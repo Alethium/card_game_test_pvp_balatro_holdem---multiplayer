@@ -68,7 +68,7 @@ func initialize_deck(seed_value: int):
 		Current_Minor_Deck.initialize_deck()
 		# Sync initial deck state to all clients
 		sync_deck_state.rpc(Current_Minor_Deck.deck_of_cards.size())
-appples
+
 
 
 
