@@ -1,0 +1,15 @@
+[gd_scene load_steps=3 format=3 uid="uid://btsrbpjk6c605"]
+
+[ext_resource type="PackedScene" uid="uid://c3rq0tkr3lvf5" path="res://Scenes/card.tscn" id="1_rowwm"]
+[ext_resource type="Script" uid="uid://du1nt08q2cliu" path="res://Scenes/Cards/Major_Arcana/major_arcana_card.gd" id="2_oasvo"]
+
+[node name="Major_Arcana_Card" instance=ExtResource("1_rowwm")]
+script = ExtResource("2_oasvo")
+joker_name = "Joker"
+effect_description = "Joker effect description."
+sell_value = 3
+rarity = 0
+chip_modifier = 0
+mult_modifier = 0
+money_modifier = 0
+probability_modifier = 0.0

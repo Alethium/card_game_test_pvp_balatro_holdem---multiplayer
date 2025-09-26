@@ -1,0 +1,1 @@
+extends Minor_Arcana

@@ -1,0 +1,7 @@
+[gd_scene load_steps=3 format=3 uid="uid://duj2bqxcyce7v"]
+
+[ext_resource type="PackedScene" uid="uid://by3far74b8x5s" path="res://Scenes/Cards/Minor_Arcana/Minor_Arcana.tscn" id="1_7vw7q"]
+[ext_resource type="Script" uid="uid://dsd7uvyxyar4a" path="res://Scenes/Cards/Minor_Arcana/Cups/ace_of_cups.gd" id="2_v36lu"]
+
+[node name="Ace_of_Cups" instance=ExtResource("1_7vw7q")]
+script = ExtResource("2_v36lu")

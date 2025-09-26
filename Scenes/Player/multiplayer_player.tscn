@@ -1,0 +1,100 @@
+[gd_scene load_steps=8 format=3 uid="uid://bqtpu7j6665bn"]
+
+[ext_resource type="Script" uid="uid://ryrvaexjy5si" path="res://scripts/Multiplayer/multiplayer_player.gd" id="1_a61r2"]
+[ext_resource type="PackedScene" uid="uid://dw4rp4xr3fy7k" path="res://Scenes/Player/hand_cursor.tscn" id="2_4ea1o"]
+[ext_resource type="Script" uid="uid://bomxxc8qi6eke" path="res://scripts/Multiplayer/multiplayer_input.gd" id="2_ql3ps"]
+[ext_resource type="PackedScene" uid="uid://c3fgf484hca30" path="res://Scenes/Player/health_meter.tscn" id="4_ql3ps"]
+[ext_resource type="Script" uid="uid://bv8vfsflrvprv" path="res://scripts/mouse_window_detection.gd" id="5_ql3ps"]
+
+[sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_ql3ps"]
+properties/0/path = NodePath(".:player_id")
+properties/0/spawn = true
+properties/0/replication_mode = 1
+properties/1/path = NodePath("Hand_Cursor:position")
+properties/1/spawn = true
+properties/1/replication_mode = 1
+properties/2/path = NodePath(".:position")
+properties/2/spawn = true
+properties/2/replication_mode = 1
+
+[sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_i7h06"]
+properties/0/path = NodePath("input_synchronizer:player_mouse_cursor_direction")
+properties/0/spawn = true
+properties/0/replication_mode = 1
+properties/1/path = NodePath("input_synchronizer:player_mouse_cursor_position")
+properties/1/spawn = true
+properties/1/replication_mode = 1
+properties/2/path = NodePath("Hand_Cursor:modulate")
+properties/2/spawn = true
+properties/2/replication_mode = 1
+properties/3/path = NodePath("input_synchronizer:clicked")
+properties/3/spawn = true
+properties/3/replication_mode = 1
+
+[node name="multiplayer_player" type="Node2D"]
+script = ExtResource("1_a61r2")
+
+[node name="playerSynchronizer" type="MultiplayerSynchronizer" parent="."]
+replication_config = SubResource("SceneReplicationConfig_ql3ps")
+
+[node name="input_synchronizer" type="MultiplayerSynchronizer" parent="."]
+unique_name_in_owner = true
+replication_config = SubResource("SceneReplicationConfig_i7h06")
+script = ExtResource("2_ql3ps")
+
+[node name="Hand_Cursor" parent="." instance=ExtResource("2_4ea1o")]
+z_index = 5
+position = Vector2(118, 32)
+
+[node name="Control" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="discard_button" type="Button" parent="Control"]
+layout_mode = 0
+offset_left = 5.0
+offset_top = -94.0
+offset_right = 82.0
+offset_bottom = -63.0
+text = "DISCARD"
+
+[node name="play_button" type="Button" parent="Control"]
+layout_mode = 0
+offset_left = 5.0
+offset_top = -57.0
+offset_right = 103.0
+offset_bottom = -26.0
+text = "PLAY HAND"
+
+[node name="current_hand" type="Label" parent="Control"]
+layout_mode = 0
+offset_left = 5.0
+offset_top = -14.0
+offset_right = 119.0
+offset_bottom = 9.0
+text = "Current Hand :"
+
+[node name="Score" type="Label" parent="Control"]
+layout_mode = 0
+offset_left = 5.0
+offset_top = 9.0
+offset_right = 142.0
+offset_bottom = 32.0
+text = "SCORE :"
+
+[node name="player_hand" type="Node2D" parent="."]
+position = Vector2(-1258, 0)
+
+[node name="health meter" parent="." instance=ExtResource("4_ql3ps")]
+position = Vector2(17, 87)
+
+[node name="player_role_marker_position" type="Node2D" parent="."]
+position = Vector2(13, -159)
+
+[node name="mouse_window_detection" type="Node" parent="."]
+script = ExtResource("5_ql3ps")
+
+[connection signal="pressed" from="Control/discard_button" to="." method="_on_discard_button_pressed"]
+[connection signal="pressed" from="Control/play_button" to="." method="_on_play_button_pressed"]

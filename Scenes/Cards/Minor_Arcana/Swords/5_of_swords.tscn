@@ -1,0 +1,9 @@
+[gd_scene load_steps=3 format=3 uid="uid://cmjsspkcfinq0"]
+
+[ext_resource type="PackedScene" uid="uid://by3far74b8x5s" path="res://Scenes/Cards/Minor_Arcana/Minor_Arcana.tscn" id="1_uc4vi"]
+[ext_resource type="Script" uid="uid://boxhjcrq07onl" path="res://Scenes/Cards/Minor_Arcana/Swords/5_of_swords.gd" id="2_gbkfe"]
+
+[node name="5_of_Swords" instance=ExtResource("1_uc4vi")]
+script = ExtResource("2_gbkfe")
+suit = 3
+rank = 4

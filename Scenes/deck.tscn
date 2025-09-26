@@ -1,0 +1,48 @@
+[gd_scene load_steps=5 format=3 uid="uid://d6j4atda58sg"]
+
+[ext_resource type="Script" uid="uid://1yow31y65nki" path="res://scripts/deck.gd" id="1_io7pv"]
+[ext_resource type="Shape2D" uid="uid://boknmjoc3mejb" path="res://Scenes/card_shape.tres" id="1_ukesx"]
+[ext_resource type="Texture2D" uid="uid://bbfs58fqo5w3a" path="res://Cards/card_sprites/PC _ Computer - Balatro - Playing Cards - Card Backs, Enhancers and Seals.png" id="3_nlncs"]
+[ext_resource type="Texture2D" uid="uid://bu04xpr65t45s" path="res://Cards/card_sprites/PC _ Computer - Balatro - Playing Cards - Playing Cards.png" id="4_xvpt4"]
+
+[node name="Deck" type="Node2D"]
+script = ExtResource("1_io7pv")
+
+[node name="deck_body" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="deck_body"]
+visible = false
+shape = ExtResource("1_ukesx")
+
+[node name="visuals" type="Node2D" parent="."]
+
+[node name="height_outline" type="Sprite2D" parent="visuals"]
+modulate = Color(1, 1, 0, 1)
+scale = Vector2(2.1, 2.1)
+texture = ExtResource("4_xvpt4")
+hframes = 15
+vframes = 4
+
+[node name="card_outline" type="Sprite2D" parent="visuals"]
+modulate = Color(1, 1, 0, 1)
+scale = Vector2(2.1, 2.1)
+texture = ExtResource("4_xvpt4")
+hframes = 15
+vframes = 4
+
+[node name="thickness" type="Sprite2D" parent="visuals"]
+modulate = Color(0.733005, 0.733005, 0.733005, 1)
+scale = Vector2(2, 2)
+texture = ExtResource("4_xvpt4")
+region_enabled = true
+region_rect = Rect2(0, 96, 71, 95)
+
+[node name="Back" type="Sprite2D" parent="visuals"]
+z_index = 4
+scale = Vector2(2, 2)
+texture = ExtResource("3_nlncs")
+hframes = 7
+vframes = 5
+
+[connection signal="mouse_entered" from="deck_body" to="." method="_on_deck_body_mouse_entered"]
+[connection signal="mouse_exited" from="deck_body" to="." method="_on_deck_body_mouse_exited"]

@@ -1,0 +1,35 @@
+[gd_scene load_steps=3 format=3 uid="uid://c3fgf484hca30"]
+
+[ext_resource type="Texture2D" uid="uid://bluej74nvmh1h" path="res://ICONS/poker buttons.png" id="1_ipg2f"]
+[ext_resource type="Script" uid="uid://mt35ylygqk3f" path="res://scripts/health_meter.gd" id="1_m1brx"]
+
+[node name="health meter" type="Node2D"]
+scale = Vector2(2, 2)
+script = ExtResource("1_m1brx")
+
+[node name="health_bar" type="Sprite2D" parent="."]
+scale = Vector2(1, 6)
+texture = ExtResource("1_ipg2f")
+offset = Vector2(0, -2)
+region_enabled = true
+region_rect = Rect2(288, 72, 4, 4)
+
+[node name="container_bottom" type="Sprite2D" parent="."]
+texture = ExtResource("1_ipg2f")
+offset = Vector2(0, 1.5)
+region_enabled = true
+region_rect = Rect2(272, 75, 12, 5)
+
+[node name="container_middle" type="Sprite2D" parent="."]
+position = Vector2(0, -1)
+texture = ExtResource("1_ipg2f")
+offset = Vector2(0, -11)
+region_enabled = true
+region_rect = Rect2(272, 53, 12, 22)
+
+[node name="container_top" type="Sprite2D" parent="."]
+position = Vector2(0, -23)
+texture = ExtResource("1_ipg2f")
+offset = Vector2(0, -3)
+region_enabled = true
+region_rect = Rect2(272, 47, 12, 6)

@@ -1,0 +1,7 @@
+[gd_scene load_steps=3 format=3 uid="uid://b74yh17gf2rmq"]
+
+[ext_resource type="PackedScene" uid="uid://d6j4atda58sg" path="res://Scenes/deck.tscn" id="1_kpbd5"]
+[ext_resource type="Script" uid="uid://fp1gt3l800y0" path="res://scripts/major_arcana_deck.gd" id="2_3pm0x"]
+
+[node name="Major_Arcana_Deck" instance=ExtResource("1_kpbd5")]
+script = ExtResource("2_3pm0x")

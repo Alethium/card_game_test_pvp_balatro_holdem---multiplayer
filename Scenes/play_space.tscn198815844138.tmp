@@ -1,0 +1,137 @@
+[gd_scene load_steps=6 format=3 uid="uid://bstgicllg5jw4"]
+
+[ext_resource type="PackedScene" uid="uid://dvdg2bxoihq32" path="res://Scenes/card_slot.tscn" id="1_pe22w"]
+[ext_resource type="Script" uid="uid://cvvna1si82h41" path="res://scripts/play_space.gd" id="1_yahnq"]
+[ext_resource type="Script" uid="uid://fyjtmnu0p70k" path="res://scripts/game_manager.gd" id="2_1q6os"]
+[ext_resource type="PackedScene" uid="uid://dykqpm7wklekq" path="res://Scenes/Cards/Minor_Arcana/Minor_Arcana_Deck.tscn" id="2_i6akn"]
+[ext_resource type="PackedScene" uid="uid://cmw07kbi54r1n" path="res://Scenes/Hexas_Hold_Em_Card_Manager.tscn" id="2_osk37"]
+
+[node name="Play_Space" type="Node2D"]
+script = ExtResource("1_yahnq")
+
+[node name="UI" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="Button" type="Button" parent="UI"]
+layout_mode = 0
+offset_left = 1476.0
+offset_top = 299.0
+offset_right = 1552.0
+offset_bottom = 330.0
+text = "SHUFFLE"
+
+[node name="game_manager" type="Node2D" parent="."]
+script = ExtResource("2_1q6os")
+
+[node name="card_manager" parent="." node_paths=PackedStringArray("Current_Minor_Deck") instance=ExtResource("2_osk37")]
+Current_Minor_Deck = NodePath("../Minor_Arcana_Deck")
+
+[node name="opponent_hand" type="Node2D" parent="."]
+
+[node name="Opponent_Hand_Slot" parent="opponent_hand" instance=ExtResource("1_pe22w")]
+position = Vector2(651, 120)
+Slot_Type = 3
+
+[node name="Opponent_Hand_Slot2" parent="opponent_hand" instance=ExtResource("1_pe22w")]
+position = Vector2(814, 120)
+Slot_Type = 3
+
+[node name="Opponent_Hand_Slot3" parent="opponent_hand" instance=ExtResource("1_pe22w")]
+position = Vector2(976, 120)
+Slot_Type = 3
+
+[node name="Opponent_Hand_Slot4" parent="opponent_hand" instance=ExtResource("1_pe22w")]
+position = Vector2(1139, 120)
+Slot_Type = 3
+
+[node name="Opponent_Hand_Slot5" parent="opponent_hand" instance=ExtResource("1_pe22w")]
+position = Vector2(1300, 120)
+Slot_Type = 3
+
+[node name="opponents_modifier" parent="." instance=ExtResource("1_pe22w")]
+position = Vector2(422, 120)
+Slot_Type = 3
+
+[node name="player_modifier" parent="." instance=ExtResource("1_pe22w")]
+position = Vector2(1513, 956)
+
+[node name="Minor_arcana_Slots" type="Node2D" parent="."]
+
+[node name="Minor_Arcana_Slot" parent="Minor_arcana_Slots" instance=ExtResource("1_pe22w")]
+position = Vector2(651, 648)
+
+[node name="Minor_Arcana_Slot2" parent="Minor_arcana_Slots" instance=ExtResource("1_pe22w")]
+position = Vector2(814, 648)
+
+[node name="Minor_Arcana_Slot3" parent="Minor_arcana_Slots" instance=ExtResource("1_pe22w")]
+position = Vector2(976, 648)
+
+[node name="Minor_Arcana_Slot4" parent="Minor_arcana_Slots" instance=ExtResource("1_pe22w")]
+position = Vector2(1139, 648)
+
+[node name="Minor_Arcana_Slot5" parent="Minor_arcana_Slots" instance=ExtResource("1_pe22w")]
+position = Vector2(1300, 648)
+
+[node name="Major_arcana_Slots" type="Node2D" parent="."]
+
+[node name="Major_Arcana_Slot" parent="Major_arcana_Slots" instance=ExtResource("1_pe22w")]
+position = Vector2(651, 438)
+Slot_Type = 1
+
+[node name="Major_Arcana_Slot2" parent="Major_arcana_Slots" instance=ExtResource("1_pe22w")]
+position = Vector2(814, 438)
+Slot_Type = 1
+
+[node name="Major_Arcana_Slot3" parent="Major_arcana_Slots" instance=ExtResource("1_pe22w")]
+position = Vector2(976, 438)
+Slot_Type = 1
+
+[node name="Major_Arcana_Slot4" parent="Major_arcana_Slots" instance=ExtResource("1_pe22w")]
+position = Vector2(1139, 438)
+Slot_Type = 1
+
+[node name="Major_Arcana_Slot5" parent="Major_arcana_Slots" instance=ExtResource("1_pe22w")]
+position = Vector2(1300, 438)
+Slot_Type = 1
+
+[node name="Minor_card_deck_Slot" parent="." instance=ExtResource("1_pe22w")]
+position = Vector2(1513, 648)
+
+[node name="Major_modifier_deck_Slot" parent="." instance=ExtResource("1_pe22w")]
+position = Vector2(1513, 438)
+
+[node name="Minor_card_discard_slot" parent="." instance=ExtResource("1_pe22w")]
+position = Vector2(422, 648)
+
+[node name="Major_modifier_discard_slot" parent="." instance=ExtResource("1_pe22w")]
+position = Vector2(422, 438)
+
+[node name="Minor_Arcana_Deck" parent="." instance=ExtResource("2_i6akn")]
+position = Vector2(1513, 648)
+
+[connection signal="pressed" from="UI/Button" to="card_manager" method="_on_shuffle_button_pressed"]
+
+[editable path="opponent_hand/Opponent_Hand_Slot"]
+[editable path="opponent_hand/Opponent_Hand_Slot2"]
+[editable path="opponent_hand/Opponent_Hand_Slot3"]
+[editable path="opponent_hand/Opponent_Hand_Slot4"]
+[editable path="opponent_hand/Opponent_Hand_Slot5"]
+[editable path="opponents_modifier"]
+[editable path="player_modifier"]
+[editable path="Minor_arcana_Slots/Minor_Arcana_Slot"]
+[editable path="Minor_arcana_Slots/Minor_Arcana_Slot2"]
+[editable path="Minor_arcana_Slots/Minor_Arcana_Slot3"]
+[editable path="Minor_arcana_Slots/Minor_Arcana_Slot4"]
+[editable path="Minor_arcana_Slots/Minor_Arcana_Slot5"]
+[editable path="Major_arcana_Slots/Major_Arcana_Slot"]
+[editable path="Major_arcana_Slots/Major_Arcana_Slot2"]
+[editable path="Major_arcana_Slots/Major_Arcana_Slot3"]
+[editable path="Major_arcana_Slots/Major_Arcana_Slot4"]
+[editable path="Major_arcana_Slots/Major_Arcana_Slot5"]
+[editable path="Minor_card_deck_Slot"]
+[editable path="Major_modifier_deck_Slot"]
+[editable path="Minor_card_discard_slot"]
+[editable path="Major_modifier_discard_slot"]

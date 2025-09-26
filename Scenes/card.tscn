@@ -1,0 +1,97 @@
+[gd_scene load_steps=8 format=3 uid="uid://c3rq0tkr3lvf5"]
+
+[ext_resource type="Script" uid="uid://g6hb1xvsmag7" path="res://scripts/card.gd" id="1_0qqmn"]
+[ext_resource type="Texture2D" uid="uid://bu04xpr65t45s" path="res://Cards/card_sprites/PC _ Computer - Balatro - Playing Cards - Playing Cards.png" id="2_brehn"]
+[ext_resource type="Shape2D" uid="uid://boknmjoc3mejb" path="res://Scenes/card_shape.tres" id="2_wf8id"]
+[ext_resource type="Texture2D" uid="uid://bbfs58fqo5w3a" path="res://Cards/card_sprites/PC _ Computer - Balatro - Playing Cards - Card Backs, Enhancers and Seals.png" id="3_eumee"]
+
+[sub_resource type="Animation" id="Animation_eumee"]
+resource_name = "flip"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Visuals:scale")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector2(2, 2), Vector2(-2, 2)]
+}
+tracks/1/type = "method"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0.5),
+"transitions": PackedFloat32Array(1),
+"values": [{
+"args": [],
+"method": &"flip"
+}]
+}
+
+[sub_resource type="Animation" id="Animation_e6po8"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Visuals:scale")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(2, 2)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_bnspj"]
+_data = {
+&"RESET": SubResource("Animation_e6po8"),
+&"flip": SubResource("Animation_eumee")
+}
+
+[node name="card" type="Node2D"]
+script = ExtResource("1_0qqmn")
+
+[node name="Visuals" type="Node2D" parent="."]
+scale = Vector2(2, 2)
+
+[node name="bg" type="Sprite2D" parent="Visuals"]
+texture = ExtResource("2_brehn")
+hframes = 15
+vframes = 4
+
+[node name="Front" type="Sprite2D" parent="Visuals"]
+
+[node name="Back" type="Sprite2D" parent="Visuals"]
+texture = ExtResource("3_eumee")
+hframes = 7
+vframes = 5
+
+[node name="card_outline" type="Sprite2D" parent="Visuals"]
+visible = false
+modulate = Color(1, 1, 0, 1)
+z_index = -3
+scale = Vector2(1.05, 1.05)
+texture = ExtResource("2_brehn")
+hframes = 15
+vframes = 4
+
+[node name="card_body" type="Area2D" parent="." groups=["Card"]]
+monitorable = false
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="card_body"]
+shape = ExtResource("2_wf8id")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+&"": SubResource("AnimationLibrary_bnspj")
+}
+
+[connection signal="mouse_entered" from="card_body" to="." method="_on_card_body_mouse_entered"]
+[connection signal="mouse_exited" from="card_body" to="." method="_on_card_body_mouse_exited"]

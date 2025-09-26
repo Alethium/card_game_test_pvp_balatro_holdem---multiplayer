@@ -1,0 +1,8 @@
+[gd_scene load_steps=3 format=3 uid="uid://coynxdgqkqdqa"]
+
+[ext_resource type="PackedScene" uid="uid://by3far74b8x5s" path="res://Scenes/Cards/Minor_Arcana/Minor_Arcana.tscn" id="1_5qvmk"]
+[ext_resource type="Script" uid="uid://c0q1lip2m005d" path="res://Scenes/Cards/Minor_Arcana/Cups/queen_of_cups.gd" id="2_76p3j"]
+
+[node name="Queen_of_Cups" instance=ExtResource("1_5qvmk")]
+script = ExtResource("2_76p3j")
+rank = 12

@@ -1,0 +1,70 @@
+[gd_scene load_steps=16 format=3 uid="uid://bvp2lq0xadoi2"]
+
+[ext_resource type="Script" uid="uid://bpbny0aly4adf" path="res://scripts/game_manager_new.gd" id="1_hjqsb"]
+[ext_resource type="Script" uid="uid://d3edgbt58ajfm" path="res://scripts/State_machine/game_start_state.gd" id="2_mmt5l"]
+[ext_resource type="Script" uid="uid://dxqc5w5eoico7" path="res://scripts/State_machine/ante_state.gd" id="3_fgdfb"]
+[ext_resource type="Script" uid="uid://ticfbi074bym" path="res://scripts/State_machine/deal_players_state.gd" id="4_yqty0"]
+[ext_resource type="Script" uid="uid://chexwyd36fp87" path="res://scripts/State_machine/deal_hole_state.gd" id="5_71d4j"]
+[ext_resource type="Script" uid="uid://fmsvyje2qukp" path="res://scripts/State_machine/hole_bet_state.gd" id="6_efn8y"]
+[ext_resource type="Script" uid="uid://d0xvomu7q4q1v" path="res://scripts/State_machine/deal_flop_state.gd" id="7_jencv"]
+[ext_resource type="Script" uid="uid://bbhlaainaqp" path="res://scripts/State_machine/flop_bet_state.gd" id="8_kmrvs"]
+[ext_resource type="Script" uid="uid://05xu534xu4e0" path="res://scripts/State_machine/deal_turn_state.gd" id="9_e6ru4"]
+[ext_resource type="Script" uid="uid://bftopn7ms5bvx" path="res://scripts/State_machine/turn_bet_state.gd" id="10_sm5re"]
+[ext_resource type="Script" uid="uid://1h8mhdplpn7w" path="res://scripts/State_machine/river_deal_state.gd" id="11_hjqsb"]
+[ext_resource type="Script" uid="uid://d37gnqs54ohud" path="res://scripts/State_machine/river_bet_state.gd" id="12_kmrvs"]
+[ext_resource type="Script" uid="uid://dt8opmxnhg086" path="res://scripts/State_machine/showdown_state.gd" id="13_e6ru4"]
+[ext_resource type="Script" uid="uid://w5gjr3eih3e1" path="res://scripts/State_machine/payout_state.gd" id="14_sm5re"]
+[ext_resource type="Script" uid="uid://dpx41o7t7skvk" path="res://scripts/State_machine/store_state.gd" id="15_hjqsb"]
+
+[node name="game_manager" type="Node2D"]
+script = ExtResource("1_hjqsb")
+
+[node name="game_start" type="Node" parent="."]
+script = ExtResource("2_mmt5l")
+
+[node name="bet_ante" type="Node" parent="."]
+script = ExtResource("3_fgdfb")
+play_state = 1
+
+[node name="deal_players" type="Node" parent="."]
+script = ExtResource("4_yqty0")
+play_state = 2
+
+[node name="deal_hole" type="Node" parent="."]
+script = ExtResource("5_71d4j")
+play_state = 3
+
+[node name="bet_hole" type="Node" parent="."]
+script = ExtResource("6_efn8y")
+play_state = 4
+
+[node name="deal_flop" type="Node" parent="."]
+script = ExtResource("7_jencv")
+play_state = 5
+
+[node name="bet_flop" type="Node" parent="."]
+script = ExtResource("8_kmrvs")
+play_state = 6
+
+[node name="deal_turn" type="Node" parent="."]
+script = ExtResource("9_e6ru4")
+play_state = 7
+
+[node name="bet_turn" type="Node" parent="."]
+script = ExtResource("10_sm5re")
+
+[node name="deal_river" type="Node" parent="."]
+script = ExtResource("11_hjqsb")
+play_state = 9
+
+[node name="bet_river" type="Node" parent="."]
+script = ExtResource("12_kmrvs")
+
+[node name="showdown" type="Node" parent="."]
+script = ExtResource("13_e6ru4")
+
+[node name="payout" type="Node" parent="."]
+script = ExtResource("14_sm5re")
+
+[node name="store" type="Node" parent="."]
+script = ExtResource("15_hjqsb")

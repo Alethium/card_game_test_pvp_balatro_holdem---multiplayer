@@ -1,0 +1,18 @@
+[gd_scene load_steps=4 format=3 uid="uid://by3far74b8x5s"]
+
+[ext_resource type="PackedScene" uid="uid://c3rq0tkr3lvf5" path="res://Scenes/card.tscn" id="1_0s87a"]
+[ext_resource type="Script" uid="uid://dooyyrdmo2rux" path="res://Scenes/Cards/Minor_Arcana/Minor_Arcana.gd" id="2_mdjes"]
+[ext_resource type="Texture2D" uid="uid://bu04xpr65t45s" path="res://Cards/card_sprites/PC _ Computer - Balatro - Playing Cards - Playing Cards.png" id="3_8cajy"]
+
+[node name="Minor_Arcana" groups=["Card"] instance=ExtResource("1_0s87a")]
+script = ExtResource("2_mdjes")
+suit = 0
+rank = 0
+
+[node name="Front" parent="Visuals" index="1"]
+texture = ExtResource("3_8cajy")
+hframes = 15
+vframes = 4
+
+[node name="Back" parent="Visuals" index="2"]
+frame = 31

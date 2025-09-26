@@ -1,0 +1,9 @@
+[gd_scene load_steps=3 format=3 uid="uid://bdu1cveobdfns"]
+
+[ext_resource type="PackedScene" uid="uid://by3far74b8x5s" path="res://Scenes/Cards/Minor_Arcana/Minor_Arcana.tscn" id="1_3osk2"]
+[ext_resource type="Script" uid="uid://d1yk0pf7xqyh1" path="res://Scenes/Cards/Minor_Arcana/Pentacles/king_of_pentacles.gd" id="2_xlekl"]
+
+[node name="King_of_Pentacles" instance=ExtResource("1_3osk2")]
+script = ExtResource("2_xlekl")
+suit = 2
+rank = 13

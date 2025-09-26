@@ -1,0 +1,11 @@
+[gd_scene load_steps=2 format=3 uid="uid://bg01g8jxf4rnd"]
+
+[ext_resource type="Texture2D" uid="uid://bdsqb1yydj5hj" path="res://Cards/card_sprites/PC _ Computer - Balatro - Miscellaneous - UI Assets.png" id="1_6ptax"]
+
+[node name="dealer_marker" type="Node2D"]
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+scale = Vector2(3, 3)
+texture = ExtResource("1_6ptax")
+region_enabled = true
+region_rect = Rect2(39, 38, 13, 16)

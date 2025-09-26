@@ -1,0 +1,9 @@
+[gd_scene load_steps=3 format=3 uid="uid://j1h6sbbvtul3"]
+
+[ext_resource type="PackedScene" uid="uid://by3far74b8x5s" path="res://Scenes/Cards/Minor_Arcana/Minor_Arcana.tscn" id="1_l144v"]
+[ext_resource type="Script" uid="uid://bdo0openvc0c" path="res://Scenes/Cards/Minor_Arcana/Swords/knight_of_swords.gd" id="2_6b6us"]
+
+[node name="Knight_of_Swords" instance=ExtResource("1_l144v")]
+script = ExtResource("2_6b6us")
+suit = 3
+rank = 11

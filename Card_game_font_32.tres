@@ -1,0 +1,7 @@
+[gd_resource type="Theme" load_steps=2 format=3 uid="uid://bl5r56swuu6ll"]
+
+[ext_resource type="FontFile" uid="uid://bvox705qhd1er" path="res://Uncial.ttf" id="1_8tm53"]
+
+[resource]
+default_font = ExtResource("1_8tm53")
+default_font_size = 32

@@ -1,0 +1,28 @@
+[gd_scene load_steps=4 format=3 uid="uid://82h4w7cjwwpp"]
+
+[ext_resource type="Script" uid="uid://d2o2q643xxcom" path="res://Scenes/score_marker.gd" id="1_soo7p"]
+[ext_resource type="FontFile" uid="uid://cr6c62tsuq0vc" path="res://NotJamBlkltr16.ttf" id="2_0pi8l"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_rrequ"]
+font = ExtResource("2_0pi8l")
+font_size = 32
+
+[node name="score_marker" type="Node2D"]
+script = ExtResource("1_soo7p")
+
+[node name="ColorRect" type="ColorRect" parent="."]
+offset_left = 21.0
+offset_top = -7.0
+offset_right = 61.0
+offset_bottom = 33.0
+rotation = 0.785752
+color = Color(0.0701663, 0.6714, 1, 1)
+
+[node name="Score" type="Label" parent="."]
+texture_filter = 1
+offset_left = -3.0
+offset_top = 4.0
+offset_right = 43.0
+offset_bottom = 36.0
+text = "+10"
+label_settings = SubResource("LabelSettings_rrequ")

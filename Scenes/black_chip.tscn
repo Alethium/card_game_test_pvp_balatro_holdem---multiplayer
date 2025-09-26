@@ -1,0 +1,10 @@
+[gd_scene load_steps=2 format=3 uid="uid://5mwx6drkg761"]
+
+[ext_resource type="PackedScene" uid="uid://c7w4rmojc6gei" path="res://Scenes/chip.tscn" id="1_5ij4k"]
+
+[node name="Black_Chip" instance=ExtResource("1_5ij4k")]
+value = 10
+rank = 3
+
+[node name="Sprite2D" parent="." index="0"]
+frame = 4

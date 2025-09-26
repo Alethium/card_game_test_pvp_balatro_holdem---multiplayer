@@ -1,0 +1,18 @@
+[gd_scene load_steps=3 format=3 uid="uid://bj48bnxvmxoi5"]
+
+[ext_resource type="Script" uid="uid://g6hb1xvsmag7" path="res://scripts/card.gd" id="1_0qqmn"]
+[ext_resource type="Shape2D" uid="uid://boknmjoc3mejb" path="res://Scenes/card_shape.tres" id="2_wf8id"]
+
+[node name="card" type="Node2D"]
+script = ExtResource("1_0qqmn")
+
+[node name="Front" type="Sprite2D" parent="."]
+
+[node name="Back" type="Sprite2D" parent="."]
+
+[node name="card_body" type="Area2D" parent="."]
+monitoring = false
+monitorable = false
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="card_body"]
+shape = ExtResource("2_wf8id")

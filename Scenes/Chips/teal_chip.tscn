@@ -1,0 +1,13 @@
+[gd_scene load_steps=2 format=3 uid="uid://duah3o46pjpeu"]
+
+[ext_resource type="PackedScene" uid="uid://c7w4rmojc6gei" path="res://Scenes/chip.tscn" id="1_5xgsj"]
+
+[node name="Teal_Chip" instance=ExtResource("1_5xgsj")]
+value = 10
+rank = 3
+
+[node name="Sprite2D" parent="." index="0"]
+frame = 2
+
+[node name="CollisionShape2D" parent="Area2D" index="0"]
+visible = false

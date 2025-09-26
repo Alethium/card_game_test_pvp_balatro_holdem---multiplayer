@@ -1,0 +1,9 @@
+[gd_scene load_steps=3 format=3 uid="uid://dl6rprqpihw7w"]
+
+[ext_resource type="PackedScene" uid="uid://by3far74b8x5s" path="res://Scenes/Cards/Minor_Arcana/Minor_Arcana.tscn" id="1_kurs1"]
+[ext_resource type="Script" uid="uid://c8ihomyirtkbl" path="res://Scenes/Cards/Minor_Arcana/Pentacles/page_of_pentacles.gd" id="2_xosx6"]
+
+[node name="Page_of_Pentacles" instance=ExtResource("1_kurs1")]
+script = ExtResource("2_xosx6")
+suit = 2
+rank = 10

@@ -1,0 +1,41 @@
+[gd_scene load_steps=5 format=3 uid="uid://cbyogflct2cp0"]
+
+[ext_resource type="Script" uid="uid://bd7rtcwg4g057" path="res://scripts/main.gd" id="1_jjgbg"]
+[ext_resource type="Script" uid="uid://rnj7rsre16s" path="res://scripts/network_manager.gd" id="2_bo1nx"]
+[ext_resource type="PackedScene" uid="uid://bstgicllg5jw4" path="res://Scenes/play_space.tscn" id="2_jjvhh"]
+[ext_resource type="Theme" uid="uid://bl5r56swuu6ll" path="res://Card_game_font_32.tres" id="3_8gbba"]
+
+[node name="Main" type="Node2D"]
+script = ExtResource("1_jjgbg")
+
+[node name="network_manager" type="Node" parent="."]
+script = ExtResource("2_bo1nx")
+
+[node name="Multiplayer_HUD" type="Control" parent="."]
+unique_name_in_owner = true
+layout_mode = 3
+anchors_preset = 0
+offset_left = 267.0
+offset_top = 639.0
+offset_right = 267.0
+offset_bottom = 639.0
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Multiplayer_HUD"]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="Host_Game_Button" type="Button" parent="Multiplayer_HUD/VBoxContainer"]
+layout_mode = 2
+theme = ExtResource("3_8gbba")
+text = "Host New Game"
+
+[node name="Join_Game_Button" type="Button" parent="Multiplayer_HUD/VBoxContainer"]
+layout_mode = 2
+theme = ExtResource("3_8gbba")
+text = "Join Game"
+
+[node name="Play_Space" parent="." instance=ExtResource("2_jjvhh")]
+
+[connection signal="pressed" from="Multiplayer_HUD/VBoxContainer/Host_Game_Button" to="network_manager" method="_on_host_game_button_pressed"]
+[connection signal="pressed" from="Multiplayer_HUD/VBoxContainer/Join_Game_Button" to="network_manager" method="_on_join_game_button_pressed"]

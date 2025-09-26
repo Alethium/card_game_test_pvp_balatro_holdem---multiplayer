@@ -1,0 +1,9 @@
+[gd_scene load_steps=3 format=3 uid="uid://calb3lej0bc18"]
+
+[ext_resource type="PackedScene" uid="uid://by3far74b8x5s" path="res://Scenes/Cards/Minor_Arcana/Minor_Arcana.tscn" id="1_audod"]
+[ext_resource type="Script" uid="uid://c73hnp76k2vpa" path="res://Scenes/Cards/Minor_Arcana/Wands/page_of_wands.gd" id="2_3e5um"]
+
+[node name="Page_of_Wands" instance=ExtResource("1_audod")]
+script = ExtResource("2_3e5um")
+suit = 1
+rank = 10

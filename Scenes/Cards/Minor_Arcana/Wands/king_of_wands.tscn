@@ -1,0 +1,9 @@
+[gd_scene load_steps=3 format=3 uid="uid://dy1id0ccksmyi"]
+
+[ext_resource type="PackedScene" uid="uid://by3far74b8x5s" path="res://Scenes/Cards/Minor_Arcana/Minor_Arcana.tscn" id="1_34hm8"]
+[ext_resource type="Script" uid="uid://bwwuwuqtkubxa" path="res://Scenes/Cards/Minor_Arcana/Wands/king_of_wands.gd" id="2_okxis"]
+
+[node name="King_of_Wands" instance=ExtResource("1_34hm8")]
+script = ExtResource("2_okxis")
+suit = 1
+rank = 13

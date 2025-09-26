@@ -1,0 +1,9 @@
+[gd_scene load_steps=3 format=3 uid="uid://conthr1petdfj"]
+
+[ext_resource type="PackedScene" uid="uid://by3far74b8x5s" path="res://Scenes/Cards/Minor_Arcana/Minor_Arcana.tscn" id="1_y7s2v"]
+[ext_resource type="Script" uid="uid://bqx6vd6s7pidw" path="res://Scenes/Cards/Minor_Arcana/Wands/queen_of_wands.gd" id="2_4fxlq"]
+
+[node name="Queen_of_Wands" instance=ExtResource("1_y7s2v")]
+script = ExtResource("2_4fxlq")
+suit = 1
+rank = 12

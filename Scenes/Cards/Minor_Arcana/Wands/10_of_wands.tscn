@@ -1,0 +1,7 @@
+[gd_scene load_steps=2 format=3 uid="uid://d1w8sixdpx7gy"]
+
+[ext_resource type="PackedScene" uid="uid://by3far74b8x5s" path="res://Scenes/Cards/Minor_Arcana/Minor_Arcana.tscn" id="1_463ia"]
+
+[node name="10_of_Wands" instance=ExtResource("1_463ia")]
+suit = 1
+rank = 9

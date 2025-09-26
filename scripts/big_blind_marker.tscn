@@ -1,0 +1,11 @@
+[gd_scene load_steps=2 format=3 uid="uid://bi7jhadit3imb"]
+
+[ext_resource type="Texture2D" uid="uid://5m7bgnewxi20" path="res://Cards/card_sprites/Blind Tokens.png" id="1_rkyje"]
+
+[node name="big blind marker" type="Node2D"]
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("1_rkyje")
+hframes = 21
+vframes = 31
+frame = 21

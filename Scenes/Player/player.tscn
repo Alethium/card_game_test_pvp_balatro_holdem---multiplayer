@@ -1,0 +1,70 @@
+[gd_scene load_steps=6 format=3 uid="uid://du82q62gnt3d6"]
+
+[ext_resource type="Script" uid="uid://oexq23f40cdd" path="res://scripts/player.gd" id="1_uvnfx"]
+[ext_resource type="Script" uid="uid://dx1w7xen78de5" path="res://scripts/mouse_manager.gd" id="2_mtuoh"]
+[ext_resource type="PackedScene" uid="uid://dw4rp4xr3fy7k" path="res://Scenes/Player/hand_cursor.tscn" id="3_xpcdj"]
+[ext_resource type="PackedScene" uid="uid://c3fgf484hca30" path="res://Scenes/Player/health_meter.tscn" id="4_mtuoh"]
+
+[sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_mtuoh"]
+
+[node name="Player" type="Node2D"]
+script = ExtResource("1_uvnfx")
+
+[node name="mouse_manager" type="Node2D" parent="."]
+script = ExtResource("2_mtuoh")
+
+[node name="Hand_Cursor" parent="." instance=ExtResource("3_xpcdj")]
+position = Vector2(118, 32)
+
+[node name="Control" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="discard_button" type="Button" parent="Control"]
+layout_mode = 0
+offset_left = 5.0
+offset_top = -94.0
+offset_right = 82.0
+offset_bottom = -63.0
+text = "DISCARD"
+
+[node name="play_button" type="Button" parent="Control"]
+layout_mode = 0
+offset_left = 5.0
+offset_top = -57.0
+offset_right = 103.0
+offset_bottom = -26.0
+text = "PLAY HAND"
+
+[node name="current_hand" type="Label" parent="Control"]
+layout_mode = 0
+offset_left = 5.0
+offset_top = -14.0
+offset_right = 119.0
+offset_bottom = 9.0
+text = "Current Hand :"
+
+[node name="Score" type="Label" parent="Control"]
+layout_mode = 0
+offset_left = 5.0
+offset_top = 9.0
+offset_right = 142.0
+offset_bottom = 32.0
+text = "SCORE :"
+
+[node name="player_hand" type="Node2D" parent="."]
+position = Vector2(-1258, 0)
+
+[node name="health meter" parent="." instance=ExtResource("4_mtuoh")]
+position = Vector2(17, 87)
+
+[node name="player_role_marker_position" type="Node2D" parent="."]
+position = Vector2(13, -159)
+
+[node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="."]
+replication_config = SubResource("SceneReplicationConfig_mtuoh")
+
+[connection signal="pressed" from="Control/discard_button" to="." method="_on_discard_button_pressed"]
+[connection signal="pressed" from="Control/play_button" to="." method="_on_play_button_pressed"]

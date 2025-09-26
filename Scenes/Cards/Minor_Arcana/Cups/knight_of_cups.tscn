@@ -1,0 +1,8 @@
+[gd_scene load_steps=3 format=3 uid="uid://cvj1u7pivusst"]
+
+[ext_resource type="PackedScene" uid="uid://by3far74b8x5s" path="res://Scenes/Cards/Minor_Arcana/Minor_Arcana.tscn" id="1_angkn"]
+[ext_resource type="Script" uid="uid://c4e3qouhkb2qt" path="res://Scenes/Cards/Minor_Arcana/Cups/knight_of_cups.gd" id="2_obpoj"]
+
+[node name="Knight_of_Cups" instance=ExtResource("1_angkn")]
+script = ExtResource("2_obpoj")
+rank = 11

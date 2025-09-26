@@ -1,0 +1,8 @@
+[gd_scene load_steps=3 format=3 uid="uid://dxofq3gxspclc"]
+
+[ext_resource type="PackedScene" uid="uid://by3far74b8x5s" path="res://Scenes/Cards/Minor_Arcana/Minor_Arcana.tscn" id="1_bnk1y"]
+[ext_resource type="Script" uid="uid://dk5gg3ohcsvc2" path="res://Scenes/Cards/Minor_Arcana/Wands/ace_of_wands.gd" id="2_s4d7x"]
+
+[node name="Ace_of_Wands" instance=ExtResource("1_bnk1y")]
+script = ExtResource("2_s4d7x")
+suit = 1
