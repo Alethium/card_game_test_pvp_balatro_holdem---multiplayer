@@ -47,10 +47,10 @@ func _ready() -> void:
 	current_hand = []
 	Input.set_mouse_mode(Input.MOUSE_MODE_HIDDEN)
 		# Only enable interaction if this is our local player
-	if not is_multiplayer_authority():
-		set_buttons_interactable(false)
-	else:
-		set_buttons_interactable(true)
+	#if not is_multiplayer_authority():
+		#set_buttons_interactable(false)
+	#else:
+		#set_buttons_interactable(true)
 	
 	
 	

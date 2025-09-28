@@ -23,4 +23,5 @@ func exit_state() -> void:
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func update(_delta: float) -> void:
 	
+	card_manager.instantiate_cards()
 	states.change_state(states.bet_ante)

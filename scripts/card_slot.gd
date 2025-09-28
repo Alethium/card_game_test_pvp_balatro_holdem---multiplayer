@@ -7,12 +7,6 @@ signal off_hover
 var stored_cards:Array[Card]
 
 
-func _process(delta: float) -> void:
-	if stored_cards != null:
-		for card in stored_cards:
-			card.global_transform = lerp(card.global_transform,global_transform,delta*10)
-		
-		
 
 func _on_card_slot_body_mouse_entered() -> void:
 	on_hover.emit(self)

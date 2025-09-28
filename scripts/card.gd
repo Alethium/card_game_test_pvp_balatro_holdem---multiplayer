@@ -22,9 +22,11 @@ signal off_hover
 @export var face_down : bool = false
 @onready var anim: AnimationPlayer = $AnimationPlayer
 
-func set_target():
-	if target_slot != null:
-		target_slot.stored_card = self
+
+
+
+
+
 
 func _ready():
 	if multiplayer.is_server():
@@ -50,15 +52,15 @@ func _on_card_body_mouse_exited() -> void:
 	if is_multiplayer_authority():
 		off_hover.emit(self)
 		
-@rpc("any_peer", "reliable")
-func update_card_visibility(should_face_down: bool, visible_to_player: int):
-	if multiplayer.get_unique_id() == visible_to_player:
-		face_down = false
-	else:
-		face_down = should_face_down
-	handle_facing()
-
-@rpc("any_peer", "unreliable")
-func sync_position(new_position: Vector2):
-	global_position = new_position
+#@rpc("any_peer", "reliable")
+#func update_card_visibility(should_face_down: bool, visible_to_player: int):
+	#if multiplayer.get_unique_id() == visible_to_player:
+		#face_down = false
+	#else:
+		#face_down = should_face_down
+	#handle_facing()
+#
+#@rpc("any_peer", "unreliable")
+#func sync_position(new_position: Vector2):
+	#global_position = new_position
 	

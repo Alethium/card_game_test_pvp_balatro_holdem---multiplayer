@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=3 uid="uid://bstgicllg5jw4"]
+[gd_scene load_steps=12 format=3 uid="uid://bstgicllg5jw4"]
 
 [ext_resource type="PackedScene" uid="uid://dvdg2bxoihq32" path="res://Scenes/card_slot.tscn" id="1_pe22w"]
 [ext_resource type="Script" uid="uid://cvvna1si82h41" path="res://scripts/play_space.gd" id="1_yahnq"]
@@ -6,19 +6,12 @@
 [ext_resource type="PackedScene" uid="uid://dykqpm7wklekq" path="res://Scenes/Cards/Minor_Arcana/Minor_Arcana_Deck.tscn" id="2_i6akn"]
 [ext_resource type="PackedScene" uid="uid://cmw07kbi54r1n" path="res://Scenes/Hexas_Hold_Em_Card_Manager.tscn" id="2_osk37"]
 [ext_resource type="Script" uid="uid://boin6tr0pb4jm" path="res://scripts/score_manager.gd" id="3_5lyoa"]
+[ext_resource type="Script" uid="uid://brcn0uu1w4pk5" path="res://Scenes/Cards/Minor_Arcana/Minor_Arcana_cards.gd" id="4_c2gb4"]
+[ext_resource type="Script" uid="uid://dokx0fbek01si" path="res://scripts/card_synchronizer.gd" id="4_l4lkg"]
 [ext_resource type="Script" uid="uid://cilgpbld2ax5j" path="res://scripts/players.gd" id="6_m4s6i"]
 [ext_resource type="Script" uid="uid://chwq4d5jfqblg" path="res://scripts/Multiplayer/multiplayer_manager.gd" id="8_5lyoa"]
 
 [sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_5lyoa"]
-properties/0/path = NodePath(".:card_manager")
-properties/0/spawn = true
-properties/0/replication_mode = 1
-properties/1/path = NodePath(".:game_manager")
-properties/1/spawn = true
-properties/1/replication_mode = 1
-properties/2/path = NodePath("Minor_Arcana:currently_spawned_cards")
-properties/2/spawn = true
-properties/2/replication_mode = 1
 
 [node name="Play_Space" type="Node2D"]
 script = ExtResource("1_yahnq")
@@ -83,8 +76,23 @@ script = ExtResource("3_5lyoa")
 [node name="card_manager" parent="." node_paths=PackedStringArray("Current_Minor_Deck") instance=ExtResource("2_osk37")]
 Current_Minor_Deck = NodePath("../Minor_Arcana")
 
+[node name="cards_in_play" type="Node2D" parent="."]
+process_priority = 1
+script = ExtResource("4_c2gb4")
+
 [node name="card_synchronizer" type="MultiplayerSynchronizer" parent="."]
 replication_config = SubResource("SceneReplicationConfig_5lyoa")
+script = ExtResource("4_l4lkg")
+
+[node name="multiplayer__spawner" type="MultiplayerSpawner" parent="."]
+_spawnable_scenes = PackedStringArray("uid://bqtpu7j6665bn")
+spawn_path = NodePath("../Players")
+spawn_limit = 4
+
+[node name="Card_Spawner2" type="MultiplayerSpawner" parent="."]
+_spawnable_scenes = PackedStringArray("uid://d4bg2fjkyscq2", "uid://mhajchtk424d", "uid://drsmlrw45phl5", "uid://j2iukh50yewt", "uid://bs6yeipecaa1p", "uid://c8nagbifgm20i", "uid://dhrgq0ogf8xeb", "uid://cqfihcmqt7kt7", "uid://d06wp8q8q2pc5", "uid://duj2bqxcyce7v", "uid://bfoks6lvmcscl", "uid://cvj1u7pivusst", "uid://coynxdgqkqdqa", "uid://dofwpfub0oatt")
+spawn_path = NodePath("../cards_in_play")
+spawn_limit = 4
 
 [node name="multiplayer_manager" type="Node2D" parent="."]
 script = ExtResource("8_5lyoa")
@@ -165,11 +173,6 @@ position = Vector2(1738, 673)
 [node name="Player4_location" type="Node2D" parent="Players"]
 position = Vector2(1732, 887)
 
-[node name="MultiplayerSpawner" type="MultiplayerSpawner" parent="."]
-_spawnable_scenes = PackedStringArray("uid://bqtpu7j6665bn")
-spawn_path = NodePath("../Players")
-spawn_limit = 4
-
 [connection signal="pressed" from="UI/Shuffle" to="card_manager" method="_on_shuffle_button_pressed"]
 [connection signal="pressed" from="UI/clear_minor_arcana" to="card_manager" method="_on_clear_minor_arcana_pressed"]
 [connection signal="pressed" from="UI/Deal_to_players" to="card_manager" method="_on_deal_pressed"]
@@ -187,6 +190,7 @@ spawn_limit = 4
 [editable path="Major_arcana_Slots/Major_Arcana_Slot3"]
 [editable path="Major_arcana_Slots/Major_Arcana_Slot4"]
 [editable path="Major_arcana_Slots/Major_Arcana_Slot5"]
+[editable path="Minor_Arcana"]
 [editable path="Minor_card_deck_Slot"]
 [editable path="Minor_card_discard_slot"]
 [editable path="Major_modifier_deck_Slot"]

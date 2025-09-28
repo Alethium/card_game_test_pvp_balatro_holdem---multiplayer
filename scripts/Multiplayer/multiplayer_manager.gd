@@ -44,23 +44,6 @@ func join_as_player():
 	multiplayer.multiplayer_peer = client_peer
 	
 func _add_player_to_game(id:int):
-	#var player_to_add = multiplayer_player_scene.instantiate()
-	#var player_index_to_load = players.current_num_of_players
-	
-	#print("player %s joined the game!"% id)
-	#player_to_add.player_id = id
-	#player_to_add.name = str(id)
-	#players.add_child(player_to_add,true)
-	#players.current_num_of_players += 1
-	#players.current_players.append(player_to_add)
-	#print("current players  : ",players.current_players)
-	#print("adding as player number  : ",players.current_num_of_players)
-	#var added_player = players.get_node(str(id))
-	#print(card_manager,"  :  ",added_player)
-	#card_manager.connect_player_signals(added_player)
-	#game_manager.connect_player_signals(added_player)
-	##connect_player_signals(player)
-	#added_player.hand_cursor.modulate = Color.HOT_PINK
 	var player_to_add = multiplayer_player_scene.instantiate()
 	print("player %s joined the game!" % id)
 	player_to_add.player_id = id
@@ -70,12 +53,9 @@ func _add_player_to_game(id:int):
 	players.current_players.append(player_to_add)
 	
 	var added_player = players.get_node(str(id))
-	card_manager.connect_player_signals(added_player)
+	#card_manager.connect_player_signals(added_player)
 	game_manager.connect_player_signals(added_player)
 	added_player.hand_cursor.modulate = Color.HOT_PINK
-	
-	if multiplayer.is_server():
-		sync_player_positions.rpc()
 	 
 	
 	if players.current_num_of_players == 1:
@@ -96,15 +76,6 @@ func _add_player_to_game(id:int):
 		player_to_add.global_position = players.get_node("Player4_location").global_position
 		added_player.hand_cursor.modulate = Color.GREEN_YELLOW		
 
-@rpc("any_peer", "reliable")
-func sync_player_positions():
-	# Sync all player positions to clients
-	for i in range(players.current_players.size()):
-		var player = players.current_players[i]
-		var location_name = "Player%d_location" % (i + 1)
-		if players.has_node(location_name):
-			player.global_position = players.get_node(location_name).global_position			
-	
 func delete_player(id:int):
 	print("player %s left the game" % id)
 	if not players.has_node(str(id)):

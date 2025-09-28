@@ -6,7 +6,6 @@ enum RANK {Ace,Two,Three,Four,Five,Six,Seven,Eight,Nine,Ten,Page,Knight,Queen,Ki
 @export var rank : RANK
 var score : int
 var face_card : bool
-
 var cursed = false
 
 
@@ -15,7 +14,6 @@ var cursed = false
 func _ready() -> void:
 	front.frame_coords.x = rank + 1
 	front.frame_coords.y = suit 
-	set_target() 
 	if rank == 0:
 		score = 10
 		face_card = true

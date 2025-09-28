@@ -20,7 +20,7 @@ var edition: String = "Base"  # Foil, Holographic, Polychrome, etc.
 func _ready():
 	# Jokers are always face up
 	face_down = false
-	handle_facing()
+	#handle_facing()
 
 #func calculate_sell_value() -> int:
 	## Calculate final sell value based on edition, upgrades, etc.
