@@ -140,13 +140,13 @@ func _process(delta: float) -> void:
 		for card in card_manager.currently_spawned_cards:
 			card.handle_facing()
 
-func initialize_deck():
-	for i in base_set.size() :
-		var curr_card = base_set[i]
-		deck_of_cards.append(curr_card)
-		print("added : ", curr_card)
-		#cards remain uninstantiated until they become visible
-	
+#func initialize_deck():
+	#for i in base_set.size() :
+		#var curr_card = base_set[i]
+		#deck_of_cards.append(curr_card)
+		#print("added : ", curr_card)
+		##cards remain uninstantiated until they become visible
+	#
 
 func _on_Major_Arcana_deck_body_mouse_entered() -> void:
 	pass

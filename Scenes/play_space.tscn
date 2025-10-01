@@ -1,4 +1,4 @@
-[gd_scene load_steps=12 format=3 uid="uid://bstgicllg5jw4"]
+[gd_scene load_steps=13 format=3 uid="uid://bstgicllg5jw4"]
 
 [ext_resource type="PackedScene" uid="uid://dvdg2bxoihq32" path="res://Scenes/card_slot.tscn" id="1_pe22w"]
 [ext_resource type="Script" uid="uid://cvvna1si82h41" path="res://scripts/play_space.gd" id="1_yahnq"]
@@ -8,10 +8,14 @@
 [ext_resource type="Script" uid="uid://boin6tr0pb4jm" path="res://scripts/score_manager.gd" id="3_5lyoa"]
 [ext_resource type="Script" uid="uid://brcn0uu1w4pk5" path="res://Scenes/Cards/Minor_Arcana/Minor_Arcana_cards.gd" id="4_c2gb4"]
 [ext_resource type="Script" uid="uid://dokx0fbek01si" path="res://scripts/card_synchronizer.gd" id="4_l4lkg"]
+[ext_resource type="Script" uid="uid://bq8u3qwnf4w16" path="res://scripts/card_spawner.gd" id="6_a7jki"]
 [ext_resource type="Script" uid="uid://cilgpbld2ax5j" path="res://scripts/players.gd" id="6_m4s6i"]
 [ext_resource type="Script" uid="uid://chwq4d5jfqblg" path="res://scripts/Multiplayer/multiplayer_manager.gd" id="8_5lyoa"]
 
 [sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_5lyoa"]
+properties/0/path = NodePath("card_manager:networked_cards")
+properties/0/spawn = true
+properties/0/replication_mode = 1
 
 [node name="Play_Space" type="Node2D"]
 script = ExtResource("1_yahnq")
@@ -89,10 +93,10 @@ _spawnable_scenes = PackedStringArray("uid://bqtpu7j6665bn")
 spawn_path = NodePath("../Players")
 spawn_limit = 4
 
-[node name="Card_Spawner2" type="MultiplayerSpawner" parent="."]
-_spawnable_scenes = PackedStringArray("uid://d4bg2fjkyscq2", "uid://mhajchtk424d", "uid://drsmlrw45phl5", "uid://j2iukh50yewt", "uid://bs6yeipecaa1p", "uid://c8nagbifgm20i", "uid://dhrgq0ogf8xeb", "uid://cqfihcmqt7kt7", "uid://d06wp8q8q2pc5", "uid://duj2bqxcyce7v", "uid://bfoks6lvmcscl", "uid://cvj1u7pivusst", "uid://coynxdgqkqdqa", "uid://dofwpfub0oatt")
+[node name="Card_Spawner" type="MultiplayerSpawner" parent="."]
+_spawnable_scenes = PackedStringArray("uid://d4bg2fjkyscq2", "uid://mhajchtk424d", "uid://drsmlrw45phl5", "uid://j2iukh50yewt", "uid://bs6yeipecaa1p", "uid://c8nagbifgm20i", "uid://dhrgq0ogf8xeb", "uid://cqfihcmqt7kt7", "uid://d06wp8q8q2pc5", "uid://bfoks6lvmcscl", "uid://cvj1u7pivusst", "uid://coynxdgqkqdqa", "uid://dofwpfub0oatt", "uid://duj2bqxcyce7v", "uid://ff8vrymvdrgs", "uid://cdoitkgsmfiba", "uid://c3qx0612o88qb", "uid://df5xoqo6s7p0a", "uid://do3but4m0lcg1", "uid://dcgwtpmmv3yse", "uid://cm7oqmx87bvs1", "uid://chpaiyda2qbos", "uid://vw827lfx0ycl", "uid://dl6rprqpihw7w", "uid://b5a6ih0y4ffaq", "uid://x2cixdk12pvi", "uid://bdu1cveobdfns", "uid://dhvqk7maugtk7", "uid://fcb08xwf270c", "uid://5m1tdo0pvpc3", "uid://cp2ed38po2n0", "uid://cmjsspkcfinq0", "uid://bo6hcsssrr2i2", "uid://dn4kh1xpi1ee", "uid://cupx7ebudox6a", "uid://dhou5814tsyis", "uid://db78bd3sall0y", "uid://cku7ub33oekmq", "uid://j1h6sbbvtul3", "uid://c87q0yw1rn2wj", "uid://bt7lijhv2vtje", "uid://duheuggs440vs", "uid://ch4c4stw52sqd", "uid://bsipwvyh2781g", "uid://cv5qe8on007ia", "uid://b6llft0jbigne", "uid://cw1xwdbag2kwx", "uid://dvwdr1xco46iy", "uid://cuomvtluurk11", "uid://ckmmo3gnwc3d3", "uid://d1w8sixdpx7gy", "uid://calb3lej0bc18", "uid://cbtjjiaunwaib", "uid://conthr1petdfj", "uid://dy1id0ccksmyi", "uid://dxofq3gxspclc")
 spawn_path = NodePath("../cards_in_play")
-spawn_limit = 4
+script = ExtResource("6_a7jki")
 
 [node name="multiplayer_manager" type="Node2D" parent="."]
 script = ExtResource("8_5lyoa")
@@ -105,18 +109,23 @@ rotation = 3.14159
 position = Vector2(-523, -216)
 
 [node name="Minor_Arcana_Slot5" parent="Minor_Arcana_Community_Slots" instance=ExtResource("1_pe22w")]
+unique_name_in_owner = true
 position = Vector2(1300, 648)
 
 [node name="Minor_Arcana_Slot4" parent="Minor_Arcana_Community_Slots" instance=ExtResource("1_pe22w")]
+unique_name_in_owner = true
 position = Vector2(1139, 648)
 
 [node name="Minor_Arcana_Slot3" parent="Minor_Arcana_Community_Slots" instance=ExtResource("1_pe22w")]
+unique_name_in_owner = true
 position = Vector2(976, 648)
 
 [node name="Minor_Arcana_Slot2" parent="Minor_Arcana_Community_Slots" instance=ExtResource("1_pe22w")]
+unique_name_in_owner = true
 position = Vector2(814, 648)
 
 [node name="Minor_Arcana_Slot" parent="Minor_Arcana_Community_Slots" instance=ExtResource("1_pe22w")]
+unique_name_in_owner = true
 position = Vector2(651, 648)
 
 [node name="Major_arcana_Slots" type="Node2D" parent="."]

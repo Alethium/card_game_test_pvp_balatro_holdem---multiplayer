@@ -33,6 +33,7 @@ func become_host():
 	multiplayer.multiplayer_peer = server_peer
 	
 	_add_player_to_game(1)
+	card_manager.initialize_deck_order()
 	multiplayer.peer_connected.connect(_add_player_to_game)
 	multiplayer.peer_disconnected.connect(delete_player)
 
@@ -40,7 +41,6 @@ func join_as_player():
 	print("joining game")
 	var client_peer = ENetMultiplayerPeer.new()
 	client_peer.create_client(SERVER_IP,SERVER_PORT)
-	
 	multiplayer.multiplayer_peer = client_peer
 	
 func _add_player_to_game(id:int):
@@ -51,6 +51,7 @@ func _add_player_to_game(id:int):
 	players.add_child(player_to_add, true)
 	players.current_num_of_players += 1
 	players.current_players.append(player_to_add)
+	#card_manager.sync_deck_order.rpc(card_manager.deck_seed,card_manager.deck_order)
 	
 	var added_player = players.get_node(str(id))
 	#card_manager.connect_player_signals(added_player)

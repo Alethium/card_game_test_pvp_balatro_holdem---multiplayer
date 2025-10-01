@@ -7,5 +7,5 @@
 script = ExtResource("2_8l7og")
 rank = 1
 
-[node name="card_body" parent="." index="1"]
+[node name="card_body" parent="." index="2"]
 monitoring = false

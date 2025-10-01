@@ -1,9 +1,47 @@
-[gd_scene load_steps=8 format=3 uid="uid://c3rq0tkr3lvf5"]
+[gd_scene load_steps=9 format=3 uid="uid://c3rq0tkr3lvf5"]
 
 [ext_resource type="Script" uid="uid://g6hb1xvsmag7" path="res://scripts/card.gd" id="1_0qqmn"]
 [ext_resource type="Texture2D" uid="uid://bu04xpr65t45s" path="res://Cards/card_sprites/PC _ Computer - Balatro - Playing Cards - Playing Cards.png" id="2_brehn"]
 [ext_resource type="Shape2D" uid="uid://boknmjoc3mejb" path="res://Scenes/card_shape.tres" id="2_wf8id"]
 [ext_resource type="Texture2D" uid="uid://bbfs58fqo5w3a" path="res://Cards/card_sprites/PC _ Computer - Balatro - Playing Cards - Card Backs, Enhancers and Seals.png" id="3_eumee"]
+
+[sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_eumee"]
+properties/0/path = NodePath(".:position")
+properties/0/spawn = true
+properties/0/replication_mode = 1
+properties/1/path = NodePath(".:selected")
+properties/1/spawn = true
+properties/1/replication_mode = 1
+properties/2/path = NodePath(".:selectable")
+properties/2/spawn = true
+properties/2/replication_mode = 1
+properties/3/path = NodePath(".:card_id")
+properties/3/spawn = true
+properties/3/replication_mode = 1
+properties/4/path = NodePath(".:target_position")
+properties/4/spawn = true
+properties/4/replication_mode = 1
+properties/5/path = NodePath(".:face_down")
+properties/5/spawn = true
+properties/5/replication_mode = 1
+properties/6/path = NodePath(".:owner_id")
+properties/6/spawn = true
+properties/6/replication_mode = 1
+
+[sub_resource type="Animation" id="Animation_e6po8"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Visuals:scale")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(2, 2)]
+}
 
 [sub_resource type="Animation" id="Animation_eumee"]
 resource_name = "flip"
@@ -34,21 +72,6 @@ tracks/1/keys = {
 }]
 }
 
-[sub_resource type="Animation" id="Animation_e6po8"]
-length = 0.001
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("Visuals:scale")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [Vector2(2, 2)]
-}
-
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_bnspj"]
 _data = {
 &"RESET": SubResource("Animation_e6po8"),
@@ -57,6 +80,9 @@ _data = {
 
 [node name="card" type="Node2D"]
 script = ExtResource("1_0qqmn")
+
+[node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="."]
+replication_config = SubResource("SceneReplicationConfig_eumee")
 
 [node name="Visuals" type="Node2D" parent="."]
 scale = Vector2(2, 2)
