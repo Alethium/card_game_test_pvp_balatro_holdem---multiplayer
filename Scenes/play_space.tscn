@@ -184,7 +184,7 @@ position = Vector2(1732, 887)
 
 [connection signal="pressed" from="UI/Shuffle" to="card_manager" method="_on_shuffle_button_pressed"]
 [connection signal="pressed" from="UI/clear_minor_arcana" to="card_manager" method="_on_clear_minor_arcana_pressed"]
-[connection signal="pressed" from="UI/Deal_to_players" to="card_manager" method="_on_deal_pressed"]
+[connection signal="pressed" from="UI/Deal_to_players" to="card_manager" method="_on_deal_to_players_pressed"]
 [connection signal="pressed" from="UI/Reload" to="card_manager" method="_on_reload_pressed"]
 [connection signal="pressed" from="UI/Deal_to_community" to="card_manager" method="_on_deal_to_community_pressed"]
 [connection signal="pressed" from="UI/Deal2" to="card_manager" method="_on_deal_pressed"]

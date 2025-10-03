@@ -2,7 +2,7 @@ class_name Card
 extends Node2D
 
 #@export var OWNER_ID : Player
-@export var target_position : Vector2
+@export var target_slot : CardSlot
 
 @onready var back: Sprite2D = $Visuals/Back
 @onready var front: Sprite2D = $Visuals/Front
@@ -40,9 +40,7 @@ func _ready():
 
 
 func handle_facing():
-	
-	
-	
+
 	if face_down:
 		back.visible = true
 		front.visible = false
@@ -78,8 +76,8 @@ func _on_card_body_mouse_exited() -> void:
 	#
 #the server will run this function	
 func move_to_target(delta):
-	if target_position:
-		global_position = lerp(global_position, target_position,delta * 10)
+	if target_slot:
+		global_position = lerp(global_position, target_slot.global_position,delta * 10)
 	else:
 		pass
 		

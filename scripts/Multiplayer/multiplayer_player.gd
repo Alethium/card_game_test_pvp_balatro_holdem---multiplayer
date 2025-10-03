@@ -10,28 +10,40 @@ signal play_hand
 @onready var mouse_window_detection: Node = $mouse_window_detection
 
 var display_name : String
-var hand_size = 5
+
+var max_hand_size = 5
+var current_hand_size = 0
+
 var discard_count = 2
+
 var current_slots = []
+
 var starting_health = 100
 var remaining_health : int
+
 var current_chips : Array[Chip]
 const CHIP = preload("res://Scenes/chip.tscn")
+
 var starting_mana = 0
 var current_mana : int
+
 var active_turn = false
-@onready var hand_cursor: HandCursor = $Hand_Cursor
-const CARD_SLOT = preload("res://Scenes/card_slot.tscn")
-var currently
+
 var empty_slots = 5
+
+
+@onready var hand_cursor: HandCursor = $Hand_Cursor
+
+const CARD_SLOT = preload("res://Scenes/card_slot.tscn")
+
 var hand_to_play : Array[Card]
 var current_hand : Array[Card] 
 var number_of_cards_selected = 0
+
 signal player_added
-var direction : Vector2
-var player_position : int
 signal player_request_unclick
 signal player_request_click
+
 @onready var button_container = $Control
 
 @export var player_id := 1:
@@ -40,6 +52,8 @@ signal player_request_click
 		%input_synchronizer.set_multiplayer_authority(id)
 
 
+var direction : Vector2
+var player_position : int
 
 
 func _ready() -> void:
@@ -58,7 +72,7 @@ func _ready() -> void:
 
 func _physics_process(delta: float) -> void:
 	if multiplayer.is_server():
-		update_input(delta)
+		update_input(delta) 
 
 
 func _input(event: InputEvent) -> void:
@@ -74,13 +88,26 @@ func update_input(delta):
 	
 	hand_cursor.global_position = %input_synchronizer.player_mouse_cursor_position
 	#also transfer clicking code from cardmanager over here
+func get_current_hand():
+	var hand = []
+	for slot in get_slots():
+		hand.append(slot.stored_cards[0])
+	return hand
+			
+func get_slots():
+	return player_hand.get_children()
 	
-
+func get_current_slot_target_pos():
+	for slot in get_slots():
+		if slot.stored_cards.size() == 0:
+			return slot.global_position
+			
 func add_slot():
 	var new_slot = CARD_SLOT.instantiate()
 	current_slots.push_front(new_slot)
 	player_hand.add_child(new_slot)
 	new_slot.global_position = player_hand.global_position
+	return new_slot
 
 func remove_slot(slot):
 	current_slots.erase(slot)
