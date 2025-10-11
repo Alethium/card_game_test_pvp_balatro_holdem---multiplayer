@@ -1,5 +1,6 @@
 class_name MultiplayerPlayer
 extends Node2D
+@onready var input_synchronizer: MultiplayerSynchronizer = %input_synchronizer
 
 @onready var player_hand: Node2D = $player_hand
 signal discard_request
@@ -8,9 +9,10 @@ signal play_hand
 @onready var score_display: Label = $Control/Score
 @onready var player_role_marker_position: Node2D = $player_role_marker_position
 @onready var mouse_window_detection: Node = $mouse_window_detection
-
+var discarding = false
+enum HandState {point,grab}
 var display_name : String
-
+@onready var curr_hand_state = 0
 var max_hand_size = 5
 var current_hand_size = 0
 
@@ -35,13 +37,13 @@ var empty_slots = 5
 @onready var hand_cursor: HandCursor = $Hand_Cursor
 
 const CARD_SLOT = preload("res://Scenes/card_slot.tscn")
-
+var selected_cards : Array[Card]
 var hand_to_play : Array[Card]
 var current_hand : Array[Card] 
 var number_of_cards_selected = 0
-
+var screen_size
 signal player_added
-signal player_request_unclick
+#signal player_request_unclick
 signal player_request_click
 
 @onready var button_container = $Control
@@ -57,8 +59,10 @@ var player_position : int
 
 
 func _ready() -> void:
+	screen_size = get_viewport_rect().size
 	player_added.emit(self)
 	current_hand = []
+	curr_hand_state = 0
 	Input.set_mouse_mode(Input.MOUSE_MODE_HIDDEN)
 		# Only enable interaction if this is our local player
 	#if not is_multiplayer_authority():
@@ -71,22 +75,62 @@ func _ready() -> void:
 	
 
 func _physics_process(delta: float) -> void:
+	highlight_selected_cards()
+	discarding = %input_synchronizer.discarding
 	if multiplayer.is_server():
 		update_input(delta) 
+		
 
-
+ 
 func _input(event: InputEvent) -> void:
 	if multiplayer.get_unique_id() == player_id:
+
 		if event is InputEventMouseButton and event.button_index == MOUSE_BUTTON_LEFT:
 			if event.pressed:
-				player_request_click.emit(%input_synchronizer.player_mouse_cursor_position)
+				#print("player %s requesting click" % player_id)
+				player_request_click.emit(player_id,%input_synchronizer.player_mouse_cursor_position)
 				#send a request to the server for a click of the mouse. 
+				
 				%input_synchronizer.click()
+			else:	
+				%input_synchronizer.unclick()
+				
+				
+				
+				
+				
+				#if raycast_for_card() != null:
+					#var currently_clicked_card = raycast_for_card()
+					##print(currently_clicked_card.name,"  :  ",currently_clicked_card.score,"facecard?:",currently_clicked_card.face_card)
+					#if currently_clicked_card.selected == false and currently_clicked_card.selectable == true:
+						#currently_clicked_card.selected = true
+						#if players.current_players[game_manager.current_player_index].hand_to_play.size() < 5:
+							#
+							#players.current_players[game_manager.current_player_index].hand_to_play.append(currently_clicked_card)
+							#print("hand to play :", players.current_players[game_manager.current_player_index].hand_to_play)
+							#print(currently_clicked_card,": selected")
+					#else:
+						#currently_clicked_card.selected = false
+						#players.current_players[game_manager.current_player_index].hand_to_play.erase(currently_clicked_card)
+#
+						#print(currently_clicked_card,": deselected")
+			#else:
+				#if currently_grabbed_card:
+					#currently_grabbed_card.scale = Vector2 (1.1,1.1)
+					#if current_hovered_slot:
+						#current_hovered_slot.stored_cards.append(currently_grabbed_card)
+					#currently_grabbed_card = null	
+		
+		
+		
+		
+	
 
-func update_input(delta):
+func update_input(_delta):
 	#hand_cursor.global_position += %input_synchronizer.player_mouse_cursor_direction
 	
 	hand_cursor.global_position = %input_synchronizer.player_mouse_cursor_position
+	
 	#also transfer clicking code from cardmanager over here
 func get_current_hand():
 	var hand = []
@@ -106,10 +150,12 @@ func add_slot():
 	var new_slot = CARD_SLOT.instantiate()
 	current_slots.push_front(new_slot)
 	player_hand.add_child(new_slot)
+	current_hand_size += 1
 	new_slot.global_position = player_hand.global_position
 	return new_slot
 
 func remove_slot(slot):
+	current_hand_size -= 1
 	current_slots.erase(slot)
 	slot.queue_free()
 
@@ -138,7 +184,8 @@ func handle_hand_slots(delta):
 
 func _on_discard_button_pressed() -> void:
 	print("player_pressed_discard")
-	discard_request.emit(self)
+	%input_synchronizer.discarding = true
+	#discard_request.emit(self)
 
 
 func _on_play_button_pressed() -> void:
@@ -146,7 +193,7 @@ func _on_play_button_pressed() -> void:
 	#for card in current_hand:
 		#if card.selected:
 			#played_hand.append(card)
-	if hand_to_play.size() ==0:
+	if hand_to_play.size() == 0:
 		print("no hand to play")
 		return
 	else:
@@ -157,3 +204,34 @@ func set_buttons_interactable(enabled: bool):
 		if button is BaseButton:
 			button.disabled = !enabled
 			button.mouse_filter = Control.MOUSE_FILTER_IGNORE if not enabled else Control.MOUSE_FILTER_PASS
+
+
+func highlight_selected_cards():
+		for card in hand_to_play:
+			card.card_outline.visible = true
+func dehighlight_selected_cards():
+		for card in hand_to_play:
+			card.card_outline.visible = false
+# In each player's script
+
+
+func toggle_card_selection(card: Card):
+
+	if card in selected_cards:
+		selected_cards.erase(card);
+	else:
+		if selected_cards.size() <= 5:
+			selected_cards.append(card)
+	
+	# Update visual highlight locally
+	update_card_highlight(card)
+
+
+func update_card_highlight(card: Card):
+	var should_highlight = card in selected_cards
+	card.card_outline.visible = should_highlight
+
+# Call this in your _process or when handling input
+func update_all_card_highlights():
+	for card in current_hand:
+		update_card_highlight(card)

@@ -3,12 +3,12 @@ extends Node
 
 func become_host():
 	print("host game pressed")
-	%Multiplayer_HUD.hide()
+	%Enet_Multiplayer_HUD.hide()
 	MultiplayerManager.become_host()
 
 func join_game():
 	print("joining game")
-	%Multiplayer_HUD.hide()
+	%Enet_Multiplayer_HUD.hide()
 	MultiplayerManager.join_as_player()
 
 

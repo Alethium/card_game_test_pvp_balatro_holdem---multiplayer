@@ -15,12 +15,14 @@ var deck_of_cards : Array
 @onready var card_outline: Sprite2D = $visuals/card_outline
 @onready var visuals: Node2D = $visuals
 
-@export var deck_height : int
+@onready var deck_height : int 
+@onready var starting_deck_height : int  = 56
 
+	
 
 func handle_deck_height():
+	#print(deck_height,"deck height deck of cards size",deck_of_cards.size())
 	if deck_of_cards.size() > 0:
-		deck_height = deck_of_cards.size()
 		visuals.modulate.a = 1
 	else:
 		visuals.modulate.a = 0

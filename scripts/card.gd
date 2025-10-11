@@ -49,6 +49,7 @@ func handle_facing():
 		front.visible = true
 		
 func flip():
+	print("flipping")
 	face_down = !face_down
 	handle_facing()
 	

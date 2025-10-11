@@ -80,7 +80,7 @@ script = ExtResource("3_5lyoa")
 [node name="card_manager" parent="." node_paths=PackedStringArray("Current_Minor_Deck") instance=ExtResource("2_osk37")]
 Current_Minor_Deck = NodePath("../Minor_Arcana")
 
-[node name="cards_in_play" type="Node2D" parent="."]
+[node name="spawned_cards" type="Node2D" parent="."]
 process_priority = 1
 script = ExtResource("4_c2gb4")
 
@@ -95,7 +95,7 @@ spawn_limit = 4
 
 [node name="Card_Spawner" type="MultiplayerSpawner" parent="."]
 _spawnable_scenes = PackedStringArray("uid://d4bg2fjkyscq2", "uid://mhajchtk424d", "uid://drsmlrw45phl5", "uid://j2iukh50yewt", "uid://bs6yeipecaa1p", "uid://c8nagbifgm20i", "uid://dhrgq0ogf8xeb", "uid://cqfihcmqt7kt7", "uid://d06wp8q8q2pc5", "uid://bfoks6lvmcscl", "uid://cvj1u7pivusst", "uid://coynxdgqkqdqa", "uid://dofwpfub0oatt", "uid://duj2bqxcyce7v", "uid://ff8vrymvdrgs", "uid://cdoitkgsmfiba", "uid://c3qx0612o88qb", "uid://df5xoqo6s7p0a", "uid://do3but4m0lcg1", "uid://dcgwtpmmv3yse", "uid://cm7oqmx87bvs1", "uid://chpaiyda2qbos", "uid://vw827lfx0ycl", "uid://dl6rprqpihw7w", "uid://b5a6ih0y4ffaq", "uid://x2cixdk12pvi", "uid://bdu1cveobdfns", "uid://dhvqk7maugtk7", "uid://fcb08xwf270c", "uid://5m1tdo0pvpc3", "uid://cp2ed38po2n0", "uid://cmjsspkcfinq0", "uid://bo6hcsssrr2i2", "uid://dn4kh1xpi1ee", "uid://cupx7ebudox6a", "uid://dhou5814tsyis", "uid://db78bd3sall0y", "uid://cku7ub33oekmq", "uid://j1h6sbbvtul3", "uid://c87q0yw1rn2wj", "uid://bt7lijhv2vtje", "uid://duheuggs440vs", "uid://ch4c4stw52sqd", "uid://bsipwvyh2781g", "uid://cv5qe8on007ia", "uid://b6llft0jbigne", "uid://cw1xwdbag2kwx", "uid://dvwdr1xco46iy", "uid://cuomvtluurk11", "uid://ckmmo3gnwc3d3", "uid://d1w8sixdpx7gy", "uid://calb3lej0bc18", "uid://cbtjjiaunwaib", "uid://conthr1petdfj", "uid://dy1id0ccksmyi", "uid://dxofq3gxspclc")
-spawn_path = NodePath("../cards_in_play")
+spawn_path = NodePath("../spawned_cards")
 script = ExtResource("6_a7jki")
 
 [node name="multiplayer_manager" type="Node2D" parent="."]
@@ -183,7 +183,7 @@ position = Vector2(1738, 673)
 position = Vector2(1732, 887)
 
 [connection signal="pressed" from="UI/Shuffle" to="card_manager" method="_on_shuffle_button_pressed"]
-[connection signal="pressed" from="UI/clear_minor_arcana" to="card_manager" method="_on_clear_minor_arcana_pressed"]
+[connection signal="pressed" from="UI/clear_minor_arcana" to="card_manager" method="on_clear_pressed"]
 [connection signal="pressed" from="UI/Deal_to_players" to="card_manager" method="_on_deal_to_players_pressed"]
 [connection signal="pressed" from="UI/Reload" to="card_manager" method="_on_reload_pressed"]
 [connection signal="pressed" from="UI/Deal_to_community" to="card_manager" method="_on_deal_to_community_pressed"]

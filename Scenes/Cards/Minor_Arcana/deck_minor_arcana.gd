@@ -127,18 +127,19 @@ var base_set: Array = [
 	]
 
 func _ready() -> void:
-	pass
-	#initialize_deck()
+	deck_height = starting_deck_height
+	
 	
 
 	
 	
 # Called when the node enters the scene tree for the first time.
-func _process(delta: float) -> void:
-	handle_deck_height()
-	if card_manager.currently_spawned_cards.size() != 0:
-		for card in card_manager.currently_spawned_cards:
-			card.handle_facing()
+func _process(_delta: float) -> void:
+	if multiplayer.is_server:
+		handle_deck_height()
+		#if card_manager.currently_spawned_cards.size() != 0:
+			#for card in card_manager.currently_spawned_cards:
+				#card.handle_facing()
 
 #func initialize_deck():
 	#for i in base_set.size() :
