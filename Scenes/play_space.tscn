@@ -42,6 +42,14 @@ offset_right = 528.0
 offset_bottom = 1036.0
 text = "CLEAR"
 
+[node name="clear_discards" type="Button" parent="UI"]
+layout_mode = 0
+offset_left = 452.0
+offset_top = 933.0
+offset_right = 528.0
+offset_bottom = 964.0
+text = "DISCARD"
+
 [node name="Deal_to_players" type="Button" parent="UI"]
 layout_mode = 0
 offset_left = 372.0
@@ -184,6 +192,7 @@ position = Vector2(1732, 887)
 
 [connection signal="pressed" from="UI/Shuffle" to="card_manager" method="_on_shuffle_button_pressed"]
 [connection signal="pressed" from="UI/clear_minor_arcana" to="card_manager" method="on_clear_pressed"]
+[connection signal="pressed" from="UI/clear_discards" to="card_manager" method="_on_discard_pressed"]
 [connection signal="pressed" from="UI/Deal_to_players" to="card_manager" method="_on_deal_to_players_pressed"]
 [connection signal="pressed" from="UI/Reload" to="card_manager" method="_on_reload_pressed"]
 [connection signal="pressed" from="UI/Deal_to_community" to="card_manager" method="_on_deal_to_community_pressed"]

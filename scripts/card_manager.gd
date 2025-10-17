@@ -93,7 +93,7 @@ func _process(delta: float) -> void:
 
 #_____________signal functions_________________________
 func connect_player_signals(player):
-	player.connect("discard_request",on_discard_button_pressed)
+	#player.connect("discard_request",on_discard_button_pressed)
 	player.connect("player_added",on_player_added)
 	#player.connect("player_request_click",request_player_click)
 	#player.connect("player_request_unclick",on_player_unclick)
@@ -276,13 +276,13 @@ func _on_deal_to_players_pressed() -> void:
 		print("player requested deal")
 		request_deal_to_players.rpc()
 
-func on_discard_button_pressed(player)-> void:
-	print("discard from %s pressed" % player)
-	if multiplayer.is_server():
-		server_discard_from_players.rpc(player)
-	else:
-		
-		request_discard_from_players.rpc_id(1,player)
+#func on_discard_button_pressed(player)-> void:
+	#print("discard from %s pressed" % player)
+	#if multiplayer.is_server():
+		#server_discard_from_players.rpc(player)
+	#else:
+		#
+		#request_discard_from_players.rpc_id(1,player)
 
 func _on_reload_pressed() -> void:
 	if multiplayer.is_server():
@@ -312,7 +312,14 @@ func on_clear_pressed()-> void:
 	else:
 
 		request_clear_from_community.rpc()
-
+func _on_discard_pressed() -> void:
+	print("deal pressed by : " , multiplayer.get_unique_id())
+	if multiplayer.is_server():
+		print("discard from  pressed sever", get_multiplayer_authority())
+		server_discard_from_players.rpc(multiplayer.get_unique_id())
+	else:
+		print("discard from  pressed client" , get_multiplayer_authority())
+		request_discard_from_players.rpc(multiplayer.get_unique_id())
 #_________________deal community cards ___________________________
 
 @rpc("any_peer", "call_local", "reliable")
@@ -430,9 +437,26 @@ func request_discard_from_players(player):
 
 
 
-@rpc("authority", "call_local", "reliable")
-func server_discard_from_players(player):
-	player.input_synchronizer.discarding = true
+@rpc("any_peer", "call_local", "reliable")
+func server_discard_from_players(player_id):
+#	remove cards from players selections
+	for player in players.current_players:
+		if player_id == player.player_id:
+			print("discarding for player :" , player)
+			for card in currently_spawned_cards: 
+				if card.owner_id == player.player_id and card.sync.selected :
+					print("clearing card for players : ",card," selected :" , card.selected)
+					card.sync.selected = false
+					card.outline.visible = false
+					card.owner_id = 0
+					var slot = card.target_slot
+					card.target_slot = minor_card_discard_slot
+					minor_card_discard_slot.stored_cards.append(card)
+					player.remove_slot(slot)
+					player.selected_cards.erase(card)
+					
+
+		#print("owner id : ",card.owner_id,"selected?", card.selected)
 	
 #@rpc("any_peer", "call_local", "reliable")
 func do_discards(player):

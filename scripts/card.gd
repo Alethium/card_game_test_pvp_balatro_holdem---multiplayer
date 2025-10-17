@@ -6,7 +6,7 @@ extends Node2D
 
 @onready var back: Sprite2D = $Visuals/Back
 @onready var front: Sprite2D = $Visuals/Front
-@onready var card_outline: Sprite2D = $Visuals/card_outline
+@onready var outline: Sprite2D = $Visuals/card_outline
 @onready var visuals: Node2D = $Visuals
 var current_slot_id
 var selected = false
@@ -22,7 +22,7 @@ signal off_hover
 @export var face_down : bool = false
 @onready var anim: AnimationPlayer = $AnimationPlayer
 
-@onready var sync = $MultiplayerSynchronizer  # Reference to your sync node
+@onready var sync: MultiplayerSynchronizer = $MultiplayerSynchronizer
 
 func _ready():
 	# Only the server should control the card's authoritative state
@@ -36,7 +36,8 @@ func _ready():
 		card_id = randi()
 
 
-	
+func _physics_process(_delta: float) -> void:
+	selected = sync.selected	
 
 
 func handle_facing():
@@ -54,9 +55,11 @@ func flip():
 	handle_facing()
 	
 func _on_card_body_mouse_entered() -> void:
-	print(self.name, " hovered, owner id : ",owner_id)
-	flip()
+	#print(self.name, " hovered, owner id : ",owner_id, selected)
+	#flip()
 	if is_multiplayer_authority():
+		print(self.name, " hovered, owner id : ",owner_id, selected)
+
 		emit_signal("on_hover",self)
 
 func _on_card_body_mouse_exited() -> void:
