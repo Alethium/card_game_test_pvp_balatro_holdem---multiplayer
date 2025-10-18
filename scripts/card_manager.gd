@@ -68,7 +68,9 @@ func _ready() -> void:
 	if multiplayer.is_server():
 		instantiate_cards()
 	
-	
+func _input(event):
+	if event.is_action_pressed("ui_accept"):  # Press Enter to debug
+		debug_selection_state()	
 	#if multiplayer.is_server():
 		#initialize_deck_order()
 	
@@ -313,14 +315,26 @@ func on_clear_pressed()-> void:
 
 		request_clear_from_community.rpc()
 func _on_discard_pressed() -> void:
-	print("deal pressed by : " , multiplayer.get_unique_id())
+	print("Discard pressed by: ", multiplayer.get_unique_id())
+	for card in currently_spawned_cards:
+		print("card :", card, "selected? :", card.sync.selected)
 	if multiplayer.is_server():
-		print("discard from  pressed sever", get_multiplayer_authority())
-		server_discard_from_players.rpc(multiplayer.get_unique_id())
+		print("Server processing own discard")
+		server_discard_from_players(multiplayer.get_unique_id())
 	else:
-		print("discard from  pressed client" , get_multiplayer_authority())
-		request_discard_from_players.rpc(multiplayer.get_unique_id())
-#_________________deal community cards ___________________________
+		print("Client requesting discard from server")
+		request_discard_from_players.rpc_id(1, multiplayer.get_unique_id())
+	
+	
+	
+	#print("deal pressed by : " , multiplayer.get_unique_id())
+	#if multiplayer.is_server():
+		#print("discard from  pressed sever", get_multiplayer_authority())
+		#server_discard_from_players.rpc(multiplayer.get_unique_id())
+	#else:
+		#print("discard from  pressed client" , get_multiplayer_authority())
+		#request_discard_from_players.rpc(multiplayer.get_unique_id())
+##_________________deal community cards ___________________________
 
 @rpc("any_peer", "call_local", "reliable")
 func request_deal_to_community():
@@ -426,39 +440,115 @@ func handle_players_served():
 			
 
 #_____________Discard cards from player selected____________________________
-@rpc("any_peer", "call_local", "reliable")
-func request_discard_from_players(player):
+@rpc("any_peer", "reliable")
+func request_discard_from_players(player_id):
+	
 	if multiplayer.is_server():
-		server_discard_from_players.rpc(player)
-	else:
-		
-		server_discard_from_players.rpc_id(1,player)
-	
+		print("Server received discard request for player: ", player_id)
+		server_discard_from_players(player_id)
 
-
-
-@rpc("any_peer", "call_local", "reliable")
+# Remove the RPC decorator from this function and make it server-only
 func server_discard_from_players(player_id):
-#	remove cards from players selections
-	for player in players.current_players:
-		if player_id == player.player_id:
-			print("discarding for player :" , player)
-			for card in currently_spawned_cards: 
-				if card.owner_id == player.player_id and card.sync.selected :
-					print("clearing card for players : ",card," selected :" , card.selected)
-					card.sync.selected = false
-					card.outline.visible = false
-					card.owner_id = 0
-					var slot = card.target_slot
-					card.target_slot = minor_card_discard_slot
-					minor_card_discard_slot.stored_cards.append(card)
-					player.remove_slot(slot)
-					player.selected_cards.erase(card)
-					
-
-		#print("owner id : ",card.owner_id,"selected?", card.selected)
+	if not multiplayer.is_server():
+		return
+	#print(currently_spawned_cards)
+	print("Server processing discard for player: ", player_id)
 	
+	# Find the player
+	var target_player = null
+	for player in players.current_players:
+		if player.player_id == player_id:
+			target_player = player
+			break
+	
+	if target_player == null:
+		print("Player not found: ", player_id)
+		return
+	
+	print("Discarding for player: ", target_player.name)
+	
+	# Get all selected cards for this player
+	var cards_to_discard = []
+	
+	print(currently_spawned_cards)
+	for card in currently_spawned_cards:
+		print("selected? : ",card.selected)
+		if card.owner_id == player_id and card.selected:
+			cards_to_discard.append(card)
+			print("Found selected card to discard: ", card.card_id)
+	
+	# Process the discard
+	for card in cards_to_discard:
+		print("Discarding card: ", card.card_id)
+		card.selected = false
+		card.owner_id = 0  # Or whatever indicates discarded
+		
+		# Remove from player's selection
+		if card in target_player.selected_cards:
+			target_player.selected_cards.erase(card)
+		
+		# Move to discard slot
+		var original_slot = card.target_slot
+		card.target_slot = minor_card_discard_slot
+		minor_card_discard_slot.stored_cards.append(card)
+		
+		# Remove slot from player
+		target_player.remove_slot(original_slot)
+	
+	print("Discard complete for player: ", player_id)
+
+func debug_selection_state():
+	print("=== SELECTION DEBUG ===")
+	print("Local player ID: ", multiplayer.get_unique_id())
+	#print(currently_spawned_cards)
+	for card in currently_spawned_cards:
+		var selection_owner = -1
+		for player in players.current_players:
+			if card in player.selected_cards:
+				selection_owner = player.player_id
+				break
+		
+		print("Card ", card.card_id, 
+			  " | Owner: ", card.owner_id, 
+			  " | sync.selected: ", card.sync.selected, 
+			  " | local selected: ", card.selected,
+			  " | In player selection: ", selection_owner)
+
+
+
 #@rpc("any_peer", "call_local", "reliable")
+#func request_discard_from_players(player):
+	#if multiplayer.is_server():
+		#server_discard_from_players.rpc(player)
+	#else:
+		#
+		#server_discard_from_players.rpc_id(1,player)
+	#
+#
+#
+#
+#@rpc("authority", "call_local", "reliable")
+#func server_discard_from_players(player_id):
+##	remove cards from players selections
+	#for player in players.current_players:
+		#if player_id == player.player_id:
+			#print("discarding for player :" , player)
+			#for card in currently_spawned_cards: 
+				#if card.owner_id == player.player_id and card.sync.selected :
+					#print("clearing card for players : ",card," selected :" , card.selected)
+					#card.sync.selected = false
+					#card.outline.visible = false
+					#card.owner_id = 0
+					#var slot = card.target_slot
+					#card.target_slot = minor_card_discard_slot
+					#minor_card_discard_slot.stored_cards.append(card)
+					#player.remove_slot(slot)
+					#player.selected_cards.erase(card)
+					#
+#
+		##print("owner id : ",card.owner_id,"selected?", card.selected)
+	#
+##@rpc("any_peer", "call_local", "reliable")
 func do_discards(player):
 	var cards = player.selected_cards
 	

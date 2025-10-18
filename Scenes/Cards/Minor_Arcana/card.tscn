@@ -1,8 +1,13 @@
-[gd_scene load_steps=5 format=3 uid="uid://bj48bnxvmxoi5"]
+[gd_scene load_steps=6 format=3 uid="uid://bj48bnxvmxoi5"]
 
 [ext_resource type="Script" uid="uid://g6hb1xvsmag7" path="res://scripts/card.gd" id="1_0qqmn"]
 [ext_resource type="Script" uid="uid://dqdyeq7nod3d1" path="res://Scenes/Cards/Minor_Arcana/multiplayer_synchronizer.gd" id="2_qe7r6"]
 [ext_resource type="Shape2D" uid="uid://boknmjoc3mejb" path="res://Scenes/card_shape.tres" id="2_wf8id"]
+
+[sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_qe7r6"]
+properties/0/path = NodePath("card:selected")
+properties/0/spawn = true
+properties/0/replication_mode = 1
 
 [sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_taqiw"]
 properties/0/path = NodePath(".:position")
@@ -24,7 +29,11 @@ properties/4/replication_mode = 1
 [node name="card" type="Node2D"]
 script = ExtResource("1_0qqmn")
 
+[node name="card_sync" type="MultiplayerSynchronizer" parent="."]
+replication_config = SubResource("SceneReplicationConfig_qe7r6")
+
 [node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="."]
+unique_name_in_owner = true
 replication_config = SubResource("SceneReplicationConfig_taqiw")
 script = ExtResource("2_qe7r6")
 

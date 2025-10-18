@@ -70,7 +70,7 @@ func request_player_click(player_id,click_position):
 		server_player_click.rpc(player_id,click_position)
 	else:
 		request_player_click.rpc_id(1,player_id,click_position)
-
+#address this. the player can see stuff they shouldnt, and the server cant see stuff it should. 
 
 @rpc("any_peer", "call_local", "reliable")	
 func server_player_click(player_id,click_position):
@@ -80,15 +80,16 @@ func server_player_click(player_id,click_position):
 		if card != null and !card.selected:
 			
 			if card.owner_id == player_id or card.owner_id == -1 and get_parent().selected_cards.size() <= 5 :
-				card.sync.selected = true
+				
+				card.select.rpc()
 				selected_cards.append(card.card_id)
 				print("yay!",card," clicked!, clicker is: ",player_id,"clicked at : ",click_position)
 				print("clicked card is  allowed to be selected by this user  : ",card.sync.selected)
 			else:
 				print("clicked card is NOT allowed to be selected by this user  : ",card.sync.selected)
-		elif card != null and card.sync.selected:
+		elif card != null and card.selected:
 			if card.owner_id == player_id or card.owner_id == -1 :
-				card.sync.selected = false
+				card.deselect.rpc()
 				selected_cards.erase(card.card_id)
 				print("selected card clicked for deselect", card.sync.selected)
 			else:

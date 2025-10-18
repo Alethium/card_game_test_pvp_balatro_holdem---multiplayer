@@ -11,7 +11,7 @@ extends Node2D
 var current_slot_id
 var selected = false
 var selectable = true
-
+var marked_for_discard = false
 var card_id: int = -1
 var owner_id: int = -1
 var network_position: Vector2
@@ -34,11 +34,25 @@ func _ready():
 
 	if multiplayer.is_server():
 		card_id = randi()
+	
+	 	
 
-
-func _physics_process(_delta: float) -> void:
-	selected = sync.selected	
-
+		
+	
+@rpc ("any_peer", "call_local", "reliable")
+func select():
+	
+	# Update visual feedback based on selection state
+	if selected == false:
+		outline.visible = true
+		selected = true
+		
+@rpc ("any_peer", "call_local", "reliable")
+func deselect():
+		# Add any other visual feedback for selected cards
+	if selected == true:
+		selected = false
+		outline.visible = false
 
 func handle_facing():
 
@@ -53,14 +67,32 @@ func flip():
 	print("flipping")
 	face_down = !face_down
 	handle_facing()
-	
-func _on_card_body_mouse_entered() -> void:
-	#print(self.name, " hovered, owner id : ",owner_id, selected)
-	#flip()
-	if is_multiplayer_authority():
-		print(self.name, " hovered, owner id : ",owner_id, selected)
+# right now the client can see the cards the server has selected 
+#but the server cannot see the cards the player has selected. 
+#or at least as far as the print statements go	
 
-		emit_signal("on_hover",self)
+func _on_card_body_mouse_entered() -> void:
+	# Update local state before reading
+	#update_status()
+	
+	var is_server = multiplayer.is_server()
+	var authority = get_multiplayer_authority()
+	
+	print(self.name, " hovered")
+	print("  Owner ID: ", owner_id)
+	print("  Is Server: ", is_server)
+	print("  Authority: ", authority)
+	print("  sync.selected: ", sync.selected)
+	print("  local selected: ", selected)
+	
+	# Emit signals only if we have authority
+	if sync.get_multiplayer_authority() == multiplayer.get_unique_id():
+		on_hover.emit(self)
+		
+	#if is_multiplayer_authority():
+		#print(self.name, " hovered, owner id : ",owner_id, sync.selected)
+#
+		#emit_signal("on_hover",self)
 
 func _on_card_body_mouse_exited() -> void:
 	if is_multiplayer_authority():

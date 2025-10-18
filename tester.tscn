@@ -1,0 +1,37 @@
+[gd_scene load_steps=6 format=3 uid="uid://2laq31q2ycv6"]
+
+[ext_resource type="Script" uid="uid://dpr8wdpjl345b" path="res://tester.gd" id="1_7g65i"]
+[ext_resource type="Texture2D" uid="uid://cq4f50uf7pnaw" path="res://icon.svg" id="2_noswq"]
+[ext_resource type="Script" uid="uid://dgyogviny05r0" path="res://test_sync.gd" id="3_d5o46"]
+
+[sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_x3eih"]
+properties/0/path = NodePath("test_sync:selected")
+properties/0/spawn = true
+properties/0/replication_mode = 1
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_gdr51"]
+size = Vector2(128, 128)
+
+[node name="tester" type="Node2D"]
+script = ExtResource("1_7g65i")
+
+[node name="Label" type="Label" parent="."]
+offset_left = -21.0
+offset_top = -87.0
+offset_right = 19.0
+offset_bottom = -64.0
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("2_noswq")
+
+[node name="test_sync" type="MultiplayerSynchronizer" parent="."]
+unique_name_in_owner = true
+replication_config = SubResource("SceneReplicationConfig_x3eih")
+script = ExtResource("3_d5o46")
+
+[node name="Area2D" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+shape = SubResource("RectangleShape2D_gdr51")
+
+[connection signal="mouse_entered" from="Area2D" to="test_sync" method="_on_area_2d_mouse_entered"]
