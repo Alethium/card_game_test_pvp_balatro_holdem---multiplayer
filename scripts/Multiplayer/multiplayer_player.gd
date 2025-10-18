@@ -2,6 +2,7 @@ class_name MultiplayerPlayer
 extends Node2D
 @onready var input_synchronizer: MultiplayerSynchronizer = %input_synchronizer
 
+
 @onready var player_hand: Node2D = $player_hand
 signal discard_request
 signal play_hand
@@ -43,7 +44,7 @@ var current_hand : Array[Card]
 var number_of_cards_selected = 0
 var screen_size
 signal player_added
-#signal player_request_unclick
+
 signal player_request_click
 
 @onready var button_container = $Control
@@ -64,19 +65,12 @@ func _ready() -> void:
 	current_hand = []
 	curr_hand_state = 0
 	Input.set_mouse_mode(Input.MOUSE_MODE_HIDDEN)
-		# Only enable interaction if this is our local player
-	#if not is_multiplayer_authority():
-		#set_buttons_interactable(false)
-	#else:
-		#set_buttons_interactable(true)
-	
-	
+
 	
 	
 
 func _physics_process(delta: float) -> void:
-	highlight_selected_cards()
-	discarding = %input_synchronizer.discarding
+
 	if multiplayer.is_server():
 		update_input(delta) 
 		
@@ -132,6 +126,7 @@ func update_input(_delta):
 	hand_cursor.global_position = %input_synchronizer.player_mouse_cursor_position
 	
 	#also transfer clicking code from cardmanager over here
+	
 func get_current_hand():
 	var hand = []
 	for slot in get_slots():
@@ -182,56 +177,18 @@ func handle_hand_slots(delta):
 		
 
 
-func _on_discard_button_pressed() -> void:
-	print("player_pressed_discard")
-	%input_synchronizer.discarding = true
-	#discard_request.emit(self)
+#func _on_discard_button_pressed() -> void:
+	#print("player_pressed_discard")
+	#%input_synchronizer.discarding = true
+	##discard_request.emit(self)
 
 
 func _on_play_button_pressed() -> void:
 	print("player_pressed_play")
-	#for card in current_hand:
-		#if card.selected:
-			#played_hand.append(card)
+
 	if hand_to_play.size() == 0:
 		print("no hand to play")
 		return
 	else:
 		play_hand.emit(self,hand_to_play)
 	
-func set_buttons_interactable(enabled: bool):
-	for button in button_container.get_children():
-		if button is BaseButton:
-			button.disabled = !enabled
-			button.mouse_filter = Control.MOUSE_FILTER_IGNORE if not enabled else Control.MOUSE_FILTER_PASS
-
-
-func highlight_selected_cards():
-		for card in hand_to_play:
-			card.card_outline.visible = true
-func dehighlight_selected_cards():
-		for card in hand_to_play:
-			card.card_outline.visible = false
-# In each player's script
-
-
-func toggle_card_selection(card: Card):
-
-	if card in selected_cards:
-		selected_cards.erase(card);
-	else:
-		if selected_cards.size() <= 5:
-			selected_cards.append(card)
-	
-	# Update visual highlight locally
-	update_card_highlight(card)
-
-
-func update_card_highlight(card: Card):
-	var should_highlight = card in selected_cards
-	card.card_outline.visible = should_highlight
-
-# Call this in your _process or when handling input
-func update_all_card_highlights():
-	for card in current_hand:
-		update_card_highlight(card)

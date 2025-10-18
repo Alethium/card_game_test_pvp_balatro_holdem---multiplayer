@@ -41,7 +41,6 @@ func _ready():
 	
 @rpc ("any_peer", "call_local", "reliable")
 func select():
-	
 	# Update visual feedback based on selection state
 	if selected == false:
 		outline.visible = true

@@ -1,4 +1,4 @@
-[gd_scene load_steps=14 format=3 uid="uid://bstgicllg5jw4"]
+[gd_scene load_steps=13 format=3 uid="uid://bstgicllg5jw4"]
 
 [ext_resource type="PackedScene" uid="uid://dvdg2bxoihq32" path="res://Scenes/card_slot.tscn" id="1_pe22w"]
 [ext_resource type="Script" uid="uid://cvvna1si82h41" path="res://scripts/play_space.gd" id="1_yahnq"]
@@ -11,7 +11,6 @@
 [ext_resource type="Script" uid="uid://bq8u3qwnf4w16" path="res://scripts/card_spawner.gd" id="6_a7jki"]
 [ext_resource type="Script" uid="uid://cilgpbld2ax5j" path="res://scripts/players.gd" id="6_m4s6i"]
 [ext_resource type="Script" uid="uid://chwq4d5jfqblg" path="res://scripts/Multiplayer/multiplayer_manager.gd" id="8_5lyoa"]
-[ext_resource type="PackedScene" uid="uid://2laq31q2ycv6" path="res://tester.tscn" id="12_2r64v"]
 
 [sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_5lyoa"]
 properties/0/path = NodePath("card_manager:networked_cards")
@@ -190,9 +189,6 @@ position = Vector2(1738, 673)
 
 [node name="Player4_location" type="Node2D" parent="Players"]
 position = Vector2(1732, 887)
-
-[node name="tester" parent="." instance=ExtResource("12_2r64v")]
-position = Vector2(134, 701)
 
 [connection signal="pressed" from="UI/Shuffle" to="card_manager" method="_on_shuffle_button_pressed"]
 [connection signal="pressed" from="UI/clear_minor_arcana" to="card_manager" method="on_clear_pressed"]

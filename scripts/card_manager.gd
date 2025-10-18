@@ -472,15 +472,17 @@ func server_discard_from_players(player_id):
 	
 	print(currently_spawned_cards)
 	for card in currently_spawned_cards:
-		print("selected? : ",card.selected)
+		
 		if card.owner_id == player_id and card.selected:
 			cards_to_discard.append(card)
-			print("Found selected card to discard: ", card.card_id)
+			print("Found selected card to discard: ", card)
 	
 	# Process the discard
 	for card in cards_to_discard:
-		print("Discarding card: ", card.card_id)
-		card.selected = false
+		print("Discarding card: ", card)
+		print(target_player.selected_cards)
+		target_player.selected_cards.erase(card)
+		card.deselect.rpc()
 		card.owner_id = 0  # Or whatever indicates discarded
 		
 		# Remove from player's selection
@@ -595,7 +597,7 @@ func server_clear_from_community():
 	for slot in minor_arcana_community_slots:
 		if slot.stored_cards.size() > 0:
 			slot.stored_cards[0].flip()
-			slot.stored_cards[0].selected = false
+			slot.stored_cards[0].deselect.rpc()
 			slot.stored_cards[0].selectable = false
 			slot.stored_cards[0].target_slot = minor_card_discard_slot 
 			minor_card_discard_slot.stored_cards.append(slot.stored_cards[0])
