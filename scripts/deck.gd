@@ -57,3 +57,12 @@ func _on_deck_body_mouse_exited() -> void:
 
 func _on_click():
 	pass
+	
+
+@rpc ("any_peer", "call_local", "reliable")
+func increase_deck_height():
+	deck_height += 1
+@rpc ("any_peer", "call_local", "reliable")
+func decrease_deck_height():
+	deck_height -= 1
+	

@@ -135,8 +135,7 @@ func _ready() -> void:
 	
 # Called when the node enters the scene tree for the first time.
 func _process(_delta: float) -> void:
-	if multiplayer.is_server:
-		handle_deck_height()
+	handle_deck_height()
 		#if card_manager.currently_spawned_cards.size() != 0:
 			#for card in card_manager.currently_spawned_cards:
 				#card.handle_facing()

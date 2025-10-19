@@ -165,7 +165,7 @@ func draw_single_card(owner_id) -> Card:
 	card_scene.z_index = 5
 	#remove the card from the deck
 	
-	Current_Minor_Deck.deck_height -= 1
+	Current_Minor_Deck.decrease_deck_height.rpc()
 	
 	#return with the call that replicates this picked card for everyone. 
 	if card_scene is Node2D:
@@ -644,7 +644,7 @@ func do_reload():
 			
 			for card in minor_card_discard_slot.stored_cards:
 				print("adding to deck height")
-				Current_Minor_Deck.deck_height += 1
+				Current_Minor_Deck.increase_deck_height.rpc()
 				card.z_index = -3
 				card.selectable = true
 				card.target_slot = minor_card_deck_slot
