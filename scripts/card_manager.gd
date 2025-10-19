@@ -139,6 +139,9 @@ func instantiate_cards():
 			
 			Current_Minor_Deck.deck_of_cards.append(int_card)
 			int_card.global_position = minor_card_deck_slot.global_position
+			int_card.card_id = card_id_counter
+			int_card.discard_slot = minor_card_discard_slot
+			card_id_counter += 1
 			spawned_cards.add_child(int_card)
 			
 			
@@ -474,28 +477,29 @@ func server_discard_from_players(player_id):
 	for card in currently_spawned_cards:
 		
 		if card.owner_id == player_id and card.selected:
+			
 			cards_to_discard.append(card)
 			print("Found selected card to discard: ", card)
 	
 	# Process the discard
 	for card in cards_to_discard:
 		print("Discarding card: ", card)
-		print(target_player.selected_cards)
-		target_player.selected_cards.erase(card)
+		target_player.input_synchronizer.deselect_card(card.card_id)
 		card.deselect.rpc()
 		card.owner_id = 0  # Or whatever indicates discarded
 		
-		# Remove from player's selection
-		if card in target_player.selected_cards:
-			target_player.selected_cards.erase(card)
+		## Remove from player's selection
+		#if card in target_player.selected_cards:
+			#target_player.selected_cards.erase(card)
 		
 		# Move to discard slot
 		var original_slot = card.target_slot
-		card.target_slot = minor_card_discard_slot
+		if original_slot != card.discard_slot:
+			target_player.remove_slot(original_slot)
+		card.target_slot = card.discard_slot
 		minor_card_discard_slot.stored_cards.append(card)
 		
 		# Remove slot from player
-		target_player.remove_slot(original_slot)
 	
 	print("Discard complete for player: ", player_id)
 

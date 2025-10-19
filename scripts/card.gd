@@ -3,7 +3,7 @@ extends Node2D
 
 #@export var OWNER_ID : Player
 @export var target_slot : CardSlot
-
+@export var discard_slot : CardSlot
 @onready var back: Sprite2D = $Visuals/Back
 @onready var front: Sprite2D = $Visuals/Front
 @onready var outline: Sprite2D = $Visuals/card_outline
@@ -79,8 +79,10 @@ func _on_card_body_mouse_entered() -> void:
 	
 	print(self.name, " hovered")
 	print("  Owner ID: ", owner_id)
+	print(" Card ID : ", card_id)
 	print("  Is Server: ", is_server)
 	print("  Authority: ", authority)
+	print("target slot : ",target_slot)
 	print("  sync.selected: ", sync.selected)
 	print("  local selected: ", selected)
 	

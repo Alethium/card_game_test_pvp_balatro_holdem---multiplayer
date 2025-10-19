@@ -81,9 +81,9 @@ func server_player_click(player_id,click_position):
 		if card != null and !card.selected:
 			
 			if (card.owner_id == player_id or card.owner_id == -1) and selected_cards.size() <= player.max_hand_size - 1 :
-				
+				select_card.rpc(card.card_id)  # Send ID instead of card object
 				card.select.rpc()
-				selected_cards.append(card)
+				
 				print("num of cards selected : ",selected_cards.size())
 				print("yay!",card," clicked!, clicker is: ",player_id,"clicked at : ",click_position)
 				print("clicked card is  allowed to be selected by this user  : ",card.sync.selected)
@@ -91,7 +91,7 @@ func server_player_click(player_id,click_position):
 				print("clicked card is NOT allowed to be selected by this user  : ",card.sync.selected)
 		elif card != null and card.selected:
 			if card.owner_id == player_id or card.owner_id == -1 :
-				selected_cards.erase(card)
+				deselect_card.rpc(card.card_id)
 				card.deselect.rpc()
 				print("selected card clicked for deselect", card.sync.selected)
 			else:
@@ -149,3 +149,25 @@ func get_card_with_highest_z_index(cards):
 			highest_z_index = current_card.z_index
 	return highest_z_card		
 	
+	
+@rpc ("any_peer", "call_local", "reliable")
+func select_card(card_id):
+	var card = find_card_by_id(card_id)
+	if card:
+		selected_cards.append(card)
+		print("adding selected card: ", card_id)
+
+@rpc ("any_peer", "call_local", "reliable")
+func deselect_card(card_id):
+	print("removing selected card: ", card_id)
+	for i in range(selected_cards.size() - 1, -1, -1):
+		if selected_cards[i].card_id == card_id:
+			selected_cards.remove_at(i)
+	print(selected_cards, " after removal")
+
+func find_card_by_id(card_id):
+	# Find card in the current scene or world by ID
+	for card in get_tree().get_nodes_in_group("MinorArcana"):
+		if card.card_id == card_id:
+			return card
+	return null
