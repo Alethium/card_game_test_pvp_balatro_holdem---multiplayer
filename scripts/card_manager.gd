@@ -86,9 +86,7 @@ func _process(delta: float) -> void:
 		server_reload_deck.rpc()
 	if players.current_players.size() != 0:
 		handle_players_served()		
-		for player in players.current_players:
-			if player.input_synchronizer.discarding == true:
-				do_discards(player)
+
 	if reloading == true:
 		do_reload()
 
@@ -96,16 +94,16 @@ func _process(delta: float) -> void:
 #_____________signal functions_________________________
 func connect_player_signals(player):
 	#player.connect("discard_request",on_discard_button_pressed)
-	player.connect("player_added",on_player_added)
+	player.connect("player_added",_on_player_added)
 	#player.connect("player_request_click",request_player_click)
 	#player.connect("player_request_unclick",on_player_unclick)
 
-func on_player_added(player):
+func _on_player_added(player):
 	players.current_players.append(player)
 
 func connect_slot_signals(slot):
-	slot.connect("on_hover",on_hovered_slot)
-	slot.connect("off_hover",off_hovered_slot)
+	slot.connect("on_hover",_on_hovered_slot)
+	slot.connect("off_hover",_off_hovered_slot)
 	
 	
 
@@ -303,40 +301,42 @@ func _on_shuffle_button_pressed() -> void:
 	if multiplayer.is_server():
 		Current_Minor_Deck.deck_of_cards.shuffle()
 		
-func on_hovered_slot(slot):
+func _on_hovered_slot(slot):
 	if multiplayer.is_server():
 		current_hovered_slot = slot
 
-func off_hovered_slot(_slot):
+func _off_hovered_slot(_slot):
 	if multiplayer.is_server():
 		current_hovered_slot = null
 
-func on_clear_pressed()-> void:
+func _on_clear_pressed()-> void:
 	if multiplayer.is_server():
 		server_clear_from_community.rpc()
 	else:
-
 		request_clear_from_community.rpc()
+		
 func _on_discard_pressed() -> void:
 	print("Discard pressed by: ", multiplayer.get_unique_id())
 	for card in currently_spawned_cards:
-		print("card :", card, "selected? :", card.sync.selected)
+		print("card :", card, "selected? :", card.selected)
 	if multiplayer.is_server():
 		print("Server processing own discard")
 		server_discard_from_players(multiplayer.get_unique_id())
 	else:
 		print("Client requesting discard from server")
 		request_discard_from_players.rpc_id(1, multiplayer.get_unique_id())
+func _on_score_pressed() -> void:
+	print("scoring")
+	for card in currently_spawned_cards:
+		print("card :", card, "selected? :", card.sync.selected)
+	if multiplayer.is_server():
+		print("Server processing scoring")
+		server_score_cards()
+	else:
+		print("Client requesting scoring server")
+		request_score_cards.rpc()	
 	
 	
-	
-	#print("deal pressed by : " , multiplayer.get_unique_id())
-	#if multiplayer.is_server():
-		#print("discard from  pressed sever", get_multiplayer_authority())
-		#server_discard_from_players.rpc(multiplayer.get_unique_id())
-	#else:
-		#print("discard from  pressed client" , get_multiplayer_authority())
-		#request_discard_from_players.rpc(multiplayer.get_unique_id())
 ##_________________deal community cards ___________________________
 
 @rpc("any_peer", "call_local", "reliable")
@@ -486,7 +486,7 @@ func server_discard_from_players(player_id):
 		print("Discarding card: ", card)
 		target_player.input_synchronizer.deselect_card(card.card_id)
 		card.deselect.rpc()
-		card.owner_id = 0  # Or whatever indicates discarded
+		card.owner_id = 0  # zero is for discarded cards
 		
 		## Remove from player's selection
 		#if card in target_player.selected_cards:
@@ -522,63 +522,6 @@ func debug_selection_state():
 
 
 
-#@rpc("any_peer", "call_local", "reliable")
-#func request_discard_from_players(player):
-	#if multiplayer.is_server():
-		#server_discard_from_players.rpc(player)
-	#else:
-		#
-		#server_discard_from_players.rpc_id(1,player)
-	#
-#
-#
-#
-#@rpc("authority", "call_local", "reliable")
-#func server_discard_from_players(player_id):
-##	remove cards from players selections
-	#for player in players.current_players:
-		#if player_id == player.player_id:
-			#print("discarding for player :" , player)
-			#for card in currently_spawned_cards: 
-				#if card.owner_id == player.player_id and card.sync.selected :
-					#print("clearing card for players : ",card," selected :" , card.selected)
-					#card.sync.selected = false
-					#card.outline.visible = false
-					#card.owner_id = 0
-					#var slot = card.target_slot
-					#card.target_slot = minor_card_discard_slot
-					#minor_card_discard_slot.stored_cards.append(card)
-					#player.remove_slot(slot)
-					#player.selected_cards.erase(card)
-					#
-#
-		##print("owner id : ",card.owner_id,"selected?", card.selected)
-	#
-##@rpc("any_peer", "call_local", "reliable")
-func do_discards(player):
-	var cards = player.selected_cards
-	
-	if cards.size() == 0 :
-		print("player_no longer discarding")
-		player.input_synchronizer.discarding = false
-		print("or maybe not : " , player.input_synchronizer.discarding)
-		return
-	print("server discarding player cards:", player)
-	for card in cards: 
-		var card_slot = card.target_slot
-		if card.owner_id != -1:
-			card.target_slot = minor_card_discard_slot
-			card.flip()
-			minor_card_discard_slot.stored_cards.append(card)
-			player.toggle_card_selection(card)
-			player.selected_cards.erase(card)
-			print("cards_still selected : ",player.selected_cards)
-			player.remove_slot(card_slot)
-		else:
-			player.toggle_card_selection(card)
-			player.selected_cards.erase(card)
-	
-
 #----------------clear cards from the community cards---------------------------------------------------
 @rpc("any_peer", "call_local", "reliable")
 func request_clear_from_community():
@@ -589,7 +532,7 @@ func request_clear_from_community():
 
 @rpc("authority", "call_local", "reliable")
 func server_clear_from_community():
-#	remove cards from players selections
+#	remove cards from players selections if they are community cards
 	for player in players.current_players:		
 		var cards = player.selected_cards
 		for card in cards: 
@@ -603,16 +546,12 @@ func server_clear_from_community():
 			slot.stored_cards[0].flip()
 			slot.stored_cards[0].deselect.rpc()
 			slot.stored_cards[0].selectable = false
+			slot.stored_cards[0].owner_id = 0 # set to zero for discard pile
 			slot.stored_cards[0].target_slot = minor_card_discard_slot 
 			minor_card_discard_slot.stored_cards.append(slot.stored_cards[0])
 			slot.stored_cards.remove_at(0)
 			
 			
-
-
-
-
-
 #----------------reload discarded cards to deck---------------------------------------------------
 @rpc("any_peer", "call_local", "reliable")
 func request_reload_deck():
@@ -683,3 +622,68 @@ func do_reload():
 #add the cards back to the deck, shuffle the deck, recreate deck order
 
 #----------------score player selected cards---------------------------------------------------
+@rpc("any_peer", "call_local", "reliable")
+func request_score_cards():
+	if multiplayer.is_server():
+		print("server reload requested")
+		server_score_cards.rpc()
+	else:
+		print("client reload requested")
+		request_score_cards.rpc_id(1)
+
+@rpc("authority", "call_local", "reliable")
+func server_score_cards():
+	if not multiplayer.is_server():
+		return
+	#print(currently_spawned_cards)
+	print("Server scoring players")
+
+# Find the players and get card
+	for player in players.current_players:
+		var hand = []
+		for card in currently_spawned_cards:
+			if card.selected_by.has(player.player_id):
+				hand.append(card)
+		print("player %s hand"%player.player_id,hand)
+		#loop through all cards, if selected by player.player_id, then add to the hand, then score it. 
+		
+		var hand_info = score_manager.get_hand_info(hand)
+		
+		#player.hand_to_play.clear()
+		player.current_hand_display.text = str("Current Hand : ", hand_info["hand_type"])
+		player.score_display.text = str("Score : ", hand_info["score"])
+		print("Best hand: ", hand_info["hand_type"])
+		print("Score: ", hand_info["score"])
+		print("Multiplier: ", hand_info["multiplier"])
+		print("Chips: ", hand_info["chips"])
+		print("cards: ", hand_info["cards"])
+
+	##print(currently_spawned_cards)
+	#for card in currently_spawned_cards:
+		#
+		#if card.owner_id != 0 and card.selected:
+			#print("Found selected card to score: ", card)
+			#print("selected by : ", card.selected_by)
+	
+
+	#for card in cards_to_discard:
+		#print("Discarding card: ", card)
+		#target_player.input_synchronizer.deselect_card(card.card_id)
+		#card.deselect.rpc()
+		#card.owner_id = 0  # Or whatever indicates discarded
+		#
+		### Remove from player's selection
+		##if card in target_player.selected_cards:
+			##target_player.selected_cards.erase(card)
+		#
+		## Move to discard slot
+		#var original_slot = card.target_slot
+		#if original_slot != card.discard_slot:
+			#target_player.remove_slot(original_slot)
+		#card.target_slot = card.discard_slot
+		#minor_card_discard_slot.stored_cards.append(card)
+		#
+		## Remove slot from player
+	#
+	#print("Discard complete for player: ", player_id)
+#

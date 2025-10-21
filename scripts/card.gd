@@ -10,6 +10,7 @@ extends Node2D
 @onready var visuals: Node2D = $Visuals
 var current_slot_id
 var selected = false
+var selected_by = []
 var selectable = true
 var marked_for_discard = false
 var card_id: int = -1
@@ -40,17 +41,21 @@ func _ready():
 		
 	
 @rpc ("any_peer", "call_local", "reliable")
-func select():
+func select(select_by_id):
 	# Update visual feedback based on selection state
+	print("selected by" , select_by_id)
 	if selected == false:
 		outline.visible = true
 		selected = true
+		selected_by.append(select_by_id)
 		
 @rpc ("any_peer", "call_local", "reliable")
-func deselect():
+func deselect(select_by_id):
 		# Add any other visual feedback for selected cards
+	print("deselected by" , select_by_id)
 	if selected == true:
 		selected = false
+		selected_by.erase(select_by_id)
 		outline.visible = false
 
 func handle_facing():

@@ -82,7 +82,7 @@ func server_player_click(player_id,click_position):
 			
 			if (card.owner_id == player_id or card.owner_id == -1) and selected_cards.size() <= player.max_hand_size - 1 :
 				select_card.rpc(card.card_id)  # Send ID instead of card object
-				card.select.rpc()
+				card.select.rpc(player_id)
 				
 				print("num of cards selected : ",selected_cards.size())
 				print("yay!",card," clicked!, clicker is: ",player_id,"clicked at : ",click_position)
@@ -92,7 +92,7 @@ func server_player_click(player_id,click_position):
 		elif card != null and card.selected:
 			if card.owner_id == player_id or card.owner_id == -1 :
 				deselect_card.rpc(card.card_id)
-				card.deselect.rpc()
+				card.deselect.rpc(player_id)
 				print("selected card clicked for deselect", card.sync.selected)
 			else:
 				print("clicked card is NOT allowed to be selected by this user")

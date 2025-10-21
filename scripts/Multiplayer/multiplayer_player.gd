@@ -175,20 +175,3 @@ func handle_hand_slots(delta):
 		# Rotate cards to match player orientation
 		current_slots[i].global_rotation = global_rotation
 		
-
-
-#func _on_discard_button_pressed() -> void:
-	#print("player_pressed_discard")
-	#%input_synchronizer.discarding = true
-	##discard_request.emit(self)
-
-
-func _on_play_button_pressed() -> void:
-	print("player_pressed_play")
-
-	if hand_to_play.size() == 0:
-		print("no hand to play")
-		return
-	else:
-		play_hand.emit(self,hand_to_play)
-	

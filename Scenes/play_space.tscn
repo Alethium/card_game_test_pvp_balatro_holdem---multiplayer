@@ -53,6 +53,14 @@ offset_right = 528.0
 offset_bottom = 964.0
 text = "DISCARD"
 
+[node name="Score" type="Button" parent="UI"]
+layout_mode = 0
+offset_left = 371.0
+offset_top = 933.0
+offset_right = 448.0
+offset_bottom = 964.0
+text = "SCORE"
+
 [node name="Deal_to_players" type="Button" parent="UI"]
 layout_mode = 0
 offset_left = 372.0
@@ -71,10 +79,10 @@ text = "RELOAD"
 
 [node name="Deal_to_community" type="Button" parent="UI"]
 layout_mode = 0
-offset_left = 415.0
-offset_top = 868.0
-offset_right = 491.0
-offset_bottom = 899.0
+offset_left = 866.0
+offset_top = 492.0
+offset_right = 942.0
+offset_bottom = 523.0
 text = "DEAL"
 
 [node name="Deal2" type="Button" parent="UI"]
@@ -91,9 +99,12 @@ script = ExtResource("3_5lyoa")
 [node name="card_manager" parent="." node_paths=PackedStringArray("Current_Minor_Deck") instance=ExtResource("2_osk37")]
 Current_Minor_Deck = NodePath("../Minor_Arcana")
 
-[node name="spawned_cards" type="Node2D" parent="."]
-process_priority = 1
-script = ExtResource("4_c2gb4")
+[node name="game_manager" parent="." instance=ExtResource("2_5lyoa")]
+position = Vector2(1513, 120)
+rotation = 3.14159
+
+[node name="multiplayer_manager" type="Node2D" parent="."]
+script = ExtResource("8_5lyoa")
 
 [node name="card_synchronizer" type="MultiplayerSynchronizer" parent="."]
 replication_config = SubResource("SceneReplicationConfig_5lyoa")
@@ -109,12 +120,9 @@ _spawnable_scenes = PackedStringArray("uid://d4bg2fjkyscq2", "uid://mhajchtk424d
 spawn_path = NodePath("../spawned_cards")
 script = ExtResource("6_a7jki")
 
-[node name="multiplayer_manager" type="Node2D" parent="."]
-script = ExtResource("8_5lyoa")
-
-[node name="game_manager" parent="." instance=ExtResource("2_5lyoa")]
-position = Vector2(1513, 120)
-rotation = 3.14159
+[node name="spawned_cards" type="Node2D" parent="."]
+process_priority = 1
+script = ExtResource("4_c2gb4")
 
 [node name="Minor_Arcana_Community_Slots" type="Node2D" parent="."]
 position = Vector2(-523, -216)
@@ -194,8 +202,9 @@ position = Vector2(1738, 673)
 position = Vector2(1732, 887)
 
 [connection signal="pressed" from="UI/Shuffle" to="card_manager" method="_on_shuffle_button_pressed"]
-[connection signal="pressed" from="UI/clear_minor_arcana" to="card_manager" method="on_clear_pressed"]
+[connection signal="pressed" from="UI/clear_minor_arcana" to="card_manager" method="_on_clear_pressed"]
 [connection signal="pressed" from="UI/clear_discards" to="card_manager" method="_on_discard_pressed"]
+[connection signal="pressed" from="UI/Score" to="card_manager" method="_on_score_pressed"]
 [connection signal="pressed" from="UI/Deal_to_players" to="card_manager" method="_on_deal_to_players_pressed"]
 [connection signal="pressed" from="UI/Reload" to="card_manager" method="_on_reload_pressed"]
 [connection signal="pressed" from="UI/Deal_to_community" to="card_manager" method="_on_deal_to_community_pressed"]

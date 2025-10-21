@@ -76,9 +76,9 @@ func set_starting_state():
 
 func connect_player_signals(player):
 	print("player signal connected")
-	player.connect("play_hand",on_play_request)
+	player.connect("play_hand",_on_play_request)
 		
-func on_play_request(player,hand):
+func _on_play_request(player,hand):
 	print("hand sent to play :", hand)
 	var community_slots = card_manager.minor_arcana_community_slots.get_children()
 	var community_cards = []
@@ -116,3 +116,41 @@ func on_play_request(player,hand):
 	
 
 	
+
+
+func _on_score_pressed(player,hand) -> void:
+	pass
+	##print("hand sent to play :", hand)
+	#var community_slots = card_manager.minor_arcana_community_slots.get_children()
+	#var community_cards = []
+#
+	##if the community slot contains a card, 
+	##and the card is selected for being played, add it to the played hand. 
+	#if community_slots[0].stored_cards.size() == 1:
+		#if community_slots[0].stored_cards[0].selected:
+			#community_cards.append(community_slots[0].stored_cards[0])
+	#if community_slots[1].stored_cards.size() == 1:
+		#if community_slots[1].stored_cards[0].selected:
+			#community_cards.append(community_slots[1].stored_cards[0])	
+	#if community_slots[2].stored_cards.size() == 1:
+		#if community_slots[2].stored_cards[0].selected:
+			#community_cards.append(community_slots[2].stored_cards[0])	
+	#if community_slots[3].stored_cards.size() == 1:
+		#if community_slots[3].stored_cards[0].selected:
+			#community_cards.append(community_slots[3].stored_cards[0])
+	#if community_slots[4].stored_cards.size() == 1:
+		#if community_slots[4].stored_cards[0].selected:
+			#community_cards.append(community_slots[4].stored_cards[0])	
+#
+	#print("game manager knows of played hand : ", hand)
+	#
+	#var hand_info = score_manager.get_hand_info(hand+community_cards)
+	#
+	#player.hand_to_play.clear()
+	#player.current_hand_display.text = str("Current Hand : ", hand_info["hand_type"])
+	#player.score_display.text = str("Score : ", hand_info["score"])
+	#print("Best hand: ", hand_info["hand_type"])
+	#print("Score: ", hand_info["score"])
+	#print("Multiplier: ", hand_info["multiplier"])
+	#print("Chips: ", hand_info["chips"])
+	#print("cards: ", hand_info["cards"])

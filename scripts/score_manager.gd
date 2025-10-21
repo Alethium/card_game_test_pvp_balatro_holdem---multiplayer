@@ -423,18 +423,16 @@ func calculate_hand_score(cards: Array) -> int:
 	return best_hand.get_score()
 
 # Function to get hand information
-func get_hand_info(cards: Array) -> Dictionary:
+func get_hand_info(cards: Array):
 	var best_hand = determine_best_hand(cards)
-	for card in cards:
-		card.selected = false
-	
-	return {
-		"hand_type": best_hand.hand_type,
-		"multiplier": best_hand.base_multiplier,
-		"chips": best_hand.chips,
-		"score": best_hand.get_score(),
-		"cards": best_hand.cards
-	}
+	if best_hand != null :
+		return {
+			"hand_type": best_hand.hand_type,
+			"multiplier": best_hand.base_multiplier,
+			"chips": best_hand.chips,
+			"score": best_hand.get_score(),
+			"cards": best_hand.cards
+		}
 
 # Example usage
 func _ready():
@@ -451,3 +449,7 @@ func _ready():
 	#print("Score: ", hand_info["score"])
 	#print("Multiplier: ", hand_info["multiplier"])
 	#print("Chips: ", hand_info["chips"])
+
+
+func _on_score_pressed() -> void:
+	pass # Replace with function body.
