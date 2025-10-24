@@ -648,15 +648,18 @@ func server_score_cards():
 		#loop through all cards, if selected by player.player_id, then add to the hand, then score it. 
 		
 		var hand_info = score_manager.get_hand_info(hand)
-		
-		#player.hand_to_play.clear()
-		player.current_hand_display.text = str("Current Hand : ", hand_info["hand_type"])
-		player.score_display.text = str("Score : ", hand_info["score"])
-		print("Best hand: ", hand_info["hand_type"])
-		print("Score: ", hand_info["score"])
-		print("Multiplier: ", hand_info["multiplier"])
-		print("Chips: ", hand_info["chips"])
-		print("cards: ", hand_info["cards"])
+		if hand_info != null :
+			#player.hand_to_play.clear()
+	#		player.update_score_display(score)
+			player.current_hand_display.text = str("Current Hand : ", hand_info["hand_type"])
+			player.score_display.text = str("Score : ", hand_info["score"])
+			print("Best hand: ", hand_info["hand_type"])
+			print("Score: ", hand_info["score"])
+			print("Multiplier: ", hand_info["multiplier"])
+			print("Chips: ", hand_info["chips"])
+			print("cards: ", hand_info["cards"])
+		else:
+			print("no hand to score")
 
 	##print(currently_spawned_cards)
 	#for card in currently_spawned_cards:

@@ -43,9 +43,10 @@ func _ready():
 @rpc ("any_peer", "call_local", "reliable")
 func select(select_by_id):
 	# Update visual feedback based on selection state
-	print("selected by" , select_by_id)
-	if selected == false:
+	if multiplayer.get_unique_id() ==  select_by_id:
 		outline.visible = true
+	print("selected by" , select_by_id)
+	if !selected_by.has(select_by_id):
 		selected = true
 		selected_by.append(select_by_id)
 		
@@ -53,10 +54,12 @@ func select(select_by_id):
 func deselect(select_by_id):
 		# Add any other visual feedback for selected cards
 	print("deselected by" , select_by_id)
-	if selected == true:
+	if multiplayer.get_unique_id() ==  select_by_id:
+		outline.visible = false
+	if selected_by.has(select_by_id):
 		selected = false
 		selected_by.erase(select_by_id)
-		outline.visible = false
+		
 
 func handle_facing():
 
