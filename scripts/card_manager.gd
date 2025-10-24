@@ -225,28 +225,30 @@ func draw_instantiated_card(card: Node2D, owner_id: int, position: Vector2) -> C
 
 func handle_card_visibility(card):
 	#print("card is face down?",card.face_down)
-	if card.target_slot != minor_card_discard_slot:
-		if multiplayer.get_unique_id() == card.owner_id :
-			#print("player is? ",multiplayer.get_unique_id())
-			#print("card is face down?",card.face_down)
-			#print("card owner id?",card.owner_id)
-			#print("own")
-			card.face_down = false
-		elif card.owner_id == -1 :
-			#print("player is? ",multiplayer.get_unique_id())
-			#print("card is face down?",card.face_down)
-			#print("card owner id?",card.owner_id)
-			#print("community")
-			card.face_down = false
-		else:
-			#print("player is? ",multiplayer.get_unique_id())
-			#print("card is face down?",card.face_down)
-			#print("card owner id?",card.owner_id)
-			#print("opponent")
-			card.face_down = true
-	
-	card.handle_facing()
+	if card.owner_id != 0:
+		if card.target_slot != minor_card_discard_slot:
+			if multiplayer.get_unique_id() == card.owner_id :
+				#print("player is? ",multiplayer.get_unique_id())
+				#print("card is face down?",card.face_down)
+				#print("card owner id?",card.owner_id)
+				#print("own")
+				card.face_down = false
+			elif card.owner_id == -1 :
+				#print("player is? ",multiplayer.get_unique_id())
+				#print("card is face down?",card.face_down)
+				#print("card owner id?",card.owner_id)
+				#print("community")
+				card.face_down = false
+			else:
+				#print("player is? ",multiplayer.get_unique_id())
+				#print("card is face down?",card.face_down)
+				#print("card owner id?",card.owner_id)
+				#print("opponent")
+				card.face_down = true
+	else:
+		card.face_down = true
 
+	card.handle_facing()
 
 
 func highlight_hovered_card(card,hovered):
@@ -311,7 +313,7 @@ func _off_hovered_slot(_slot):
 
 func _on_clear_pressed()-> void:
 	if multiplayer.is_server():
-		server_clear_from_community.rpc()
+		server_clear_from_community()
 	else:
 		request_clear_from_community.rpc()
 		
@@ -526,11 +528,11 @@ func debug_selection_state():
 @rpc("any_peer", "call_local", "reliable")
 func request_clear_from_community():
 	if multiplayer.is_server():
-		server_clear_from_community.rpc()
+		server_clear_from_community()
 	else:
 		request_clear_from_community.rpc_id(1)
 
-@rpc("authority", "call_local", "reliable")
+#@rpc("authority", "call_local", "reliable")
 func server_clear_from_community():
 #	remove cards from players selections if they are community cards
 	for player in players.current_players:		
@@ -543,8 +545,9 @@ func server_clear_from_community():
 				
 	for slot in minor_arcana_community_slots:
 		if slot.stored_cards.size() > 0:
-			slot.stored_cards[0].flip()
-			slot.stored_cards[0].deselect.rpc()
+			slot.stored_cards[0].face_down = true
+			slot.stored_cards[0].handle_facing()
+			slot.stored_cards[0].deselect.rpc(0)
 			slot.stored_cards[0].selectable = false
 			slot.stored_cards[0].owner_id = 0 # set to zero for discard pile
 			slot.stored_cards[0].target_slot = minor_card_discard_slot 

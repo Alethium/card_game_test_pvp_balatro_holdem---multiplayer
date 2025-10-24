@@ -25,6 +25,10 @@ signal off_hover
 
 @onready var sync: MultiplayerSynchronizer = $MultiplayerSynchronizer
 
+
+
+
+
 func _ready():
 	# Only the server should control the card's authoritative state
 	if multiplayer.is_server():
@@ -52,13 +56,21 @@ func select(select_by_id):
 		
 @rpc ("any_peer", "call_local", "reliable")
 func deselect(select_by_id):
-		# Add any other visual feedback for selected cards
-	print("deselected by" , select_by_id)
-	if multiplayer.get_unique_id() ==  select_by_id:
+	
+	if select_by_id == 0:
+		print("deselected community")
 		outline.visible = false
-	if selected_by.has(select_by_id):
 		selected = false
-		selected_by.erase(select_by_id)
+		selected_by = []
+		
+	else:	
+			# Add any other visual feedback for selected cards
+		print("deselected by" , select_by_id)
+		if multiplayer.get_unique_id() ==  select_by_id:
+			outline.visible = false
+		if selected_by.has(select_by_id):
+			selected = false
+			selected_by.erase(select_by_id)
 		
 
 func handle_facing():
