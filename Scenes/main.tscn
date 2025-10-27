@@ -1,12 +1,37 @@
-[gd_scene load_steps=5 format=3 uid="uid://cbyogflct2cp0"]
+[gd_scene load_steps=8 format=3 uid="uid://cbyogflct2cp0"]
 
 [ext_resource type="Script" uid="uid://bd7rtcwg4g057" path="res://scripts/main.gd" id="1_jjgbg"]
 [ext_resource type="Script" uid="uid://rnj7rsre16s" path="res://scripts/network_manager.gd" id="2_bo1nx"]
 [ext_resource type="PackedScene" uid="uid://bstgicllg5jw4" path="res://Scenes/play_space.tscn" id="2_jjvhh"]
+[ext_resource type="Shader" uid="uid://b7xp6qgaedm1o" path="res://scripts/Shader/Background_balatro.gdshader" id="2_kry3j"]
 [ext_resource type="Theme" uid="uid://bl5r56swuu6ll" path="res://Card_game_font_32.tres" id="3_8gbba"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_21xkr"]
+shader = ExtResource("2_kry3j")
+shader_parameter/spin_rotation_speed = 0.1
+shader_parameter/move_speed = 1.0
+shader_parameter/offset = Vector2(0, 0)
+shader_parameter/colour_1 = Color(0.124100015, 0.73, 0.49773842, 1)
+shader_parameter/colour_2 = Color(0, 0.36, 0.24600004, 1)
+shader_parameter/colour_3 = Color(0.20225054, 6.7142396e-06, 0.16353557, 1)
+shader_parameter/contrast = 0.61
+shader_parameter/lighting = 0.115
+shader_parameter/spin_amount = 0.19
+shader_parameter/pixel_filter = 379.84
+shader_parameter/is_rotating = true
+
+[sub_resource type="CanvasTexture" id="CanvasTexture_6bp64"]
 
 [node name="Main" type="Node2D"]
 script = ExtResource("1_jjgbg")
+
+[node name="Background" type="TextureRect" parent="."]
+z_index = -10
+material = SubResource("ShaderMaterial_21xkr")
+offset_right = 1920.0
+offset_bottom = 1080.0
+mouse_filter = 2
+texture = SubResource("CanvasTexture_6bp64")
 
 [node name="network_manager" type="Node" parent="."]
 script = ExtResource("2_bo1nx")

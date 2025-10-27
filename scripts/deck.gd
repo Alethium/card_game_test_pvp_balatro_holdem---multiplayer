@@ -17,12 +17,17 @@ var deck_of_cards : Array
 
 @onready var deck_height : int = 0
 
-
+func _ready() -> void:
+	card_outline.visible = false
+	height_outline.visible = false
 	
+
+func _process(_delta: float) -> void:
+	handle_deck_height()	
 
 func handle_deck_height():
 	#print(deck_height,"deck height deck of cards size",deck_of_cards.size())
-	if deck_of_cards.size() > 0:
+	if deck_height != 0:
 		visuals.modulate.a = 1
 	else:
 		visuals.modulate.a = 0
@@ -42,8 +47,7 @@ func handle_hover(delta):
 func _on_deck_body_mouse_entered() -> void:
 	clickable = true
 	print("clickable:",clickable,"node :",self)
-	card_outline.visible = true
-	height_outline.visible = true
+	highlight()
 	
 	
 
@@ -51,8 +55,8 @@ func _on_deck_body_mouse_entered() -> void:
 func _on_deck_body_mouse_exited() -> void:
 	clickable = false
 	print("unclickable:",clickable)
-	card_outline.visible = false
-	height_outline.visible = false
+	unlight()
+
 	
 
 func _on_click():
@@ -65,4 +69,11 @@ func increase_deck_height():
 @rpc ("any_peer", "call_local", "reliable")
 func decrease_deck_height():
 	deck_height -= 1
+	
+func highlight():
+	card_outline.visible = true
+	height_outline.visible = true
+func unlight():
+	card_outline.visible = false
+	height_outline.visible = false
 	

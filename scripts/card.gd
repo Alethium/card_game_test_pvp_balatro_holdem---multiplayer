@@ -92,46 +92,40 @@ func flip():
 #or at least as far as the print statements go	
 
 func _on_card_body_mouse_entered() -> void:
+	if face_down == false:
+		scale.x = 1.2
+		scale.y = 1.2
 	# Update local state before reading
 	#update_status()
 	
-	var is_server = multiplayer.is_server()
-	var authority = get_multiplayer_authority()
-	
-	print(self.name, " hovered")
-	print("  Owner ID: ", owner_id)
-	print(" Card ID : ", card_id)
-	print("  Is Server: ", is_server)
-	print("  Authority: ", authority)
-	print("target slot : ",target_slot)
-	print("  sync.selected: ", sync.selected)
-	print("  local selected: ", selected)
-	
-	# Emit signals only if we have authority
-	if sync.get_multiplayer_authority() == multiplayer.get_unique_id():
-		on_hover.emit(self)
-		
-	#if is_multiplayer_authority():
-		#print(self.name, " hovered, owner id : ",owner_id, sync.selected)
-#
-		#emit_signal("on_hover",self)
+	#var is_server = multiplayer.is_server()
+	#var authority = get_multiplayer_authority()
+	#
+	#print(self.name, " hovered")
+	#print("  Owner ID: ", owner_id)
+	#print(" Card ID : ", card_id)
+	#print("  Is Server: ", is_server)
+	#print("  Authority: ", authority)
+	#print("target slot : ",target_slot)
+	#print("  sync.selected: ", sync.selected)
+	#print("  local selected: ", selected)
+	#
+	## Emit signals only if we have authority
+	#if sync.get_multiplayer_authority() == multiplayer.get_unique_id():
+		#on_hover.emit(self)
+		#
+	##if is_multiplayer_authority():
+		##print(self.name, " hovered, owner id : ",owner_id, sync.selected)
+##
+		##emit_signal("on_hover",self)
 
 func _on_card_body_mouse_exited() -> void:
+	if face_down == false:
+		scale.x = 1
+		scale.y = 1
 	if is_multiplayer_authority():
 		off_hover.emit(self)
 		
-#@rpc("any_peer", "reliable")
-#func update_card_visibility(should_face_down: bool, visible_to_player: int):
-	#if multiplayer.get_unique_id() == visible_to_player:
-		#face_down = false
-	#else:
-		#face_down = should_face_down
-	#handle_facing()
-#
-#@rpc("any_peer", "unreliable")
-#func sync_position(new_position: Vector2):
-	#global_position = new_position
-	#
 #the server will run this function	
 func move_to_target(delta):
 	if target_slot:

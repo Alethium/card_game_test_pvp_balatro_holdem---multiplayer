@@ -1,8 +1,10 @@
-[gd_scene load_steps=2 format=3 uid="uid://b4np4nqab6der"]
+[gd_scene load_steps=3 format=3 uid="uid://b4np4nqab6der"]
 
 [ext_resource type="PackedScene" uid="uid://d6j4atda58sg" path="res://Scenes/deck.tscn" id="1_e0bbk"]
+[ext_resource type="Script" uid="uid://bke60sc4p8hox" path="res://scripts/minor_discard_pile.gd" id="2_5csxy"]
 
 [node name="Minor_Discard_Pile" instance=ExtResource("1_e0bbk")]
+script = ExtResource("2_5csxy")
 
 [node name="Back" parent="visuals" index="3"]
 frame = 31

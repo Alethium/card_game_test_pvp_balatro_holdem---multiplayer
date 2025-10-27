@@ -14,7 +14,8 @@ var all_players_full = false
 @onready var minor_card_deck_slot: CardSlot = $"../Minor_card_deck_Slot"
 @onready var minor_card_discard_slot: CardSlot = $"../Minor_card_discard_slot"
 
-@onready var minor_discard_pile: Deck = $"../Minor_Discard_Pile"
+@onready var minor_discard_pile: DiscardPile = $"../Minor_Discard_Pile"
+
 
 @onready var minor_arcana_community_slots: Array[Node2D] = [%Minor_Arcana_Slot5, %Minor_Arcana_Slot4, %Minor_Arcana_Slot3, %Minor_Arcana_Slot2, %Minor_Arcana_Slot]
 @onready var game_manager: GameManager = $"../game_manager"
@@ -109,7 +110,9 @@ func _process(delta: float) -> void:
 		card.move_to_target(delta)
 		handle_card_visibility(card)
 	
-	Current_Minor_Deck.handle_deck_height()
+	#Current_Minor_Deck.handle_deck_height()
+	#minor_discard_pile.handle_deck_height()
+	#current_major_deck.handle_deck_height()
 	if reloading == true:	
 		server_reload_deck.rpc()
 	if players.current_players.size() != 0:
@@ -529,6 +532,9 @@ func server_discard_from_players(player_id):
 		var original_slot = card.target_slot
 		if original_slot != card.discard_slot:
 			target_player.remove_slot(original_slot)
+		minor_discard_pile.increase_deck_height()
+		print(minor_discard_pile.deck_height, " : current deck height")
+		card.z_index = - 5
 		card.target_slot = card.discard_slot
 		minor_card_discard_slot.stored_cards.append(card)
 		
@@ -582,6 +588,9 @@ func server_clear_from_community():
 			slot.stored_cards[0].selectable = false
 			slot.stored_cards[0].owner_id = 0 # set to zero for discard pile
 			slot.stored_cards[0].target_slot = minor_card_discard_slot 
+			slot.stored_cards[0].z_index = - 5
+			minor_discard_pile.increase_deck_height()
+			print(minor_discard_pile.deck_height, " : current deck height")
 			minor_card_discard_slot.stored_cards.append(slot.stored_cards[0])
 			slot.stored_cards.remove_at(0)
 			
@@ -625,6 +634,9 @@ func do_reload():
 				minor_card_deck_slot.stored_cards.append(card)
 				print(minor_card_deck_slot.stored_cards)
 				print("Cards left to reload : ", minor_card_discard_slot.stored_cards)
+				minor_discard_pile.decrease_deck_height()
+				card.z_index = - 5
+				print(minor_discard_pile.deck_height, " : current deck height")
 				minor_card_discard_slot.stored_cards.erase(card)
 				break
 				

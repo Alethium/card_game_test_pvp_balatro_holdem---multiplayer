@@ -123,15 +123,14 @@ var base_set: Array = [
 	KNIGHT_OF_SWORDS,
 	QUEEN_OF_SWORDS,
 	KING_OF_SWORDS,
-	
 	]
 
 func _ready() -> void:
+	super._ready()
 	deck_height = starting_deck_height
 
 # Called when the node enters the scene tree for the first time.
-func _process(_delta: float) -> void:
-	handle_deck_height()
+
 	
 func _on_Major_Arcana_deck_body_mouse_entered() -> void:
 	pass
