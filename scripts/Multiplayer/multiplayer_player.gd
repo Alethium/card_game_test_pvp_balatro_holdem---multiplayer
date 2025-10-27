@@ -4,8 +4,7 @@ extends Node2D
 
 
 @onready var player_hand: Node2D = $player_hand
-signal discard_request
-signal play_hand
+
 @onready var current_hand_display: Label = $Control/current_hand
 @onready var score_display: Label = $Control/Score
 @onready var player_role_marker_position: Node2D = $player_role_marker_position
@@ -88,37 +87,6 @@ func _input(event: InputEvent) -> void:
 				%input_synchronizer.click()
 			else:	
 				%input_synchronizer.unclick()
-				
-				
-				
-				
-				
-				#if raycast_for_card() != null:
-					#var currently_clicked_card = raycast_for_card()
-					##print(currently_clicked_card.name,"  :  ",currently_clicked_card.score,"facecard?:",currently_clicked_card.face_card)
-					#if currently_clicked_card.selected == false and currently_clicked_card.selectable == true:
-						#currently_clicked_card.selected = true
-						#if players.current_players[game_manager.current_player_index].hand_to_play.size() < 5:
-							#
-							#players.current_players[game_manager.current_player_index].hand_to_play.append(currently_clicked_card)
-							#print("hand to play :", players.current_players[game_manager.current_player_index].hand_to_play)
-							#print(currently_clicked_card,": selected")
-					#else:
-						#currently_clicked_card.selected = false
-						#players.current_players[game_manager.current_player_index].hand_to_play.erase(currently_clicked_card)
-#
-						#print(currently_clicked_card,": deselected")
-			#else:
-				#if currently_grabbed_card:
-					#currently_grabbed_card.scale = Vector2 (1.1,1.1)
-					#if current_hovered_slot:
-						#current_hovered_slot.stored_cards.append(currently_grabbed_card)
-					#currently_grabbed_card = null	
-		
-		
-		
-		
-	
 
 func update_input(_delta):
 	#hand_cursor.global_position += %input_synchronizer.player_mouse_cursor_direction

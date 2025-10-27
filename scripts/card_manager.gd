@@ -14,6 +14,8 @@ var all_players_full = false
 @onready var minor_card_deck_slot: CardSlot = $"../Minor_card_deck_Slot"
 @onready var minor_card_discard_slot: CardSlot = $"../Minor_card_discard_slot"
 
+@onready var minor_discard_pile: Deck = $"../Minor_Discard_Pile"
+
 @onready var minor_arcana_community_slots: Array[Node2D] = [%Minor_Arcana_Slot5, %Minor_Arcana_Slot4, %Minor_Arcana_Slot3, %Minor_Arcana_Slot2, %Minor_Arcana_Slot]
 @onready var game_manager: GameManager = $"../game_manager"
 @onready var spawned_cards: Node2D = $"../spawned_cards"
@@ -23,22 +25,32 @@ var all_players_full = false
 var card_signals_connected = false
 var slot_signals_connected = false
 var player_signals_connected = false
-#signal dealing_complete
-var currently_grabbed_card : Card
-var current_hovered_slot : CardSlot
-var current_hovered_card : Card
-var last_hovered_card : Card
-var is_hovering_on_card = false
-var screen_size
 
+
+#signal dealing_complete
+#var currently_grabbed_card : Card
+#var current_hovered_slot : CardSlot
+#var current_hovered_card : Card
+#var last_hovered_card : Card
+#var is_hovering_on_card = false
+
+
+
+var screen_size
 var dealing_index : int = 0 
-var dealing = false
+
+
 var reloading = false
+
+
+# New variables for player card dealing
+var dealing = false
 var cards_delt = 0
 var dealing_timer = 0
-var slots_filled = 0
-var total_slots_to_fill = 0
 var minor_left_to_deal = 0
+var total_slots_to_fill = 0
+var slots_filled = 0
+
 
 # New variables for community card dealing
 var dealing_to_community = false
@@ -46,10 +58,25 @@ var community_cards_to_deal = 0
 var community_dealing_timer = 0
 var reloading_timer = 0
 
+
+# New variables for Major card dealing
+var dealing_to_major = false
+var major_cards_to_deal = 0
+var major_dealing_timer = 0
+
+
+
+
+
+
 var drawn_card 
+
 @export var Current_Minor_Deck : Minor_Arcana_Deck
+@export var current_major_deck : Major_Arcana_Deck
 
 var currently_spawned_cards : Array 
+
+var currently_spawned_major_arcana : Array
 
 
 # Network variables
@@ -63,7 +90,8 @@ var deck_order: Array = []  # Stores card indices instead of scenes
 
 
 func _ready() -> void:
-	
+	minor_discard_pile.global_position = minor_card_discard_slot.global_position
+	Current_Minor_Deck.global_position = minor_card_deck_slot.global_position
 	screen_size = get_viewport_rect().size
 	if multiplayer.is_server():
 		instantiate_cards()
@@ -101,9 +129,9 @@ func connect_player_signals(player):
 func _on_player_added(player):
 	players.current_players.append(player)
 
-func connect_slot_signals(slot):
-	slot.connect("on_hover",_on_hovered_slot)
-	slot.connect("off_hover",_off_hovered_slot)
+#func connect_slot_signals(slot):
+	#slot.connect("on_hover",_on_hovered_slot)
+	#slot.connect("off_hover",_off_hovered_slot)
 	
 	
 
@@ -134,7 +162,8 @@ func instantiate_cards():
 			
 			#int_card.global_position = minor_card_deck_slot.global_position
 			#int_card.card_id = randi()
-			
+			int_card.visible = false
+			int_card.owner_id = 0
 			Current_Minor_Deck.deck_of_cards.append(int_card)
 			int_card.global_position = minor_card_deck_slot.global_position
 			int_card.card_id = card_id_counter
@@ -226,27 +255,33 @@ func draw_instantiated_card(card: Node2D, owner_id: int, position: Vector2) -> C
 func handle_card_visibility(card):
 	#print("card is face down?",card.face_down)
 	if card.owner_id != 0:
+		
 		if card.target_slot != minor_card_discard_slot:
 			if multiplayer.get_unique_id() == card.owner_id :
 				#print("player is? ",multiplayer.get_unique_id())
 				#print("card is face down?",card.face_down)
 				#print("card owner id?",card.owner_id)
 				#print("own")
+				card.visible = true
 				card.face_down = false
 			elif card.owner_id == -1 :
 				#print("player is? ",multiplayer.get_unique_id())
 				#print("card is face down?",card.face_down)
 				#print("card owner id?",card.owner_id)
 				#print("community")
+				card.visible = true
 				card.face_down = false
 			else:
 				#print("player is? ",multiplayer.get_unique_id())
 				#print("card is face down?",card.face_down)
 				#print("card owner id?",card.owner_id)
 				#print("opponent")
+				card.visible = true
 				card.face_down = true
 	else:
 		card.face_down = true
+		
+		
 
 	card.handle_facing()
 
@@ -281,13 +316,8 @@ func _on_deal_to_players_pressed() -> void:
 		print("player requested deal")
 		request_deal_to_players.rpc()
 
-#func on_discard_button_pressed(player)-> void:
-	#print("discard from %s pressed" % player)
-	#if multiplayer.is_server():
-		#server_discard_from_players.rpc(player)
-	#else:
-		#
-		#request_discard_from_players.rpc_id(1,player)
+func _on_deal_to_major_arcana_pressed() -> void:
+	pass # Replace with function body.
 
 func _on_reload_pressed() -> void:
 	if multiplayer.is_server():
@@ -303,13 +333,13 @@ func _on_shuffle_button_pressed() -> void:
 	if multiplayer.is_server():
 		Current_Minor_Deck.deck_of_cards.shuffle()
 		
-func _on_hovered_slot(slot):
-	if multiplayer.is_server():
-		current_hovered_slot = slot
-
-func _off_hovered_slot(_slot):
-	if multiplayer.is_server():
-		current_hovered_slot = null
+#func _on_hovered_slot(slot):
+	#if multiplayer.is_server():
+		#current_hovered_slot = slot
+#
+#func _off_hovered_slot(_slot):
+	#if multiplayer.is_server():
+		#current_hovered_slot = null
 
 func _on_clear_pressed()-> void:
 	if multiplayer.is_server():
@@ -487,7 +517,8 @@ func server_discard_from_players(player_id):
 	for card in cards_to_discard:
 		print("Discarding card: ", card)
 		target_player.input_synchronizer.deselect_card(card.card_id)
-		card.deselect.rpc()
+		card.deselect.rpc(0)
+		card.outline.visible = false
 		card.owner_id = 0  # zero is for discarded cards
 		
 		## Remove from player's selection

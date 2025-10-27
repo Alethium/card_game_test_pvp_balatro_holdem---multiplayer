@@ -15,8 +15,8 @@ var deck_of_cards : Array
 @onready var card_outline: Sprite2D = $visuals/card_outline
 @onready var visuals: Node2D = $visuals
 
-@onready var deck_height : int 
-@onready var starting_deck_height : int  = 56
+@onready var deck_height : int = 0
+
 
 	
 

@@ -74,9 +74,9 @@ func set_starting_state():
 	curr_state = game_start
 	curr_state.enter_state()
 
-func connect_player_signals(player):
+func connect_player_signals(_player):
 	print("player signal connected")
-	player.connect("play_hand",_on_play_request)
+	
 		
 func _on_play_request(player,hand):
 	print("hand sent to play :", hand)

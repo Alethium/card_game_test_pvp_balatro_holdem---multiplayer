@@ -1,0 +1,7 @@
+[gd_scene load_steps=3 format=3 uid="uid://bik882mmprbm0"]
+
+[ext_resource type="PackedScene" uid="uid://cfhw71rcxtl2l" path="res://Scenes/Cards/Major_Arcana/joker.tscn" id="1_shgmv"]
+[ext_resource type="Script" uid="uid://bs8x3mplynhh3" path="res://Scenes/Cards/Major_Arcana/Jokers/scripts/joker_joker.gd" id="2_yuj3j"]
+
+[node name="JokerJoker" instance=ExtResource("1_shgmv")]
+script = ExtResource("2_yuj3j")

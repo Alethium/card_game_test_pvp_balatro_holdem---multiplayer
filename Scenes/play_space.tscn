@@ -1,4 +1,4 @@
-[gd_scene load_steps=13 format=3 uid="uid://bstgicllg5jw4"]
+[gd_scene load_steps=15 format=3 uid="uid://bstgicllg5jw4"]
 
 [ext_resource type="PackedScene" uid="uid://dvdg2bxoihq32" path="res://Scenes/card_slot.tscn" id="1_pe22w"]
 [ext_resource type="Script" uid="uid://cvvna1si82h41" path="res://scripts/play_space.gd" id="1_yahnq"]
@@ -11,6 +11,8 @@
 [ext_resource type="Script" uid="uid://bq8u3qwnf4w16" path="res://scripts/card_spawner.gd" id="6_a7jki"]
 [ext_resource type="Script" uid="uid://cilgpbld2ax5j" path="res://scripts/players.gd" id="6_m4s6i"]
 [ext_resource type="Script" uid="uid://chwq4d5jfqblg" path="res://scripts/Multiplayer/multiplayer_manager.gd" id="8_5lyoa"]
+[ext_resource type="PackedScene" uid="uid://b4np4nqab6der" path="res://Scenes/minor_discard_pile.tscn" id="11_2r64v"]
+[ext_resource type="PackedScene" uid="uid://b74yh17gf2rmq" path="res://Scenes/Cards/Major_Arcana/Major_Arcana_Deck.tscn" id="13_m2f5l"]
 
 [sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_5lyoa"]
 properties/0/path = NodePath("card_manager:networked_cards")
@@ -85,6 +87,14 @@ offset_right = 942.0
 offset_bottom = 523.0
 text = "DEAL"
 
+[node name="Deal_to_Major_Arcana" type="Button" parent="UI"]
+layout_mode = 0
+offset_left = 866.0
+offset_top = 174.0
+offset_right = 942.0
+offset_bottom = 205.0
+text = "DEAL"
+
 [node name="Deal2" type="Button" parent="UI"]
 layout_mode = 0
 offset_left = 1834.0
@@ -96,8 +106,9 @@ text = "DEAL"
 [node name="score_manager" type="Node2D" parent="."]
 script = ExtResource("3_5lyoa")
 
-[node name="card_manager" parent="." node_paths=PackedStringArray("Current_Minor_Deck") instance=ExtResource("2_osk37")]
+[node name="card_manager" parent="." node_paths=PackedStringArray("Current_Minor_Deck", "current_major_deck") instance=ExtResource("2_osk37")]
 Current_Minor_Deck = NodePath("../Minor_Arcana")
+current_major_deck = NodePath("../Major_Arcana_Deck")
 
 [node name="game_manager" parent="." instance=ExtResource("2_5lyoa")]
 position = Vector2(1513, 120)
@@ -170,14 +181,31 @@ Slot_Type = 1
 position = Vector2(1300, 438)
 Slot_Type = 1
 
-[node name="Minor_Arcana" parent="." node_paths=PackedStringArray("discard_pile") instance=ExtResource("2_i6akn")]
-position = Vector2(128, 948)
+[node name="Minor_Arcana" parent="." node_paths=PackedStringArray("cards", "discard_pile") instance=ExtResource("2_i6akn")]
+position = Vector2(128, 953)
+cards = NodePath("../spawned_cards")
 discard_pile = NodePath("../Minor_card_discard_slot")
+
+[node name="height_outline" parent="Minor_Arcana/visuals" index="0"]
+visible = true
+
+[node name="card_outline" parent="Minor_Arcana/visuals" index="1"]
+visible = true
+
+[node name="Minor_Discard_Pile" parent="." instance=ExtResource("11_2r64v")]
+position = Vector2(291, 953)
 
 [node name="Minor_card_deck_Slot" parent="." instance=ExtResource("1_pe22w")]
 position = Vector2(128, 953)
 
 [node name="Minor_card_discard_slot" parent="." instance=ExtResource("1_pe22w")]
+position = Vector2(291, 953)
+
+[node name="Major_Arcana_Deck" parent="." node_paths=PackedStringArray("discard_pile") instance=ExtResource("13_m2f5l")]
+position = Vector2(781, 952)
+discard_pile = NodePath("../Major_modifier_discard_slot")
+
+[node name="Major_Discard_Pile" parent="." instance=ExtResource("11_2r64v")]
 position = Vector2(291, 953)
 
 [node name="Major_modifier_deck_Slot" parent="." instance=ExtResource("1_pe22w")]
@@ -208,6 +236,7 @@ position = Vector2(1732, 887)
 [connection signal="pressed" from="UI/Deal_to_players" to="card_manager" method="_on_deal_to_players_pressed"]
 [connection signal="pressed" from="UI/Reload" to="card_manager" method="_on_reload_pressed"]
 [connection signal="pressed" from="UI/Deal_to_community" to="card_manager" method="_on_deal_to_community_pressed"]
+[connection signal="pressed" from="UI/Deal_to_Major_Arcana" to="card_manager" method="_on_deal_to_major_arcana_pressed"]
 [connection signal="pressed" from="UI/Deal2" to="card_manager" method="_on_deal_pressed"]
 
 [editable path="Minor_Arcana_Community_Slots/Minor_Arcana_Slot5"]

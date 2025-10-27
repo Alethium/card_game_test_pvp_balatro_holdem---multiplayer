@@ -1,12 +1,13 @@
 [gd_scene load_steps=3 format=3 uid="uid://btsrbpjk6c605"]
 
 [ext_resource type="PackedScene" uid="uid://c3rq0tkr3lvf5" path="res://Scenes/card.tscn" id="1_rowwm"]
-[ext_resource type="Script" uid="uid://du1nt08q2cliu" path="res://Scenes/Cards/Major_Arcana/major_arcana_card.gd" id="2_oasvo"]
+[ext_resource type="Script" uid="uid://bjbicmmu16ygb" path="res://Scenes/Cards/Major_Arcana/Major_Arcana.gd" id="2_oasvo"]
 
 [node name="Major_Arcana_Card" instance=ExtResource("1_rowwm")]
 script = ExtResource("2_oasvo")
 joker_name = "Joker"
-effect_description = "Joker effect description."
+effect_description = "Rightside-up:
+Upside-down:"
 sell_value = 3
 rarity = 0
 chip_modifier = 0

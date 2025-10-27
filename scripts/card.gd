@@ -71,6 +71,7 @@ func deselect(select_by_id):
 		if selected_by.has(select_by_id):
 			selected = false
 			selected_by.erase(select_by_id)
+	
 		
 
 func handle_facing():

@@ -5,3 +5,12 @@
 
 [node name="Major_Arcana_Deck" instance=ExtResource("1_kpbd5")]
 script = ExtResource("2_3pm0x")
+
+[node name="height_outline" parent="visuals" index="0"]
+visible = true
+
+[node name="card_outline" parent="visuals" index="1"]
+visible = true
+
+[node name="Back" parent="visuals" index="3"]
+frame = 31

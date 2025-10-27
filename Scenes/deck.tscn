@@ -17,6 +17,7 @@ shape = ExtResource("1_ukesx")
 [node name="visuals" type="Node2D" parent="."]
 
 [node name="height_outline" type="Sprite2D" parent="visuals"]
+visible = false
 modulate = Color(1, 1, 0, 1)
 scale = Vector2(2.1, 2.1)
 texture = ExtResource("4_xvpt4")
@@ -24,6 +25,7 @@ hframes = 15
 vframes = 4
 
 [node name="card_outline" type="Sprite2D" parent="visuals"]
+visible = false
 modulate = Color(1, 1, 0, 1)
 scale = Vector2(2.1, 2.1)
 texture = ExtResource("4_xvpt4")

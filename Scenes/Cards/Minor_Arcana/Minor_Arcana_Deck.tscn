@@ -3,7 +3,7 @@
 [ext_resource type="PackedScene" uid="uid://d6j4atda58sg" path="res://Scenes/deck.tscn" id="1_nnq8o"]
 [ext_resource type="Script" uid="uid://dpu8xb7lakklg" path="res://Scenes/Cards/Minor_Arcana/deck_minor_arcana.gd" id="2_8a2qm"]
 
-[node name="Minor_Arcana" instance=ExtResource("1_nnq8o")]
+[node name="Minor_Arcana_Deck" instance=ExtResource("1_nnq8o")]
 script = ExtResource("2_8a2qm")
 
 [node name="Back" parent="visuals" index="3"]

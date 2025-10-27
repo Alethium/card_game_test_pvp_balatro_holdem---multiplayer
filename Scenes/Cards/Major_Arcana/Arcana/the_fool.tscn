@@ -1,0 +1,8 @@
+[gd_scene load_steps=3 format=3 uid="uid://dewuqaryhsymb"]
+
+[ext_resource type="PackedScene" uid="uid://btsrbpjk6c605" path="res://Scenes/Cards/Major_Arcana/major_arcana_card.tscn" id="1_oldpi"]
+[ext_resource type="Script" uid="uid://ciyg4iu7r6248" path="res://Scenes/Cards/Major_Arcana/Arcana/scripts/the_fool.gd" id="2_gfvtj"]
+
+[node name="The_Fool" instance=ExtResource("1_oldpi")]
+script = ExtResource("2_gfvtj")
+joker_name = "The Fool"

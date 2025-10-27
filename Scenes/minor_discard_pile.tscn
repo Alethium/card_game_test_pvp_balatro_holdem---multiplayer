@@ -1,0 +1,8 @@
+[gd_scene load_steps=2 format=3 uid="uid://b4np4nqab6der"]
+
+[ext_resource type="PackedScene" uid="uid://d6j4atda58sg" path="res://Scenes/deck.tscn" id="1_e0bbk"]
+
+[node name="Minor_Discard_Pile" instance=ExtResource("1_e0bbk")]
+
+[node name="Back" parent="visuals" index="3"]
+frame = 31

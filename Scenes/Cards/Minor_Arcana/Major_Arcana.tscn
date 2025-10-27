@@ -1,0 +1,62 @@
+[gd_scene load_steps=7 format=3 uid="uid://d4buwqgf0xgvj"]
+
+[ext_resource type="Script" uid="uid://dqdyeq7nod3d1" path="res://Scenes/Cards/Minor_Arcana/multiplayer_synchronizer.gd" id="2_5heut"]
+[ext_resource type="Texture2D" uid="uid://hpp33x3jteei" path="res://Cards/card_sprites/PC _ Computer - Balatro - Jokers and Consumables - Jokers (Release ver.).png" id="2_n2d48"]
+[ext_resource type="Texture2D" uid="uid://bbfs58fqo5w3a" path="res://Cards/card_sprites/PC _ Computer - Balatro - Playing Cards - Card Backs, Enhancers and Seals.png" id="3_4dmw5"]
+[ext_resource type="Shape2D" uid="uid://boknmjoc3mejb" path="res://Scenes/card_shape.tres" id="3_n2d48"]
+
+[sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_qe7r6"]
+properties/0/path = NodePath("card:selected")
+properties/0/spawn = true
+properties/0/replication_mode = 1
+properties/1/path = NodePath("card:selected_by")
+properties/1/spawn = true
+properties/1/replication_mode = 1
+
+[sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_taqiw"]
+properties/0/path = NodePath(".:position")
+properties/0/spawn = true
+properties/0/replication_mode = 1
+properties/1/path = NodePath(".:target_position")
+properties/1/spawn = true
+properties/1/replication_mode = 1
+properties/2/path = NodePath(".:current_slot_id")
+properties/2/spawn = true
+properties/2/replication_mode = 1
+properties/3/path = NodePath(".:face_down")
+properties/3/spawn = true
+properties/3/replication_mode = 1
+properties/4/path = NodePath("MultiplayerSynchronizer:selected")
+properties/4/spawn = true
+properties/4/replication_mode = 1
+
+[node name="Joker" type="Node2D"]
+
+[node name="card_sync" type="MultiplayerSynchronizer" parent="."]
+replication_config = SubResource("SceneReplicationConfig_qe7r6")
+
+[node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="."]
+unique_name_in_owner = true
+replication_config = SubResource("SceneReplicationConfig_taqiw")
+script = ExtResource("2_5heut")
+
+[node name="Front" type="Sprite2D" parent="."]
+scale = Vector2(2, 2)
+texture = ExtResource("2_n2d48")
+hframes = 10
+vframes = 16
+
+[node name="Back" type="Sprite2D" parent="."]
+visible = false
+scale = Vector2(2, 2)
+texture = ExtResource("3_4dmw5")
+hframes = 7
+vframes = 5
+frame = 31
+
+[node name="card_body" type="Area2D" parent="."]
+monitoring = false
+monitorable = false
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="card_body"]
+shape = ExtResource("3_n2d48")

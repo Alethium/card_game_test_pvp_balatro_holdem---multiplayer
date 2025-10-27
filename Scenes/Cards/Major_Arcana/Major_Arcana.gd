@@ -1,9 +1,10 @@
-class_name Major_Arcana
+class_name MajorArcana
 extends Card
 
 # Joker Properties
 @export var joker_name: String = "Joker"
-@export_multiline var effect_description: String = "Joker effect description."
+@export_multiline var effect_description: String = "Rightside-up:
+Upside-down:"
 @export var sell_value: int = 3  # Base sell value
 @export var rarity: int = 0  # Common, Uncommon, Rare, etc.
 
@@ -12,7 +13,7 @@ extends Card
 @export var mult_modifier: int = 0
 @export var money_modifier: int = 0
 @export var probability_modifier: float = 0.0
-
+var upside_down = false
 # Runtime variables
 var active: bool = true
 var edition: String = "Base"  # Foil, Holographic, Polychrome, etc.
@@ -20,25 +21,15 @@ var edition: String = "Base"  # Foil, Holographic, Polychrome, etc.
 func _ready():
 	# Jokers are always face up
 	face_down = false
-	#handle_facing()
 
-#func calculate_sell_value() -> int:
-	## Calculate final sell value based on edition, upgrades, etc.
-	#var final_value = sell_value
-	#match edition:
-		#"Foil":
-			#final_value *= 2
-		#"Holographic":
-			#final_value *= 3
-		#"Polychrome":
-			#final_value *= 5
-	#return final_value
 
-func apply_effect(hand_type: String, played_cards: Array, current_chips: int, current_mult: int) -> Dictionary:
-	# Returns modified chips and mult
-	# Override this in individual jokers
-	return {"chips": current_chips + chip_modifier, "mult": current_mult + mult_modifier}
+func apply_upside_effect(hand_type: String, played_cards: Array, current_chips: int, current_mult: int):
+	pass
 
+	
+func apply_downside_effect(hand_type: String, played_cards: Array, current_chips: int, current_mult: int):
+	pass
+	
 func on_round_start():
 	# Called at the start of each round
 	pass

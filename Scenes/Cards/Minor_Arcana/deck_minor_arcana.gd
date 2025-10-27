@@ -1,7 +1,7 @@
 class_name Minor_Arcana_Deck
 extends Deck
 @onready var card_manager: Node2D = $"../card_manager"
-
+@onready var starting_deck_height : int  = 56
 
 
 #CUPS
@@ -128,26 +128,11 @@ var base_set: Array = [
 
 func _ready() -> void:
 	deck_height = starting_deck_height
-	
-	
 
-	
-	
 # Called when the node enters the scene tree for the first time.
 func _process(_delta: float) -> void:
 	handle_deck_height()
-		#if card_manager.currently_spawned_cards.size() != 0:
-			#for card in card_manager.currently_spawned_cards:
-				#card.handle_facing()
-
-#func initialize_deck():
-	#for i in base_set.size() :
-		#var curr_card = base_set[i]
-		#deck_of_cards.append(curr_card)
-		#print("added : ", curr_card)
-		##cards remain uninstantiated until they become visible
-	#
-
+	
 func _on_Major_Arcana_deck_body_mouse_entered() -> void:
 	pass
 
