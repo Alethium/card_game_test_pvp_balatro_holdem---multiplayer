@@ -63,7 +63,6 @@ func unclick():
 
 
 
-
 @rpc("any_peer","reliable")
 func request_player_click(player_id,click_position):
 	print("player click requested")
@@ -78,7 +77,7 @@ func server_player_click(player_id,click_position):
 	print("yay!",player_id,click_position)
 	if multiplayer.get_unique_id() == player_id:
 		var card = raycast_for_card(click_position)
-		if card != null :
+		if card != null and card == Card:
 			if !card.selected_by.has(player_id):
 				if (card.owner_id == player_id or card.owner_id == -1) and selected_cards.size() <= player.max_hand_size - 1 :
 					select_card.rpc(card.card_id)  # Send ID instead of card object

@@ -1,8 +1,8 @@
 class_name Major_Arcana_Deck
 extends Deck
-
 @onready var card_manager: Node2D = $"../card_manager"
 @onready var starting_deck_height : int  = 22
+
 
 
 var THE_FOOL = preload("uid://dewuqaryhsymb")

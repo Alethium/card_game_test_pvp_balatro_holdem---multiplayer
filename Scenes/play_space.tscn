@@ -106,9 +106,9 @@ text = "DEAL"
 [node name="score_manager" type="Node2D" parent="."]
 script = ExtResource("3_5lyoa")
 
-[node name="card_manager" parent="." node_paths=PackedStringArray("Current_Minor_Deck", "current_major_deck") instance=ExtResource("2_osk37")]
+[node name="card_manager" parent="." node_paths=PackedStringArray("Current_Major_Deck", "Current_Minor_Deck") instance=ExtResource("2_osk37")]
+Current_Major_Deck = NodePath("../Major_arcana_deck")
 Current_Minor_Deck = NodePath("../Minor_Arcana")
-current_major_deck = NodePath("../Major_Arcana_Deck")
 
 [node name="game_manager" parent="." instance=ExtResource("2_5lyoa")]
 position = Vector2(1513, 120)
@@ -201,17 +201,17 @@ position = Vector2(128, 953)
 [node name="Minor_card_discard_slot" parent="." instance=ExtResource("1_pe22w")]
 position = Vector2(291, 953)
 
-[node name="Major_Arcana_Deck" parent="." node_paths=PackedStringArray("discard_pile") instance=ExtResource("13_m2f5l")]
+[node name="Major_arcana_deck" parent="." node_paths=PackedStringArray("discard_pile") instance=ExtResource("13_m2f5l")]
 position = Vector2(781, 952)
-discard_pile = NodePath("../Major_modifier_discard_slot")
+discard_pile = NodePath("../Major_Arcana_Discard_Slot")
 
-[node name="Major_Discard_Pile" parent="." instance=ExtResource("11_2r64v")]
+[node name="Major_Arcana_Discard_Pile" parent="." instance=ExtResource("11_2r64v")]
 position = Vector2(291, 953)
 
-[node name="Major_modifier_deck_Slot" parent="." instance=ExtResource("1_pe22w")]
+[node name="Major_Arcana_Deck_Slot" parent="." instance=ExtResource("1_pe22w")]
 position = Vector2(781, 952)
 
-[node name="Major_modifier_discard_slot" parent="." instance=ExtResource("1_pe22w")]
+[node name="Major_Arcana_Discard_Slot" parent="." instance=ExtResource("1_pe22w")]
 position = Vector2(616, 953)
 
 [node name="Players" type="Node2D" parent="."]
@@ -252,5 +252,5 @@ position = Vector2(1732, 887)
 [editable path="Minor_Arcana"]
 [editable path="Minor_card_deck_Slot"]
 [editable path="Minor_card_discard_slot"]
-[editable path="Major_modifier_deck_Slot"]
-[editable path="Major_modifier_discard_slot"]
+[editable path="Major_Arcana_Deck_Slot"]
+[editable path="Major_Arcana_Discard_Slot"]

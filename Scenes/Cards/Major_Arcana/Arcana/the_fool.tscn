@@ -6,3 +6,12 @@
 [node name="The_Fool" instance=ExtResource("1_oldpi")]
 script = ExtResource("2_gfvtj")
 joker_name = "The Fool"
+
+[node name="bg" parent="Visuals" index="0"]
+material = null
+
+[node name="Back" parent="Visuals" index="2"]
+visible = false
+
+[node name="CollisionShape2D" parent="card_body" index="0"]
+visible = true

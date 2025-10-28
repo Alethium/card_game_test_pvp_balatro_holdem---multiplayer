@@ -17,7 +17,7 @@ shader_parameter/colour_3 = Color(0.20225054, 6.7142396e-06, 0.16353557, 1)
 shader_parameter/contrast = 0.61
 shader_parameter/lighting = 0.115
 shader_parameter/spin_amount = 0.19
-shader_parameter/pixel_filter = 379.84
+shader_parameter/pixel_filter = 700.0
 shader_parameter/is_rotating = true
 
 [sub_resource type="CanvasTexture" id="CanvasTexture_6bp64"]

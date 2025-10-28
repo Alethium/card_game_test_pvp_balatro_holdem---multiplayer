@@ -93,6 +93,7 @@ func flip():
 
 func _on_card_body_mouse_entered() -> void:
 	if face_down == false:
+		z_index = 3
 		scale.x = 1.2
 		scale.y = 1.2
 	# Update local state before reading
@@ -121,6 +122,7 @@ func _on_card_body_mouse_entered() -> void:
 
 func _on_card_body_mouse_exited() -> void:
 	if face_down == false:
+		z_index = 1
 		scale.x = 1
 		scale.y = 1
 	if is_multiplayer_authority():

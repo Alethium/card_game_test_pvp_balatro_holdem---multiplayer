@@ -5,19 +5,32 @@ extends Node2D
 @onready var players: Node2D = $"../Players"
 var all_players_full = false
 
+#-----------MAJOR ARCANA
 
-@onready var major_arcana_in_play: Node2D = $"../Major_arcana_Slots"
+@export var Current_Major_Deck : Major_Arcana_Deck
+var currently_spawned_major_arcana : Array
+@onready var major_arcana_deck_slot: CardSlot = $"../Major_Arcana_Deck_Slot"
 
-@onready var major_modifier_deck_slot: CardSlot = $"../Major_modifier_deck_Slot"
-@onready var major_modifier_discard_slot: CardSlot = $"../Major_modifier_discard_slot"
+@onready var major_arcana_slots: Node2D = $"../Major_arcana_Slots"
 
+@onready var major_arcana_discard_slot: CardSlot = $"../Major_Arcana_Discard_Slot"
+@onready var major_discard_pile: DiscardPile = $"../Major_Arcana_Discard_Pile"
+
+#---------MINOR ARCANA
+
+@export var Current_Minor_Deck : Minor_Arcana_Deck
+var currently_spawned_cards : Array 
 @onready var minor_card_deck_slot: CardSlot = $"../Minor_card_deck_Slot"
-@onready var minor_card_discard_slot: CardSlot = $"../Minor_card_discard_slot"
 
+@onready var minor_arcana_community_slots: Array[Node2D] = [%Minor_Arcana_Slot5, %Minor_Arcana_Slot4, %Minor_Arcana_Slot3, %Minor_Arcana_Slot2, %Minor_Arcana_Slot]
+
+@onready var minor_card_discard_slot: CardSlot = $"../Minor_card_discard_slot"
 @onready var minor_discard_pile: DiscardPile = $"../Minor_Discard_Pile"
 
 
-@onready var minor_arcana_community_slots: Array[Node2D] = [%Minor_Arcana_Slot5, %Minor_Arcana_Slot4, %Minor_Arcana_Slot3, %Minor_Arcana_Slot2, %Minor_Arcana_Slot]
+
+
+
 @onready var game_manager: GameManager = $"../game_manager"
 @onready var spawned_cards: Node2D = $"../spawned_cards"
 
@@ -72,12 +85,8 @@ var major_dealing_timer = 0
 
 var drawn_card 
 
-@export var Current_Minor_Deck : Minor_Arcana_Deck
-@export var current_major_deck : Major_Arcana_Deck
 
-var currently_spawned_cards : Array 
 
-var currently_spawned_major_arcana : Array
 
 
 # Network variables
@@ -136,10 +145,9 @@ func _on_player_added(player):
 	#slot.connect("on_hover",_on_hovered_slot)
 	#slot.connect("off_hover",_off_hovered_slot)
 	
-	
-
-
-#__________main utility functions_____________________________________________________________
+#_______________________________________________________________________________
+#							UTILITY TOOLS
+#_______________________________________________________________________________
 
 func initialize_deck_order():
 	if multiplayer.is_server():
@@ -152,9 +160,6 @@ func initialize_deck_order():
 		deck_order.shuffle()
 		print(deck_order)
 		print("server Deck order created. First card index: ", deck_order[0])
-
-
-
 
 func instantiate_cards():
 	var deck_index = 0
@@ -182,25 +187,50 @@ func instantiate_cards():
 		#Current_Minor_Deck.deck_of_cards.shuffle()
 	print("card_instantiation_done")
 	print(Current_Minor_Deck.deck_of_cards[0])
+	deck_index = 0	
+	for card in Current_Major_Deck.base_set:
+		#print(Current_Minor_Deck.)
+		if card is PackedScene:	
+			var int_card = card.instantiate()
+			
+			#int_card.global_position = minor_card_deck_slot.global_position
+			#int_card.card_id = randi()
+			int_card.visible = false
+			int_card.owner_id = 0
+			Current_Major_Deck.deck_of_cards.append(int_card)
+			Current_Major_Deck.increase_deck_height()
+			int_card.global_position = major_arcana_deck_slot.global_position
+			int_card.card_id = card_id_counter
+			int_card.discard_slot = minor_card_discard_slot
+			card_id_counter += 1
+			spawned_cards.add_child(int_card)
+			
+			
+			print(int_card," : added to deck of cards from base set at index : ",deck_index)
+			deck_index += 1
+			
+			#Current_Minor_Deck.deck_of_cards.shuffle()
+		#Current_Minor_Deck.deck_of_cards.shuffle()
+	print("card_instantiation_done")
+	print(Current_Major_Deck.deck_of_cards[0])
 	return	
-
-func draw_single_card(owner_id) -> Card:
+func draw_single_card(owner_id,deck) -> Card:
 	print("draw_single_card_activated")
 	
 	if Current_Minor_Deck.deck_of_cards.size() == 0:
 		push_error("No cards left in deck!")
 		return null
 	#get the node for the card we want to spawn in	
-	var card_scene = Current_Minor_Deck.deck_of_cards.pop_front()
+	var card_scene = deck.deck_of_cards.pop_front()
 	card_scene.z_index = 5
 	#remove the card from the deck
 	
-	Current_Minor_Deck.decrease_deck_height.rpc()
+	deck.decrease_deck_height.rpc()
 	
 	#return with the call that replicates this picked card for everyone. 
 	if card_scene is Node2D:
 		print("spawning card node",card_scene)
-		return draw_instantiated_card(card_scene,owner_id,minor_card_deck_slot.global_position)
+		return draw_instantiated_card(card_scene,owner_id,deck.global_position)
 	#elif card_scene is PackedScene:
 		#print("instantiating packed scene",card_scene)
 		#return spawn_card_for_all(card_scene,owner_id,minor_card_deck_slot.global_position)
@@ -237,6 +267,7 @@ func spawn_card_instance(card_scene: PackedScene, card_id: int, owner_id: int, p
 	#add node to scene for server
 	
 	return card
+
 func draw_instantiated_card(card: Node2D, owner_id: int, position: Vector2) -> Card:
 		#instantiate the scene into a node
 	
@@ -253,7 +284,6 @@ func draw_instantiated_card(card: Node2D, owner_id: int, position: Vector2) -> C
 	#add node to scene for server
 
 	return card
-
 
 func handle_card_visibility(card):
 	#print("card is face down?",card.face_down)
@@ -288,7 +318,6 @@ func handle_card_visibility(card):
 
 	card.handle_facing()
 
-
 func highlight_hovered_card(card,hovered):
 	if hovered:
 		card.scale = Vector2(1.1,1.1)
@@ -296,6 +325,14 @@ func highlight_hovered_card(card,hovered):
 	else:
 		card.scale = Vector2(1,1)
 		card.z_index = 1
+
+
+#_______________________________________________________________________________
+#							rEACTIVE FUNCTIONS
+#_______________________________________________________________________________
+
+
+
 
 #_________recieved inputs_________________________________________________________________
 
@@ -307,7 +344,7 @@ func _on_deal_to_community_pressed() -> void:
 		server_deal_to_community.rpc()
 	else:
 		print("player report:::",Current_Minor_Deck.deck_of_cards)
-		request_deal_to_community.rpc_id(1)
+		request_deal_to_community.rpc()
 
 func _on_deal_to_players_pressed() -> void:
 	print("deal to players pressed")
@@ -320,7 +357,14 @@ func _on_deal_to_players_pressed() -> void:
 		request_deal_to_players.rpc()
 
 func _on_deal_to_major_arcana_pressed() -> void:
-	pass # Replace with function body.
+	print("deal to major pressed by : " , multiplayer.get_unique_id())	
+	
+	if multiplayer.is_server():
+		print("server deck report:::",Current_Minor_Deck.deck_of_cards)
+		server_deal_to_major_arcana.rpc()
+	else:
+		print("player report:::",Current_Minor_Deck.deck_of_cards)
+		request_deal_to_major_arcana.rpc()
 
 func _on_reload_pressed() -> void:
 	if multiplayer.is_server():
@@ -372,6 +416,14 @@ func _on_score_pressed() -> void:
 		request_score_cards.rpc()	
 	
 	
+	
+	
+#_______________________________________________________________________________
+#							CARD DISTRIBUTION
+#_______________________________________________________________________________
+
+
+	
 ##_________________deal community cards ___________________________
 
 @rpc("any_peer", "call_local", "reliable")
@@ -399,7 +451,7 @@ func server_deal_to_community():
 				for slot in minor_arcana_community_slots:
 					if slot.stored_cards.size() == 0:
 						print("drawing card  : ",Current_Minor_Deck.deck_of_cards[0])
-						var drawn_community_card = draw_single_card(-1)
+						var drawn_community_card = draw_single_card(-1,Current_Minor_Deck)
 						drawn_community_card.target_slot = slot
 						Current_Minor_Deck.deck_of_cards.erase(drawn_community_card)
 						#drawn_card.current_slot_id = slot.slot_id
@@ -438,7 +490,7 @@ func server_deal_to_players():
 						
 					if curr_deal.current_hand_size < curr_deal.max_hand_size:
 
-						var drawn_player_card = draw_single_card(curr_deal.player_id)
+						var drawn_player_card = draw_single_card(curr_deal.player_id,Current_Minor_Deck)
 						
 						
 					#	assign the target slot for the card to move to.
@@ -476,6 +528,52 @@ func handle_players_served():
 		#print("all players not full")
 		all_players_full = false
 			
+#-----------------------deal to Major Arcana-----------------------------------
+@rpc("any_peer", "reliable")
+func request_deal_to_major_arcana():
+		#the player clients request to deal, then the server  runs the same function 
+		# Only server should process this
+	if multiplayer.is_server():
+		
+		server_deal_to_players.rpc()
+	else:
+		
+		request_deal_to_players.rpc_id(1)	
+
+@rpc("authority", "call_local", "reliable")
+func server_deal_to_major_arcana():	
+	if multiplayer.is_server():
+		if players.current_players.size() != 0:
+			if Current_Minor_Deck.deck_of_cards.size() == 0:
+				print("major_arcana_deck_empty")
+				#_on_reload_major_arcana_pressed()
+			else:
+				print("server dealing card to community")
+	#			only draw card if there are cards remaining, if no cards remaining call reload.
+				
+				#-1 for community cards
+			#	assign the target slot for the card to move to. 
+				for slot in major_arcana_slots.get_children():
+					if slot.stored_cards.size() == 0:
+						print("drawing card  : ",Current_Major_Deck.deck_of_cards[0])
+						var drawn_major_arcana_card = draw_single_card(-1,Current_Major_Deck) #add what deck to draw a card from in the utility function. 
+						drawn_major_arcana_card.target_slot = slot
+						Current_Major_Deck.deck_of_cards.erase(drawn_major_arcana_card)
+
+						slot.stored_cards.append(drawn_major_arcana_card)
+						break
+		
+
+
+
+
+
+#_______________________________________________________________________________
+#							CARD DISPOSAL
+#_______________________________________________________________________________
+
+
+
 
 #_____________Discard cards from player selected____________________________
 @rpc("any_peer", "reliable")
@@ -667,6 +765,16 @@ func do_reload():
 			return
 #add the cards back to the deck, shuffle the deck, recreate deck order
 
+
+#_______________________________________________________________________________
+#							SCORING
+#_______________________________________________________________________________
+
+
+
+
+
+
 #----------------score player selected cards---------------------------------------------------
 @rpc("any_peer", "call_local", "reliable")
 func request_score_cards():
@@ -706,33 +814,3 @@ func server_score_cards():
 			print("cards: ", hand_info["cards"])
 		else:
 			print("no hand to score")
-
-	##print(currently_spawned_cards)
-	#for card in currently_spawned_cards:
-		#
-		#if card.owner_id != 0 and card.selected:
-			#print("Found selected card to score: ", card)
-			#print("selected by : ", card.selected_by)
-	
-
-	#for card in cards_to_discard:
-		#print("Discarding card: ", card)
-		#target_player.input_synchronizer.deselect_card(card.card_id)
-		#card.deselect.rpc()
-		#card.owner_id = 0  # Or whatever indicates discarded
-		#
-		### Remove from player's selection
-		##if card in target_player.selected_cards:
-			##target_player.selected_cards.erase(card)
-		#
-		## Move to discard slot
-		#var original_slot = card.target_slot
-		#if original_slot != card.discard_slot:
-			#target_player.remove_slot(original_slot)
-		#card.target_slot = card.discard_slot
-		#minor_card_discard_slot.stored_cards.append(card)
-		#
-		## Remove slot from player
-	#
-	#print("Discard complete for player: ", player_id)
-#
