@@ -199,6 +199,7 @@ func instantiate_cards():
 			int_card.owner_id = 0
 			Current_Major_Deck.deck_of_cards.append(int_card)
 			Current_Major_Deck.increase_deck_height()
+			
 			int_card.global_position = major_arcana_deck_slot.global_position
 			int_card.card_id = card_id_counter
 			int_card.discard_slot = minor_card_discard_slot
@@ -407,7 +408,7 @@ func _on_discard_pressed() -> void:
 func _on_score_pressed() -> void:
 	print("scoring")
 	for card in currently_spawned_cards:
-		print("card :", card, "selected? :", card.sync.selected)
+		print("card :", card, "selected? :", card.selected)
 	if multiplayer.is_server():
 		print("Server processing scoring")
 		server_score_cards()
@@ -559,21 +560,14 @@ func server_deal_to_major_arcana():
 						var drawn_major_arcana_card = draw_single_card(-1,Current_Major_Deck) #add what deck to draw a card from in the utility function. 
 						drawn_major_arcana_card.target_slot = slot
 						Current_Major_Deck.deck_of_cards.erase(drawn_major_arcana_card)
-
+						currently_spawned_major_arcana.append(drawn_major_arcana_card)
 						slot.stored_cards.append(drawn_major_arcana_card)
 						break
-		
-
-
-
-
-
+	
+	
 #_______________________________________________________________________________
 #							CARD DISPOSAL
 #_______________________________________________________________________________
-
-
-
 
 #_____________Discard cards from player selected____________________________
 @rpc("any_peer", "reliable")

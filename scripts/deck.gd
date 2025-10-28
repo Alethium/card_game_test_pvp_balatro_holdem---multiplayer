@@ -27,7 +27,7 @@ func _process(_delta: float) -> void:
 
 func handle_deck_height():
 	#print(deck_height,"deck height deck of cards size",deck_of_cards.size())
-	if deck_height != 0:
+	if deck_height > 0:
 		visuals.modulate.a = 1
 	else:
 		visuals.modulate.a = 0

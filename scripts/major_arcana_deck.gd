@@ -8,28 +8,19 @@ extends Deck
 var THE_FOOL = preload("uid://dewuqaryhsymb")
 
 var base_set: Array = [
+	
 	THE_FOOL,
+	THE_FOOL,
+	THE_FOOL,
+	THE_FOOL,
+	THE_FOOL,
+	THE_FOOL,
+	THE_FOOL,
+	
 	]
 
 func _ready() -> void:
 	super._ready()
-	#for i in cards.base_set.size() :
-		#var curr_card = cards.base_set[i]
-		#deck_of_cards.append(curr_card)
-		#print("added : ", curr_card)
-	
-
-	
-	
-# Called when the node enters the scene tree for the first time.
-
-	#handle_hover(delta)
-	#
-	#if currently_spawned_cards.size() != 0:
-		#for card in currently_spawned_cards:
-			#card.handle_facing()
-	#
-	#currently_spawned_cards = cards.get_children()
-	#
-#
-#
+	deck_height = 5
+func _process(_delta: float) -> void:
+	super._process(_delta)

@@ -1,10 +1,11 @@
-[gd_scene load_steps=15 format=3 uid="uid://bstgicllg5jw4"]
+[gd_scene load_steps=16 format=3 uid="uid://bstgicllg5jw4"]
 
 [ext_resource type="PackedScene" uid="uid://dvdg2bxoihq32" path="res://Scenes/card_slot.tscn" id="1_pe22w"]
 [ext_resource type="Script" uid="uid://cvvna1si82h41" path="res://scripts/play_space.gd" id="1_yahnq"]
 [ext_resource type="PackedScene" uid="uid://bvp2lq0xadoi2" path="res://Scenes/game_manager.tscn" id="2_5lyoa"]
 [ext_resource type="PackedScene" uid="uid://dykqpm7wklekq" path="res://Scenes/Cards/Minor_Arcana/Minor_Arcana_Deck.tscn" id="2_i6akn"]
 [ext_resource type="PackedScene" uid="uid://cmw07kbi54r1n" path="res://Scenes/Hexas_Hold_Em_Card_Manager.tscn" id="2_osk37"]
+[ext_resource type="Theme" uid="uid://bl5r56swuu6ll" path="res://Card_game_font_32.tres" id="2_vksat"]
 [ext_resource type="Script" uid="uid://boin6tr0pb4jm" path="res://scripts/score_manager.gd" id="3_5lyoa"]
 [ext_resource type="Script" uid="uid://brcn0uu1w4pk5" path="res://Scenes/Cards/Minor_Arcana/Minor_Arcana_cards.gd" id="4_c2gb4"]
 [ext_resource type="Script" uid="uid://dokx0fbek01si" path="res://scripts/card_synchronizer.gd" id="4_l4lkg"]
@@ -26,6 +27,7 @@ properties/1/replication_mode = 1
 script = ExtResource("1_yahnq")
 
 [node name="UI" type="Control" parent="."]
+texture_filter = 1
 layout_mode = 3
 anchors_preset = 0
 offset_right = 40.0
@@ -33,75 +35,93 @@ offset_bottom = 40.0
 
 [node name="Shuffle" type="Button" parent="UI"]
 layout_mode = 0
-offset_left = 372.0
-offset_top = 1005.0
-offset_right = 448.0
-offset_bottom = 1036.0
+offset_left = 382.0
+offset_top = 953.00006
+offset_right = 458.0
+offset_bottom = 984.00006
+scale = Vector2(0.9354083, 0.9354083)
+theme = ExtResource("2_vksat")
 text = "SHUFFLE"
+
+[node name="Deal_to_community" type="Button" parent="UI"]
+layout_mode = 0
+offset_left = 65.00006
+offset_top = 534.0
+offset_right = 289.00006
+offset_bottom = 643.0
+scale = Vector2(0.9354085, 0.9354085)
+theme = ExtResource("2_vksat")
+text = "DEAL"
 
 [node name="clear_minor_arcana" type="Button" parent="UI"]
 layout_mode = 0
-offset_left = 452.0
-offset_top = 1005.0
-offset_right = 528.0
-offset_bottom = 1036.0
+offset_left = 290.00006
+offset_top = 533.0
+offset_right = 561.00006
+offset_bottom = 642.0
+scale = Vector2(0.9354085, 0.9354085)
+theme = ExtResource("2_vksat")
 text = "CLEAR"
+
+[node name="Deal_to_Major_Arcana" type="Button" parent="UI"]
+layout_mode = 0
+offset_left = 72.0
+offset_top = 221.00002
+offset_right = 296.0
+offset_bottom = 330.0
+scale = Vector2(0.9354085, 0.9354085)
+theme = ExtResource("2_vksat")
+text = "DEAL"
+
+[node name="clear_minor_arcana2" type="Button" parent="UI"]
+layout_mode = 0
+offset_left = 293.00006
+offset_top = 219.0
+offset_right = 564.00006
+offset_bottom = 328.0
+scale = Vector2(0.9354085, 0.9354085)
+theme = ExtResource("2_vksat")
+text = "CLEAR"
+
+[node name="Deal_to_players" type="Button" parent="UI"]
+layout_mode = 0
+offset_left = 866.0
+offset_top = 692.00006
+offset_right = 942.0
+offset_bottom = 723.00006
+scale = Vector2(0.9354085, 0.9354085)
+theme = ExtResource("2_vksat")
+text = "DEAL"
 
 [node name="clear_discards" type="Button" parent="UI"]
 layout_mode = 0
-offset_left = 452.0
-offset_top = 933.0
-offset_right = 528.0
-offset_bottom = 964.0
+offset_left = 866.0
+offset_top = 593.0
+offset_right = 943.0
+offset_bottom = 624.0
+scale = Vector2(0.9354085, 0.9354085)
+theme = ExtResource("2_vksat")
 text = "DISCARD"
 
 [node name="Score" type="Button" parent="UI"]
 layout_mode = 0
-offset_left = 371.0
-offset_top = 933.0
-offset_right = 448.0
-offset_bottom = 964.0
+offset_left = 382.0
+offset_top = 761.0
+offset_right = 459.0
+offset_bottom = 792.0
+scale = Vector2(0.9354083, 0.9354083)
+theme = ExtResource("2_vksat")
 text = "SCORE"
-
-[node name="Deal_to_players" type="Button" parent="UI"]
-layout_mode = 0
-offset_left = 372.0
-offset_top = 969.0
-offset_right = 448.0
-offset_bottom = 1000.0
-text = "DEAL"
 
 [node name="Reload" type="Button" parent="UI"]
 layout_mode = 0
-offset_left = 452.0
-offset_top = 969.0
-offset_right = 528.0
-offset_bottom = 1000.0
+offset_left = 382.0
+offset_top = 857.00006
+offset_right = 458.0
+offset_bottom = 888.00006
+scale = Vector2(0.9354083, 0.9354083)
+theme = ExtResource("2_vksat")
 text = "RELOAD"
-
-[node name="Deal_to_community" type="Button" parent="UI"]
-layout_mode = 0
-offset_left = 866.0
-offset_top = 492.0
-offset_right = 942.0
-offset_bottom = 523.0
-text = "DEAL"
-
-[node name="Deal_to_Major_Arcana" type="Button" parent="UI"]
-layout_mode = 0
-offset_left = 866.0
-offset_top = 174.0
-offset_right = 942.0
-offset_bottom = 205.0
-text = "DEAL"
-
-[node name="Deal2" type="Button" parent="UI"]
-layout_mode = 0
-offset_left = 1834.0
-offset_top = 95.0
-offset_right = 1910.0
-offset_bottom = 126.0
-text = "DEAL"
 
 [node name="score_manager" type="Node2D" parent="."]
 script = ExtResource("3_5lyoa")
@@ -192,27 +212,27 @@ visible = true
 [node name="card_outline" parent="Minor_Arcana/visuals" index="1"]
 visible = true
 
-[node name="Minor_Discard_Pile" parent="." instance=ExtResource("11_2r64v")]
-position = Vector2(291, 953)
-
 [node name="Minor_card_deck_Slot" parent="." instance=ExtResource("1_pe22w")]
 position = Vector2(128, 953)
+
+[node name="Minor_Discard_Pile" parent="." instance=ExtResource("11_2r64v")]
+position = Vector2(291, 953)
 
 [node name="Minor_card_discard_slot" parent="." instance=ExtResource("1_pe22w")]
 position = Vector2(291, 953)
 
 [node name="Major_arcana_deck" parent="." node_paths=PackedStringArray("discard_pile") instance=ExtResource("13_m2f5l")]
-position = Vector2(781, 952)
+position = Vector2(856, 952)
 discard_pile = NodePath("../Major_Arcana_Discard_Slot")
 
-[node name="Major_Arcana_Discard_Pile" parent="." instance=ExtResource("11_2r64v")]
-position = Vector2(291, 953)
-
 [node name="Major_Arcana_Deck_Slot" parent="." instance=ExtResource("1_pe22w")]
-position = Vector2(781, 952)
+position = Vector2(856, 952)
+
+[node name="Major_Arcana_Discard_Pile" parent="." instance=ExtResource("11_2r64v")]
+position = Vector2(691, 953)
 
 [node name="Major_Arcana_Discard_Slot" parent="." instance=ExtResource("1_pe22w")]
-position = Vector2(616, 953)
+position = Vector2(691, 953)
 
 [node name="Players" type="Node2D" parent="."]
 script = ExtResource("6_m4s6i")
@@ -230,14 +250,14 @@ position = Vector2(1738, 673)
 position = Vector2(1732, 887)
 
 [connection signal="pressed" from="UI/Shuffle" to="card_manager" method="_on_shuffle_button_pressed"]
+[connection signal="pressed" from="UI/Deal_to_community" to="card_manager" method="_on_deal_to_community_pressed"]
 [connection signal="pressed" from="UI/clear_minor_arcana" to="card_manager" method="_on_clear_pressed"]
+[connection signal="pressed" from="UI/Deal_to_Major_Arcana" to="card_manager" method="_on_deal_to_major_arcana_pressed"]
+[connection signal="pressed" from="UI/clear_minor_arcana2" to="card_manager" method="_on_clear_pressed"]
+[connection signal="pressed" from="UI/Deal_to_players" to="card_manager" method="_on_deal_to_players_pressed"]
 [connection signal="pressed" from="UI/clear_discards" to="card_manager" method="_on_discard_pressed"]
 [connection signal="pressed" from="UI/Score" to="card_manager" method="_on_score_pressed"]
-[connection signal="pressed" from="UI/Deal_to_players" to="card_manager" method="_on_deal_to_players_pressed"]
 [connection signal="pressed" from="UI/Reload" to="card_manager" method="_on_reload_pressed"]
-[connection signal="pressed" from="UI/Deal_to_community" to="card_manager" method="_on_deal_to_community_pressed"]
-[connection signal="pressed" from="UI/Deal_to_Major_Arcana" to="card_manager" method="_on_deal_to_major_arcana_pressed"]
-[connection signal="pressed" from="UI/Deal2" to="card_manager" method="_on_deal_pressed"]
 
 [editable path="Minor_Arcana_Community_Slots/Minor_Arcana_Slot5"]
 [editable path="Minor_Arcana_Community_Slots/Minor_Arcana_Slot4"]
