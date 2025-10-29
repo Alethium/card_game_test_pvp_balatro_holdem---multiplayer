@@ -82,7 +82,7 @@ _data = {
 &"flip": SubResource("Animation_eumee")
 }
 
-[node name="card" type="Node2D"]
+[node name="card" type="Button"]
 script = ExtResource("1_0qqmn")
 
 [node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="."]

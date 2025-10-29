@@ -1,5 +1,16 @@
 class_name ScoreManager
 extends Node
+@onready var card_manager: Node2D = $"../card_manager"
+@onready var game_manager: GameManager = $"../game_manager"
+
+
+
+var scoring_timer = 0
+
+var scoring = false 
+
+
+
 
 # Poker hand definitions based on your image
 const HAND_DEFINITIONS = {
@@ -20,10 +31,6 @@ const HAND_DEFINITIONS = {
 
 
 
-
-
-
-
 class PokerHand:
 	var hand_type: String
 	var base_multiplier: int
@@ -41,6 +48,7 @@ class PokerHand:
 		for card in cards:
 			card_value += card.score
 		return (card_value + chips) * base_multiplier
+	
 
 # Function to determine the best hand from selected cards
 func determine_best_hand(cards: Array) -> PokerHand:
@@ -421,6 +429,14 @@ func check_high_card(cards: Array) -> PokerHand:
 func calculate_hand_score(cards: Array) -> int:
 	var best_hand = determine_best_hand(cards)
 	return best_hand.get_score()
+	
+# this is pre doink implimentation pf most basic stuff. 	
+
+
+
+
+
+
 
 # Function to get hand information
 func get_hand_info(cards: Array):

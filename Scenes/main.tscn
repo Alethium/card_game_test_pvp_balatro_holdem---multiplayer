@@ -4,7 +4,7 @@
 [ext_resource type="Script" uid="uid://rnj7rsre16s" path="res://scripts/network_manager.gd" id="2_bo1nx"]
 [ext_resource type="PackedScene" uid="uid://bstgicllg5jw4" path="res://Scenes/play_space.tscn" id="2_jjvhh"]
 [ext_resource type="Shader" uid="uid://b7xp6qgaedm1o" path="res://scripts/Shader/Background_balatro.gdshader" id="2_kry3j"]
-[ext_resource type="Theme" uid="uid://bl5r56swuu6ll" path="res://Card_game_font_32.tres" id="3_8gbba"]
+[ext_resource type="Theme" uid="uid://bl5r56swuu6ll" path="res://Hexes_theme.tres" id="3_8gbba"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_21xkr"]
 shader = ExtResource("2_kry3j")
@@ -40,9 +40,9 @@ script = ExtResource("2_bo1nx")
 unique_name_in_owner = true
 layout_mode = 3
 anchors_preset = 0
-offset_left = 949.0
+offset_left = 1046.0
 offset_top = 827.0
-offset_right = 949.0
+offset_right = 1046.0
 offset_bottom = 827.0
 
 [node name="VBoxContainer" type="VBoxContainer" parent="Enet_Multiplayer_HUD"]

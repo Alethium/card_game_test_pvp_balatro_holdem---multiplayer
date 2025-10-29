@@ -32,7 +32,8 @@ var currently_spawned_cards : Array
 
 
 @onready var game_manager: GameManager = $"../game_manager"
-@onready var spawned_cards: Node2D = $"../spawned_cards"
+
+@onready var spawned_cards: Control = $"../UI/spawned_cards"
 
 @onready var score_manager: Node2D = $"../score_manager"
 
@@ -229,7 +230,7 @@ func draw_single_card(owner_id,deck) -> Card:
 	deck.decrease_deck_height.rpc()
 	
 	#return with the call that replicates this picked card for everyone. 
-	if card_scene is Node2D:
+	if card_scene is Button:
 		print("spawning card node",card_scene)
 		return draw_instantiated_card(card_scene,owner_id,deck.global_position)
 	#elif card_scene is PackedScene:
@@ -269,7 +270,7 @@ func spawn_card_instance(card_scene: PackedScene, card_id: int, owner_id: int, p
 	
 	return card
 
-func draw_instantiated_card(card: Node2D, owner_id: int, position: Vector2) -> Card:
+func draw_instantiated_card(card: Button, owner_id: int, position: Vector2) -> Card:
 		#instantiate the scene into a node
 	
 	#card.card_id = card_id
@@ -434,7 +435,7 @@ func request_deal_to_community():
 	if multiplayer.is_server():
 		server_deal_to_community.rpc()
 	else:
-		server_deal_to_community.rpc(1)
+		request_deal_to_community.rpc_id(1)
 	
 @rpc("authority", "call_local", "reliable")
 func server_deal_to_community():
@@ -454,6 +455,7 @@ func server_deal_to_community():
 						print("drawing card  : ",Current_Minor_Deck.deck_of_cards[0])
 						var drawn_community_card = draw_single_card(-1,Current_Minor_Deck)
 						drawn_community_card.target_slot = slot
+						drawn_community_card.visible = true
 						Current_Minor_Deck.deck_of_cards.erase(drawn_community_card)
 						#drawn_card.current_slot_id = slot.slot_id
 						#deck_order.remove_at(0)
@@ -498,6 +500,7 @@ func server_deal_to_players():
 						
 						var new_slot = curr_deal.add_slot()
 						drawn_player_card.target_slot = new_slot
+						drawn_player_card.visible = true
 						curr_deal.current_hand.append(drawn_player_card)
 						Current_Minor_Deck.deck_of_cards.erase(drawn_player_card)
 						if dealing_index < players.current_players.size()-1:
@@ -559,6 +562,7 @@ func server_deal_to_major_arcana():
 						print("drawing card  : ",Current_Major_Deck.deck_of_cards[0])
 						var drawn_major_arcana_card = draw_single_card(-1,Current_Major_Deck) #add what deck to draw a card from in the utility function. 
 						drawn_major_arcana_card.target_slot = slot
+						drawn_major_arcana_card.visible = true
 						Current_Major_Deck.deck_of_cards.erase(drawn_major_arcana_card)
 						currently_spawned_major_arcana.append(drawn_major_arcana_card)
 						slot.stored_cards.append(drawn_major_arcana_card)
@@ -719,7 +723,8 @@ func do_reload():
 			for card in minor_card_discard_slot.stored_cards:
 				print("adding to deck height")
 				Current_Minor_Deck.increase_deck_height.rpc()
-				card.z_index = -3
+				
+				card.z_index = - 5
 				card.selectable = true
 				card.target_slot = minor_card_deck_slot
 				print("reloading deck with : ", card)
@@ -727,7 +732,6 @@ func do_reload():
 				print(minor_card_deck_slot.stored_cards)
 				print("Cards left to reload : ", minor_card_discard_slot.stored_cards)
 				minor_discard_pile.decrease_deck_height()
-				card.z_index = - 5
 				print(minor_discard_pile.deck_height, " : current deck height")
 				minor_card_discard_slot.stored_cards.erase(card)
 				break
@@ -739,6 +743,7 @@ func do_reload():
 			#print(minor_card_deck_slot.stored_cards)
 			if card.global_position.distance_to(minor_card_deck_slot.global_position) <= 0.1:
 				
+				card.visible = false
 				print("removing card to reload :  ", card)
 				card.global_position = minor_card_deck_slot.global_position
 				Current_Minor_Deck.deck_of_cards.append(card)

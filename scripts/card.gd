@@ -1,5 +1,5 @@
 class_name Card
-extends Node2D
+extends Button
 
 #@export var OWNER_ID : Player
 @export var target_slot : CardSlot
@@ -30,6 +30,7 @@ signal off_hover
 
 
 func _ready():
+	visible = false
 	# Only the server should control the card's authoritative state
 	if multiplayer.is_server():
 		sync.set_multiplayer_authority(1)  # Server has authority
@@ -96,6 +97,7 @@ func _on_card_body_mouse_entered() -> void:
 		z_index = 3
 		scale.x = 1.2
 		scale.y = 1.2
+		wiggle()
 	# Update local state before reading
 	#update_status()
 	
@@ -125,6 +127,7 @@ func _on_card_body_mouse_exited() -> void:
 		z_index = 1
 		scale.x = 1
 		scale.y = 1
+		wiggle()
 	if is_multiplayer_authority():
 		off_hover.emit(self)
 		
@@ -135,3 +138,12 @@ func move_to_target(delta):
 	else:
 		pass
 		
+func wiggle():
+	var tween = create_tween()
+	tween.set_parallel(true)
+	#tween.tween_property(self, "scale", Vector2(1.1, 1.1), 0.1)
+	tween.tween_property(self, "rotation", deg_to_rad(5), 0.1)
+	tween.tween_property(self, "rotation", deg_to_rad(-4), 0.1).set_delay(0.1)
+	tween.tween_property(self, "rotation", deg_to_rad(3), 0.1).set_delay(0.1)
+	tween.tween_property(self, "rotation", 0, 0.1).set_delay(0.1)
+	#tween.tween_property(self, "scale", Vector2(1.0, 1.0), 0.1).set_delay(0.1)
