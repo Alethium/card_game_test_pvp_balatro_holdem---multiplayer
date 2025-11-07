@@ -17,6 +17,9 @@ properties/1/replication_mode = 1
 properties/2/path = NodePath(".:position")
 properties/2/spawn = false
 properties/2/replication_mode = 1
+properties/3/path = NodePath(".:ready_up")
+properties/3/spawn = true
+properties/3/replication_mode = 1
 
 [sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_i7h06"]
 properties/0/path = NodePath("input_synchronizer:player_mouse_cursor_direction")
@@ -32,8 +35,11 @@ properties/3/path = NodePath("input_synchronizer:clicked")
 properties/3/spawn = false
 properties/3/replication_mode = 1
 properties/4/path = NodePath(".:ready_up")
-properties/4/spawn = true
-properties/4/replication_mode = 1
+properties/4/spawn = false
+properties/4/replication_mode = 0
+properties/5/path = NodePath("input_synchronizer:ready_up")
+properties/5/spawn = true
+properties/5/replication_mode = 0
 
 [node name="multiplayer_player" type="Node2D"]
 script = ExtResource("1_a61r2")

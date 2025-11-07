@@ -70,7 +70,8 @@ func _ready() -> void:
 	
 
 func _physics_process(delta: float) -> void:
-
+	ready_text.text = str( "ready? : ", ready_up)
+	
 	if multiplayer.is_server():
 		update_input(delta) 
 		
@@ -91,7 +92,7 @@ func _input(event: InputEvent) -> void:
 
 func update_input(_delta):
 	#hand_cursor.global_position += %input_synchronizer.player_mouse_cursor_direction
-	
+	ready_up = %input_synchronizer.ready_up
 	hand_cursor.global_position = %input_synchronizer.player_mouse_cursor_position
 	
 	#also transfer clicking code from cardmanager over here
@@ -145,12 +146,14 @@ func handle_hand_slots(delta):
 		current_slots[i].global_rotation = global_rotation
 		
 func _on_ready_button_pressed() -> void:
+	
+	if multiplayer.get_unique_id() == player_id:
 		print("player ready button pressed")
 		if !ready_up:
 			player_ready.rpc()
 		else:
 			player_unready.rpc()
-				
+
 
 
 
@@ -159,15 +162,15 @@ func _on_ready_button_pressed() -> void:
 @rpc ("any_peer","call_local")
 func player_ready():
 		print("player : ", player_id, " is ready")
-		ready_up = true
-		ready_text.text = str( "READY", ready_up)
+		%input_synchronizer.ready_up = true
+		#ready_text.text = str( "ready? : ", ready_up)
 
 	
 @rpc ("any_peer","call_local")
 func player_unready():
 		print("player : ", player_id, " is not ready")
-		ready_up = false
-		ready_text.text = str( "not READY", ready_up)
+		%input_synchronizer.ready_up = false
+		#ready_text.text = str( "ready? : ", ready_up)
 
 	
 
