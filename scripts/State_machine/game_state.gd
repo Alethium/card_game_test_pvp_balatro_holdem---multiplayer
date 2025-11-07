@@ -10,6 +10,8 @@ var states
 var card_manager
 var game_manager
 var score_manager
+var display
+var label
 
 func enter_state() -> void:
 	pass # Replace with function body.

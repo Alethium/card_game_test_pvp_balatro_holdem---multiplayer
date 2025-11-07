@@ -1,8 +1,9 @@
-[gd_scene load_steps=8 format=3 uid="uid://bqtpu7j6665bn"]
+[gd_scene load_steps=9 format=3 uid="uid://bqtpu7j6665bn"]
 
 [ext_resource type="Script" uid="uid://ryrvaexjy5si" path="res://scripts/Multiplayer/multiplayer_player.gd" id="1_a61r2"]
 [ext_resource type="PackedScene" uid="uid://dw4rp4xr3fy7k" path="res://Scenes/Player/hand_cursor.tscn" id="2_4ea1o"]
 [ext_resource type="Script" uid="uid://bomxxc8qi6eke" path="res://scripts/Multiplayer/multiplayer_input.gd" id="2_ql3ps"]
+[ext_resource type="Texture2D" uid="uid://cq4f50uf7pnaw" path="res://icon.svg" id="4_i7h06"]
 [ext_resource type="PackedScene" uid="uid://c3fgf484hca30" path="res://Scenes/Player/health_meter.tscn" id="4_ql3ps"]
 [ext_resource type="Script" uid="uid://bv8vfsflrvprv" path="res://scripts/mouse_window_detection.gd" id="5_ql3ps"]
 
@@ -30,6 +31,9 @@ properties/2/replication_mode = 1
 properties/3/path = NodePath("input_synchronizer:clicked")
 properties/3/spawn = false
 properties/3/replication_mode = 1
+properties/4/path = NodePath(".:ready_up")
+properties/4/spawn = true
+properties/4/replication_mode = 1
 
 [node name="multiplayer_player" type="Node2D"]
 script = ExtResource("1_a61r2")
@@ -46,27 +50,34 @@ script = ExtResource("2_ql3ps")
 z_index = 5
 position = Vector2(118, 32)
 
+[node name="Avatar" type="Sprite2D" parent="."]
+unique_name_in_owner = true
+position = Vector2(81, -49)
+scale = Vector2(1.234375, 1.234375)
+texture = ExtResource("4_i7h06")
+
 [node name="Control" type="Control" parent="."]
+unique_name_in_owner = true
 layout_mode = 3
 anchors_preset = 0
 offset_right = 40.0
 offset_bottom = 40.0
 
-[node name="discard_button" type="Button" parent="Control"]
+[node name="ready" type="Button" parent="Control"]
 layout_mode = 0
 offset_left = 5.0
 offset_top = -94.0
 offset_right = 82.0
 offset_bottom = -63.0
-text = "DISCARD"
+text = "READY"
 
-[node name="play_button" type="Button" parent="Control"]
+[node name="bet" type="Button" parent="Control"]
 layout_mode = 0
 offset_left = 5.0
 offset_top = -57.0
 offset_right = 103.0
 offset_bottom = -26.0
-text = "PLAY HAND"
+text = "BET"
 
 [node name="current_hand" type="Label" parent="Control"]
 layout_mode = 0
@@ -84,6 +95,14 @@ offset_right = 142.0
 offset_bottom = 32.0
 text = "SCORE :"
 
+[node name="ready_text" type="Label" parent="Control"]
+layout_mode = 0
+offset_left = 86.0
+offset_top = -89.0
+offset_right = 145.0
+offset_bottom = -66.0
+text = "untouched"
+
 [node name="player_hand" type="Node2D" parent="."]
 position = Vector2(-1258, 0)
 
@@ -96,5 +115,6 @@ position = Vector2(13, -159)
 [node name="mouse_window_detection" type="Node" parent="."]
 script = ExtResource("5_ql3ps")
 
-[connection signal="pressed" from="Control/discard_button" to="." method="_on_discard_button_pressed"]
-[connection signal="pressed" from="Control/play_button" to="." method="_on_play_button_pressed"]
+[connection signal="pressed" from="Control/ready" to="." method="_on_ready_button_pressed"]
+[connection signal="pressed" from="Control/ready" to="input_synchronizer" method="_on_ready_button_pressed"]
+[connection signal="pressed" from="Control/bet" to="." method="_on_play_button_pressed"]

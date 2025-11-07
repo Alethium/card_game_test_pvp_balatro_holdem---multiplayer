@@ -8,6 +8,7 @@ var play_state : PlayState
 @onready var game_manager: GameManager = $game_manager
 
 
+
 func _ready() -> void:
 	print("game ready")
 func _process(_delta: float) -> void:

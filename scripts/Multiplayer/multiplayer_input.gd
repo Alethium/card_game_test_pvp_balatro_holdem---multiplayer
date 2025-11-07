@@ -15,6 +15,7 @@ var discarding = false
 var selected_cards = []
 @onready var view = get_viewport()
 var screen_size 
+var ready_up = false
 func _ready() -> void:
 	
 	curr_hand_state = 0
@@ -75,26 +76,27 @@ func request_player_click(player_id,click_position):
 @rpc("any_peer", "call_local", "reliable")	
 func server_player_click(player_id,click_position):
 	print("yay!",player_id,click_position)
-	if multiplayer.get_unique_id() == player_id:
-		var card = raycast_for_card(click_position)
-		if card != null and card is Card:
-			if !card.selected_by.has(player_id):
-				if (card.owner_id == player_id or card.owner_id == -1) and selected_cards.size() <= player.max_hand_size - 1 :
-					select_card.rpc(card.card_id)  # Send ID instead of card object
-					card.select.rpc(player_id)
-					
-					print("num of cards selected : ",selected_cards.size())
-					print("yay!",card," clicked!, clicker is: ",player_id,"clicked at : ",click_position)
-					print("clicked card is  allowed to be selected by this user  : ",card.sync.selected)
-				else:
-					print("clicked card is NOT allowed to be selected by this user  : ",card.sync.selected)
-			else :
-				if card.owner_id == player_id or card.owner_id == -1 :
-					deselect_card.rpc(card.card_id)
-					card.deselect.rpc(player_id)
-					print("selected card clicked for deselect", card.sync.selected)
-				else:
-					print("clicked card is NOT allowed to be selected by this user")
+	#if multiplayer.get_unique_id() == player_id:
+	var card = raycast_for_card(click_position)
+	if card != null and card is Card:
+		if !card.selected_by.has(player_id):
+			if (card.owner_id == player_id or card.owner_id == -1) and selected_cards.size() <= player.max_hand_size - 1 :
+				#select_card.rpc(card.card_id)  # Send ID instead of card object
+				card.select.rpc(player_id)
+				selected_cards.append(card)
+				print("num of cards selected : ",selected_cards.size())
+				print("yay!",card," clicked!, clicker is: ",player_id,"clicked at : ",click_position)
+				print("clicked card is  allowed to be selected by this user  : ",card.selected)
+			else:
+				print("clicked card is NOT allowed to be selected by this user  : ",card.sync.selected)
+		else :
+			if card.owner_id == player_id or card.owner_id == -1 :
+				#deselect_card.rpc(card.card_id)
+				card.deselect.rpc(player_id)
+				selected_cards.erase(card)
+				print("selected card clicked for deselect", card.sync.selected)
+			else:
+				print("clicked card is NOT allowed to be selected by this user")
 				
 				
 	
@@ -163,6 +165,7 @@ func deselect_card(card_id):
 		if selected_cards[i].card_id == card_id:
 			selected_cards.remove_at(i)
 	print(selected_cards, " after removal")
+	
 
 func find_card_by_id(card_id):
 	# Find card in the current scene or world by ID
@@ -170,3 +173,34 @@ func find_card_by_id(card_id):
 		if card.card_id == card_id:
 			return card
 	return null
+
+
+#func _on_ready_button_pressed() -> void:
+	#print("player ready button pressed")
+	#if multiplayer.is_server():	
+		#if multiplayer.get_unique_id() == player.player_id:
+			#server_player_ready.rpc(player.player_id)
+	#else:
+			#
+		#if multiplayer.get_unique_id() == player.player_id:
+			#request_player_ready.rpc(player.player_id)
+	#
+#@rpc("any_peer","reliable")	
+#func request_player_ready(player_id):
+	#print("player ready requested")
+	#if multiplayer.is_server():
+		#server_player_ready.rpc(player_id)
+	#else:
+		#request_player_ready.rpc_id(1,player_id)
+#
+#
+#@rpc("any_peer", "call_local", "reliable")	
+#func server_player_ready(player_id):
+	#if multiplayer.is_server():	
+		#if !ready_up:
+			#print("player : ", player_id, " is ready")
+			#ready_up = true
+#
+		#else:
+			#print("player : ", player_id, " is not ready")
+			#ready_up = false

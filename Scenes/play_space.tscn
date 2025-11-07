@@ -1,4 +1,4 @@
-[gd_scene load_steps=15 format=3 uid="uid://bstgicllg5jw4"]
+[gd_scene load_steps=27 format=3 uid="uid://bstgicllg5jw4"]
 
 [ext_resource type="PackedScene" uid="uid://dvdg2bxoihq32" path="res://Scenes/card_slot.tscn" id="1_pe22w"]
 [ext_resource type="Script" uid="uid://cvvna1si82h41" path="res://scripts/play_space.gd" id="1_yahnq"]
@@ -7,12 +7,78 @@
 [ext_resource type="PackedScene" uid="uid://cmw07kbi54r1n" path="res://Scenes/Hexas_Hold_Em_Card_Manager.tscn" id="2_osk37"]
 [ext_resource type="Theme" uid="uid://bl5r56swuu6ll" path="res://Hexes_theme.tres" id="2_vksat"]
 [ext_resource type="Script" uid="uid://boin6tr0pb4jm" path="res://scripts/score_manager.gd" id="3_5lyoa"]
+[ext_resource type="Texture2D" uid="uid://cvu6of51i2ysw" path="res://UI_SPRITES/Panel4_theme.png" id="3_8c8v6"]
+[ext_resource type="Texture2D" uid="uid://duw5qosqqirgu" path="res://UI_SPRITES/Panel1_theme.png" id="4_e11vn"]
 [ext_resource type="Script" uid="uid://dokx0fbek01si" path="res://scripts/card_synchronizer.gd" id="4_l4lkg"]
+[ext_resource type="Texture2D" uid="uid://bkdcqc2hnku8i" path="res://UI_SPRITES/Panel5_theme.png" id="5_hia5p"]
 [ext_resource type="Script" uid="uid://bq8u3qwnf4w16" path="res://scripts/card_spawner.gd" id="6_a7jki"]
+[ext_resource type="LabelSettings" uid="uid://dsh0ub0027h0" path="res://red text.tres" id="6_hia5p"]
 [ext_resource type="Script" uid="uid://cilgpbld2ax5j" path="res://scripts/players.gd" id="6_m4s6i"]
+[ext_resource type="Texture2D" uid="uid://b61a25r41lpnr" path="res://UI_SPRITES/Panel3_theme.png" id="7_hia5p"]
 [ext_resource type="Script" uid="uid://chwq4d5jfqblg" path="res://scripts/Multiplayer/multiplayer_manager.gd" id="8_5lyoa"]
 [ext_resource type="PackedScene" uid="uid://b4np4nqab6der" path="res://Scenes/minor_discard_pile.tscn" id="11_2r64v"]
 [ext_resource type="PackedScene" uid="uid://b74yh17gf2rmq" path="res://Scenes/Cards/Major_Arcana/Major_Arcana_Deck.tscn" id="13_m2f5l"]
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_ye6pk"]
+texture = ExtResource("3_8c8v6")
+texture_margin_left = 16.0
+texture_margin_top = 16.0
+texture_margin_right = 16.0
+texture_margin_bottom = 16.0
+expand_margin_left = 9.0
+expand_margin_top = 9.0
+expand_margin_right = 9.0
+expand_margin_bottom = 9.0
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_yc5f0"]
+texture = ExtResource("4_e11vn")
+texture_margin_left = 16.0
+texture_margin_top = 16.0
+texture_margin_right = 16.0
+texture_margin_bottom = 16.0
+expand_margin_left = 9.0
+expand_margin_top = 9.0
+expand_margin_right = 9.0
+expand_margin_bottom = 9.0
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_nom78"]
+texture = ExtResource("7_hia5p")
+texture_margin_left = 16.0
+texture_margin_top = 16.0
+texture_margin_right = 16.0
+texture_margin_bottom = 16.0
+expand_margin_left = 10.0
+expand_margin_top = 10.0
+expand_margin_right = 10.0
+expand_margin_bottom = 10.0
+
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_gymjv"]
+load_path = "res://.godot/imported/Panel3_theme.png-510ba5197d823759ac46b3df9ae825c8.ctex"
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_jiu1g"]
+texture = SubResource("CompressedTexture2D_gymjv")
+texture_margin_left = 16.0
+texture_margin_top = 16.0
+texture_margin_right = 16.0
+texture_margin_bottom = 16.0
+expand_margin_left = 10.0
+expand_margin_top = 10.0
+expand_margin_right = 10.0
+expand_margin_bottom = 10.0
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_sgjxw"]
+texture = ExtResource("5_hia5p")
+texture_margin_left = 16.0
+texture_margin_top = 16.0
+texture_margin_right = 16.0
+texture_margin_bottom = 16.0
+expand_margin_left = 10.0
+expand_margin_top = 10.0
+expand_margin_right = 10.0
+expand_margin_bottom = 10.0
+
+[sub_resource type="LabelSettings" id="LabelSettings_hia5p"]
+font_size = 20
 
 [sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_5lyoa"]
 properties/0/path = NodePath("card_manager:networked_cards")
@@ -133,15 +199,168 @@ anchors_preset = 0
 
 [node name="Score_Display" type="Control" parent="UI"]
 anchors_preset = 0
-offset_right = 40.0
-offset_bottom = 40.0
+offset_left = 866.99994
+offset_top = 996.00006
+offset_right = 906.99994
+offset_bottom = 1036.0
+scale = Vector2(0.5453692, 0.5032204)
 
-[node name="Panel" type="Panel" parent="UI/Score_Display"]
+[node name="BG" type="Panel" parent="UI/Score_Display"]
+texture_filter = 1
 layout_mode = 0
-offset_left = 350.0
-offset_top = 859.0
-offset_right = 710.0
-offset_bottom = 1048.0
+offset_left = -304.38098
+offset_top = -488.85132
+offset_right = -170.5267
+offset_bottom = -367.6321
+scale = Vector2(5, 5)
+theme_override_styles/panel = SubResource("StyleBoxTexture_ye6pk")
+
+[node name="Panel3" type="Panel" parent="UI/Score_Display/BG"]
+layout_mode = 0
+offset_left = 1.8336182
+offset_top = 25.833618
+offset_right = 132.02066
+offset_bottom = 87.43686
+theme_override_styles/panel = SubResource("StyleBoxTexture_yc5f0")
+
+[node name="Panel" type="Panel" parent="UI/Score_Display/BG/Panel3"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 3.3005142
+offset_top = 28.21824
+offset_right = -71.14448
+offset_bottom = -2.3846664
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxTexture_nom78")
+
+[node name="Panel3" type="Panel" parent="UI/Score_Display/BG/Panel3"]
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+offset_left = 2.2003326
+offset_top = 1.5897522
+offset_right = -2.2003326
+offset_bottom = 25.038727
+grow_horizontal = 2
+theme_override_styles/panel = SubResource("StyleBoxTexture_nom78")
+
+[node name="Panel2" type="Panel" parent="UI/Score_Display/BG/Panel3"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 67.110504
+offset_top = 27.820824
+offset_right = -2.5670776
+offset_bottom = -2.7820816
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxTexture_jiu1g")
+
+[node name="Score_Upper_Frame" type="Panel" parent="UI/Score_Display/BG"]
+layout_mode = 0
+offset_left = 1.8336182
+offset_top = 1.5897522
+offset_right = 132.02066
+offset_bottom = 25.833588
+theme_override_styles/panel = SubResource("StyleBoxTexture_yc5f0")
+
+[node name="Number_Panel" type="Panel" parent="UI/Score_Display/BG/Score_Upper_Frame"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 33.00518
+offset_top = 3.179514
+offset_right = -2.5670776
+offset_bottom = -2.3846645
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxTexture_sgjxw")
+
+[node name="Hand_Name" type="Label" parent="UI/Score_Display"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -209.03262
+offset_top = -325.901
+offset_right = 416.96738
+offset_bottom = -255.901
+grow_horizontal = 2
+grow_vertical = 2
+scale = Vector2(0.693, 0.693)
+text = "HAND NAME"
+label_settings = ExtResource("6_hia5p")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Score_Text" type="Label" parent="UI/Score_Display"]
+layout_mode = 0
+offset_left = -130.18704
+offset_top = -498.78748
+offset_right = 344.72055
+offset_bottom = -352.78748
+theme = ExtResource("2_vksat")
+text = "20,356"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Round_Score" type="Label" parent="UI/Score_Display"]
+layout_mode = 0
+offset_left = -267.7085
+offset_top = -453.0818
+offset_right = -143.7085
+offset_bottom = -354.0818
+theme = ExtResource("2_vksat")
+theme_override_constants/line_spacing = -15
+theme_override_font_sizes/font_size = 47
+text = "Round 
+Score"
+horizontal_alignment = 1
+
+[node name="Game_State_Display" type="Control" parent="UI"]
+anchors_preset = 0
+offset_left = 1357.0
+offset_top = 829.0
+offset_right = 1397.0
+offset_bottom = 869.0
+
+[node name="Panel" type="Panel" parent="UI/Game_State_Display"]
+layout_mode = 1
+anchors_preset = -1
+anchor_right = 47.763
+anchor_bottom = 26.970001
+offset_left = -280.5
+offset_top = -71.5
+offset_right = -1631.02
+offset_bottom = -911.30005
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="Game State" type="Label" parent="UI/Game_State_Display"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -677.0
+offset_top = -281.0
+offset_right = 636.0
+offset_bottom = 309.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "GAME STATE :
+"
+label_settings = SubResource("LabelSettings_hia5p")
+horizontal_alignment = 1
+vertical_alignment = 1
+autowrap_mode = 2
 
 [node name="score_manager" type="Node2D" parent="."]
 script = ExtResource("3_5lyoa")
@@ -151,7 +370,7 @@ Current_Major_Deck = NodePath("../Major_arcana_deck")
 Current_Minor_Deck = NodePath("../Minor_Arcana")
 
 [node name="game_manager" parent="." instance=ExtResource("2_5lyoa")]
-position = Vector2(1513, 120)
+position = Vector2(1617, 66)
 rotation = 3.14159
 
 [node name="multiplayer_manager" type="Node2D" parent="."]
@@ -217,9 +436,8 @@ Slot_Type = 1
 position = Vector2(1300, 438)
 Slot_Type = 1
 
-[node name="Minor_Arcana" parent="." node_paths=PackedStringArray("cards", "discard_pile") instance=ExtResource("2_i6akn")]
+[node name="Minor_Arcana" parent="." node_paths=PackedStringArray("discard_pile") instance=ExtResource("2_i6akn")]
 position = Vector2(128, 953)
-cards = NodePath("")
 discard_pile = NodePath("../Minor_card_discard_slot")
 
 [node name="height_outline" parent="Minor_Arcana/visuals" index="0"]
@@ -238,17 +456,17 @@ position = Vector2(275, 953)
 position = Vector2(275, 953)
 
 [node name="Major_arcana_deck" parent="." node_paths=PackedStringArray("discard_pile") instance=ExtResource("13_m2f5l")]
-position = Vector2(933, 953)
+position = Vector2(601, 953)
 discard_pile = NodePath("../Major_Arcana_Discard_Slot")
 
 [node name="Major_Arcana_Deck_Slot" parent="." instance=ExtResource("1_pe22w")]
-position = Vector2(933, 953)
+position = Vector2(601, 953)
 
 [node name="Major_Arcana_Discard_Pile" parent="." instance=ExtResource("11_2r64v")]
-position = Vector2(785, 954)
+position = Vector2(453, 954)
 
 [node name="Major_Arcana_Discard_Slot" parent="." instance=ExtResource("1_pe22w")]
-position = Vector2(785, 954)
+position = Vector2(453, 954)
 
 [node name="Players" type="Node2D" parent="."]
 script = ExtResource("6_m4s6i")

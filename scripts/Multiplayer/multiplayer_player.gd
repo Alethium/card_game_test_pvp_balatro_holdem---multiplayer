@@ -25,6 +25,7 @@ var remaining_health : int
 
 var current_chips : Array[Chip]
 const CHIP = preload("res://Scenes/chip.tscn")
+@onready var ready_text: Label = $Control/ready_text
 
 var starting_mana = 0
 var current_mana : int
@@ -32,7 +33,7 @@ var current_mana : int
 var active_turn = false
 
 var empty_slots = 5
-
+var ready_up = false
 
 @onready var hand_cursor: HandCursor = $Hand_Cursor
 
@@ -42,9 +43,9 @@ var hand_to_play : Array[Card]
 var current_hand : Array[Card] 
 var number_of_cards_selected = 0
 var screen_size
+
 signal player_added
 
-signal player_request_click
 
 @onready var button_container = $Control
 
@@ -81,7 +82,7 @@ func _input(event: InputEvent) -> void:
 		if event is InputEventMouseButton and event.button_index == MOUSE_BUTTON_LEFT:
 			if event.pressed:
 				#print("player %s requesting click" % player_id)
-				player_request_click.emit(player_id,%input_synchronizer.player_mouse_cursor_position)
+				#player_request_click.emit(player_id,%input_synchronizer.player_mouse_cursor_position)
 				#send a request to the server for a click of the mouse. 
 				
 				%input_synchronizer.click()
@@ -143,3 +144,52 @@ func handle_hand_slots(delta):
 		# Rotate cards to match player orientation
 		current_slots[i].global_rotation = global_rotation
 		
+func _on_ready_button_pressed() -> void:
+		print("player ready button pressed")
+		if !ready_up:
+			player_ready.rpc()
+		else:
+			player_unready.rpc()
+				
+
+
+
+
+
+@rpc ("any_peer","call_local")
+func player_ready():
+		print("player : ", player_id, " is ready")
+		ready_up = true
+		ready_text.text = str( "READY", ready_up)
+
+	
+@rpc ("any_peer","call_local")
+func player_unready():
+		print("player : ", player_id, " is not ready")
+		ready_up = false
+		ready_text.text = str( "not READY", ready_up)
+
+	
+
+
+
+	
+#@rpc("any_peer","reliable")	
+#func request_player_ready():
+	#print("player ready requested")
+	#if multiplayer.is_server():
+		#server_player_ready.rpc()
+	#else:
+		#request_player_ready.rpc_id(1)
+#
+#
+#@rpc("any_peer", "call_local", "reliable")	
+#func server_player_ready():
+	#if multiplayer.is_server():	
+		#if !ready_up:
+			#print("player : ", player_id, " is ready")
+			#ready_up = true
+#
+		#else:
+			#print("player : ", player_id, " is not ready")
+			#ready_up = false

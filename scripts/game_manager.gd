@@ -27,6 +27,10 @@ var curr_state
 @onready var showdown: Node = $showdown
 @onready var payout: Node = $payout
 @onready var store: Node = $store
+@onready var game_state_label: Label = $"../UI/Game_State_Display/Game State"
+@onready var game_state_display: Control = $"../UI/Game_State_Display"
+@onready var play_space: Node2D = $".."
+
 
 
 
@@ -35,7 +39,7 @@ var player_signals_connected = false
 
 func _ready() -> void:	
 	set_starting_state()
-		
+	
 func _process(delta: float) -> void:
 	
 	if player_signals_connected == false :
@@ -67,7 +71,8 @@ func set_starting_state():
 		state.card_manager = card_manager
 		state.game_manager = self
 		state.score_manager = score_manager
-
+		state.display = game_state_display
+		state.label = game_state_label
 
 		
 	prev_state = game_start
