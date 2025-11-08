@@ -472,16 +472,16 @@ position = Vector2(453, 954)
 script = ExtResource("6_m4s6i")
 
 [node name="Player1_location" type="Node2D" parent="Players"]
-position = Vector2(1736, 189)
+position = Vector2(1720, 140)
 
 [node name="Player2_location" type="Node2D" parent="Players"]
-position = Vector2(1732, 427)
+position = Vector2(1716, 378)
 
 [node name="Player3_location" type="Node2D" parent="Players"]
-position = Vector2(1738, 673)
+position = Vector2(1722, 624)
 
 [node name="Player4_location" type="Node2D" parent="Players"]
-position = Vector2(1732, 887)
+position = Vector2(1716, 838)
 
 [connection signal="pressed" from="UI/Buttons/Shuffle" to="card_manager" method="_on_shuffle_button_pressed"]
 [connection signal="pressed" from="UI/Buttons/Deal_to_community" to="card_manager" method="_on_deal_to_community_pressed"]

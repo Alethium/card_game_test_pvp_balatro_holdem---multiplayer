@@ -17,9 +17,6 @@ properties/1/replication_mode = 1
 properties/2/path = NodePath(".:position")
 properties/2/spawn = false
 properties/2/replication_mode = 1
-properties/3/path = NodePath(".:ready_up")
-properties/3/spawn = true
-properties/3/replication_mode = 1
 
 [sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_i7h06"]
 properties/0/path = NodePath("input_synchronizer:player_mouse_cursor_direction")
@@ -34,12 +31,9 @@ properties/2/replication_mode = 1
 properties/3/path = NodePath("input_synchronizer:clicked")
 properties/3/spawn = false
 properties/3/replication_mode = 1
-properties/4/path = NodePath(".:ready_up")
-properties/4/spawn = false
-properties/4/replication_mode = 0
-properties/5/path = NodePath("input_synchronizer:ready_up")
-properties/5/spawn = true
-properties/5/replication_mode = 0
+properties/4/path = NodePath(".:is_ready")
+properties/4/spawn = true
+properties/4/replication_mode = 1
 
 [node name="multiplayer_player" type="Node2D"]
 script = ExtResource("1_a61r2")
@@ -58,8 +52,14 @@ position = Vector2(118, 32)
 
 [node name="Avatar" type="Sprite2D" parent="."]
 unique_name_in_owner = true
-position = Vector2(81, -49)
-scale = Vector2(1.234375, 1.234375)
+position = Vector2(96.50001, 0.5000057)
+scale = Vector2(1.4921876, 1.4921876)
+texture = ExtResource("4_i7h06")
+
+[node name="mini_avatar" type="Sprite2D" parent="."]
+unique_name_in_owner = true
+position = Vector2(35.25, 62.75)
+scale = Vector2(0.5273437, 0.5273437)
 texture = ExtResource("4_i7h06")
 
 [node name="Control" type="Control" parent="."]
@@ -113,7 +113,8 @@ text = "untouched"
 position = Vector2(-1258, 0)
 
 [node name="health meter" parent="." instance=ExtResource("4_ql3ps")]
-position = Vector2(17, 87)
+position = Vector2(-36, 72)
+scale = Vector2(6, 6)
 
 [node name="player_role_marker_position" type="Node2D" parent="."]
 position = Vector2(13, -159)

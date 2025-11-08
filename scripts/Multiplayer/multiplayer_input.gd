@@ -15,7 +15,7 @@ var discarding = false
 var selected_cards = []
 @onready var view = get_viewport()
 var screen_size 
-var ready_up = false
+var is_ready = false
 func _ready() -> void:
 	
 	curr_hand_state = 0
@@ -197,10 +197,10 @@ func find_card_by_id(card_id):
 #@rpc("any_peer", "call_local", "reliable")	
 #func server_player_ready(player_id):
 	#if multiplayer.is_server():	
-		#if !ready_up:
+		#if !is_ready:
 			#print("player : ", player_id, " is ready")
-			#ready_up = true
+			#is_ready = true
 #
 		#else:
 			#print("player : ", player_id, " is not ready")
-			#ready_up = false
+			#is_ready = false

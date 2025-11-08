@@ -3,6 +3,7 @@ extends Node2D
 @onready var input_synchronizer: MultiplayerSynchronizer = %input_synchronizer
 
 
+
 @onready var player_hand: Node2D = $player_hand
 
 @onready var current_hand_display: Label = $Control/current_hand
@@ -33,7 +34,7 @@ var current_mana : int
 var active_turn = false
 
 var empty_slots = 5
-var ready_up = false
+
 
 @onready var hand_cursor: HandCursor = $Hand_Cursor
 
@@ -53,24 +54,37 @@ signal player_added
 	set(id):
 		player_id = id
 		%input_synchronizer.set_multiplayer_authority(id)
-
+		
+@export var is_ready: bool = false:
+	set(value):
+		is_ready = value
+		update_ready_display()
 
 var direction : Vector2
 var player_position : int
 
 
 func _ready() -> void:
+	if multiplayer.get_unique_id() != player_id:
+		%Control.visible = false
+		%Control.mouse_filter =Control.MOUSE_FILTER_IGNORE
+		%mini_avatar.visible = false
+		%Avatar.visible = true
+	else:
+		%mini_avatar.visible = true
+		%Avatar.visible = false
+		
 	screen_size = get_viewport_rect().size
 	player_added.emit(self)
 	current_hand = []
 	curr_hand_state = 0
 	Input.set_mouse_mode(Input.MOUSE_MODE_HIDDEN)
-
+	update_ready_display()
 	
 	
 
 func _physics_process(delta: float) -> void:
-	ready_text.text = str( "ready? : ", ready_up)
+	
 	
 	if multiplayer.is_server():
 		update_input(delta) 
@@ -92,7 +106,7 @@ func _input(event: InputEvent) -> void:
 
 func update_input(_delta):
 	#hand_cursor.global_position += %input_synchronizer.player_mouse_cursor_direction
-	ready_up = %input_synchronizer.ready_up
+	#is_ready = %input_synchronizer.is_ready
 	hand_cursor.global_position = %input_synchronizer.player_mouse_cursor_position
 	
 	#also transfer clicking code from cardmanager over here
@@ -149,29 +163,45 @@ func _on_ready_button_pressed() -> void:
 	
 	if multiplayer.get_unique_id() == player_id:
 		print("player ready button pressed")
-		if !ready_up:
-			player_ready.rpc()
+		if !is_ready:
+			request_player_ready.rpc()
 		else:
-			player_unready.rpc()
+			request_player_unready.rpc()
 
 
 
 
 
 
-@rpc ("any_peer","call_local")
-func player_ready():
+@rpc ("any_peer","call_local", "reliable")
+func request_player_ready():
+	if multiplayer.is_server():
 		print("player : ", player_id, " is ready")
-		%input_synchronizer.ready_up = true
-		#ready_text.text = str( "ready? : ", ready_up)
+		set_player_ready.rpc(true)
+		#ready_text.text = str( "ready? : ", is_ready)
 
 	
-@rpc ("any_peer","call_local")
-func player_unready():
+@rpc ("any_peer","call_local", "reliable")
+func request_player_unready():
+	if multiplayer.is_server():
 		print("player : ", player_id, " is not ready")
-		%input_synchronizer.ready_up = false
-		#ready_text.text = str( "ready? : ", ready_up)
+		set_player_ready.rpc(false)
+		#ready_text.text = str( "ready? : ", is_ready)
 
+@rpc("any_peer", "call_local", "reliable")
+func set_player_ready(ready_state: bool):
+	is_ready = ready_state
+	# This will automatically call the setter and update_ready_display()
+
+func update_ready_display():
+	if ready_text:
+		ready_text.text = "READY: " + str(is_ready)
+	
+	# Optional: Visual feedback like color change
+		if is_ready:
+			ready_text.modulate = Color.GREEN
+		else:
+			ready_text.modulate = Color.WHITE
 	
 
 
@@ -189,10 +219,10 @@ func player_unready():
 #@rpc("any_peer", "call_local", "reliable")	
 #func server_player_ready():
 	#if multiplayer.is_server():	
-		#if !ready_up:
+		#if !is_ready:
 			#print("player : ", player_id, " is ready")
-			#ready_up = true
+			#is_ready = true
 #
 		#else:
 			#print("player : ", player_id, " is not ready")
-			#ready_up = false
+			#is_ready = false

@@ -32,7 +32,7 @@ func check_players_ready():
 	if multiplayer.is_server() and players.current_players.size() > 0:
 		var players_ready = 0
 		for player in players.current_players:
-			if player.ready_up == true:
+			if player.is_ready == true:
 				players_ready += 1
 			if players_ready == players.current_players.size():
 				print("all players ready")
