@@ -10,7 +10,13 @@ extends Node2D
 @onready var score_display: Label = $Control/Score
 @onready var player_role_marker_position: Node2D = $player_role_marker_position
 @onready var mouse_window_detection: Node = $mouse_window_detection
+
+
 var discarding = false
+
+
+
+
 enum HandState {point,grab}
 var display_name : String
 @onready var curr_hand_state = 0
@@ -26,7 +32,13 @@ var remaining_health : int
 
 var current_chips : Array[Chip]
 const CHIP = preload("res://Scenes/chip.tscn")
-@onready var ready_text: Label = $Control/ready_text
+
+@onready var status_text: Label = $Control/status_text
+@onready var ready_btn_text = %ready.text
+@onready var bet_btn_text = %bet.text
+
+
+
 
 var starting_mana = 0
 var current_mana : int
@@ -169,16 +181,12 @@ func _on_ready_button_pressed() -> void:
 			request_player_unready.rpc()
 
 
-
-
-
-
 @rpc ("any_peer","call_local", "reliable")
 func request_player_ready():
 	if multiplayer.is_server():
 		print("player : ", player_id, " is ready")
 		set_player_ready.rpc(true)
-		#ready_text.text = str( "ready? : ", is_ready)
+		#status_text.text = str( "ready? : ", is_ready)
 
 	
 @rpc ("any_peer","call_local", "reliable")
@@ -186,7 +194,7 @@ func request_player_unready():
 	if multiplayer.is_server():
 		print("player : ", player_id, " is not ready")
 		set_player_ready.rpc(false)
-		#ready_text.text = str( "ready? : ", is_ready)
+		#status_text.text = str( "ready? : ", is_ready)
 
 @rpc("any_peer", "call_local", "reliable")
 func set_player_ready(ready_state: bool):
@@ -194,15 +202,50 @@ func set_player_ready(ready_state: bool):
 	# This will automatically call the setter and update_ready_display()
 
 func update_ready_display():
-	if ready_text:
-		ready_text.text = "READY: " + str(is_ready)
+	if status_text:
+		status_text.text = "READY: " + str(is_ready)
 	
 	# Optional: Visual feedback like color change
 		if is_ready:
-			ready_text.modulate = Color.GREEN
+			%Avatar.modulate = Color.GREEN
+			#%mini_avatar.modulate = Color.GREEN
+			status_text.modulate = Color.GREEN
 		else:
-			ready_text.modulate = Color.WHITE
-	
+			status_text.modulate = Color.WHITE
+			%Avatar.modulate = Color.WHITE
+			#%mini_avatar.modulate = Color.WHITE
+			
+			
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

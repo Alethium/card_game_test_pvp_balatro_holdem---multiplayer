@@ -393,25 +393,25 @@ script = ExtResource("6_a7jki")
 [node name="Minor_Arcana_Community_Slots" type="Node2D" parent="."]
 position = Vector2(-523, -216)
 
-[node name="Minor_Arcana_Slot5" parent="Minor_Arcana_Community_Slots" instance=ExtResource("1_pe22w")]
+[node name="Minor_Arcana_Slot" parent="Minor_Arcana_Community_Slots" instance=ExtResource("1_pe22w")]
 unique_name_in_owner = true
-position = Vector2(1300, 648)
-
-[node name="Minor_Arcana_Slot4" parent="Minor_Arcana_Community_Slots" instance=ExtResource("1_pe22w")]
-unique_name_in_owner = true
-position = Vector2(1139, 648)
-
-[node name="Minor_Arcana_Slot3" parent="Minor_Arcana_Community_Slots" instance=ExtResource("1_pe22w")]
-unique_name_in_owner = true
-position = Vector2(976, 648)
+position = Vector2(651, 648)
 
 [node name="Minor_Arcana_Slot2" parent="Minor_Arcana_Community_Slots" instance=ExtResource("1_pe22w")]
 unique_name_in_owner = true
 position = Vector2(814, 648)
 
-[node name="Minor_Arcana_Slot" parent="Minor_Arcana_Community_Slots" instance=ExtResource("1_pe22w")]
+[node name="Minor_Arcana_Slot3" parent="Minor_Arcana_Community_Slots" instance=ExtResource("1_pe22w")]
 unique_name_in_owner = true
-position = Vector2(651, 648)
+position = Vector2(976, 648)
+
+[node name="Minor_Arcana_Slot4" parent="Minor_Arcana_Community_Slots" instance=ExtResource("1_pe22w")]
+unique_name_in_owner = true
+position = Vector2(1139, 648)
+
+[node name="Minor_Arcana_Slot5" parent="Minor_Arcana_Community_Slots" instance=ExtResource("1_pe22w")]
+unique_name_in_owner = true
+position = Vector2(1300, 648)
 
 [node name="Major_arcana_Slots" type="Node2D" parent="."]
 position = Vector2(-523, -325)
@@ -472,16 +472,16 @@ position = Vector2(453, 954)
 script = ExtResource("6_m4s6i")
 
 [node name="Player1_location" type="Node2D" parent="Players"]
-position = Vector2(1720, 140)
+position = Vector2(1646, 140)
 
 [node name="Player2_location" type="Node2D" parent="Players"]
-position = Vector2(1716, 378)
+position = Vector2(1642, 378)
 
 [node name="Player3_location" type="Node2D" parent="Players"]
-position = Vector2(1722, 624)
+position = Vector2(1648, 624)
 
 [node name="Player4_location" type="Node2D" parent="Players"]
-position = Vector2(1716, 838)
+position = Vector2(1642, 838)
 
 [connection signal="pressed" from="UI/Buttons/Shuffle" to="card_manager" method="_on_shuffle_button_pressed"]
 [connection signal="pressed" from="UI/Buttons/Deal_to_community" to="card_manager" method="_on_deal_to_community_pressed"]
@@ -493,11 +493,11 @@ position = Vector2(1716, 838)
 [connection signal="pressed" from="UI/Buttons/Score" to="card_manager" method="_on_score_pressed"]
 [connection signal="pressed" from="UI/Buttons/Reload" to="card_manager" method="_on_reload_pressed"]
 
-[editable path="Minor_Arcana_Community_Slots/Minor_Arcana_Slot5"]
-[editable path="Minor_Arcana_Community_Slots/Minor_Arcana_Slot4"]
-[editable path="Minor_Arcana_Community_Slots/Minor_Arcana_Slot3"]
-[editable path="Minor_Arcana_Community_Slots/Minor_Arcana_Slot2"]
 [editable path="Minor_Arcana_Community_Slots/Minor_Arcana_Slot"]
+[editable path="Minor_Arcana_Community_Slots/Minor_Arcana_Slot2"]
+[editable path="Minor_Arcana_Community_Slots/Minor_Arcana_Slot3"]
+[editable path="Minor_Arcana_Community_Slots/Minor_Arcana_Slot4"]
+[editable path="Minor_Arcana_Community_Slots/Minor_Arcana_Slot5"]
 [editable path="Major_arcana_Slots/Major_Arcana_Slot"]
 [editable path="Major_arcana_Slots/Major_Arcana_Slot2"]
 [editable path="Major_arcana_Slots/Major_Arcana_Slot3"]

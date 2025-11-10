@@ -22,7 +22,7 @@ var currently_spawned_major_arcana : Array
 var currently_spawned_cards : Array 
 @onready var minor_card_deck_slot: CardSlot = $"../Minor_card_deck_Slot"
 
-@onready var minor_arcana_community_slots: Array[Node2D] = [%Minor_Arcana_Slot5, %Minor_Arcana_Slot4, %Minor_Arcana_Slot3, %Minor_Arcana_Slot2, %Minor_Arcana_Slot]
+@onready var minor_arcana_community_slots: Array[Node2D] = [%Minor_Arcana_Slot, %Minor_Arcana_Slot2, %Minor_Arcana_Slot3,%Minor_Arcana_Slot4,%Minor_Arcana_Slot5]
 
 @onready var minor_card_discard_slot: CardSlot = $"../Minor_card_discard_slot"
 @onready var minor_discard_pile: DiscardPile = $"../Minor_Discard_Pile"

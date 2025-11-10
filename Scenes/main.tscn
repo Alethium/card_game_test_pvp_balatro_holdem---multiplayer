@@ -11,8 +11,8 @@ shader = ExtResource("2_kry3j")
 shader_parameter/spin_rotation_speed = 0.1
 shader_parameter/move_speed = 1.0
 shader_parameter/offset = Vector2(0, 0)
-shader_parameter/colour_1 = Color(0.124100015, 0.73, 0.49773842, 1)
-shader_parameter/colour_2 = Color(0, 0.36, 0.24600004, 1)
+shader_parameter/colour_1 = Color(0.93, 0.1674, 0.52327996, 1)
+shader_parameter/colour_2 = Color(0.38499993, 0, 0.42, 1)
 shader_parameter/colour_3 = Color(0.20225054, 6.7142396e-06, 0.16353557, 1)
 shader_parameter/contrast = 0.61
 shader_parameter/lighting = 0.115
@@ -40,10 +40,10 @@ script = ExtResource("2_bo1nx")
 unique_name_in_owner = true
 layout_mode = 3
 anchors_preset = 0
-offset_left = 1046.0
-offset_top = 827.0
-offset_right = 1046.0
-offset_bottom = 827.0
+offset_left = 1063.0
+offset_top = 515.0
+offset_right = 1063.0
+offset_bottom = 515.0
 
 [node name="VBoxContainer" type="VBoxContainer" parent="Enet_Multiplayer_HUD"]
 layout_mode = 0
@@ -61,6 +61,8 @@ theme = ExtResource("3_8gbba")
 text = "Join Game"
 
 [node name="Play_Space" parent="." instance=ExtResource("2_jjvhh")]
+process_mode = 4
+visible = false
 
 [node name="Steam_Multiplayer_Hud" type="Control" parent="."]
 visible = false

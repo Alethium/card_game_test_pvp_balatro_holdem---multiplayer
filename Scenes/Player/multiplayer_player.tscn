@@ -1,11 +1,12 @@
-[gd_scene load_steps=9 format=3 uid="uid://bqtpu7j6665bn"]
+[gd_scene load_steps=10 format=3 uid="uid://bqtpu7j6665bn"]
 
 [ext_resource type="Script" uid="uid://ryrvaexjy5si" path="res://scripts/Multiplayer/multiplayer_player.gd" id="1_a61r2"]
 [ext_resource type="PackedScene" uid="uid://dw4rp4xr3fy7k" path="res://Scenes/Player/hand_cursor.tscn" id="2_4ea1o"]
 [ext_resource type="Script" uid="uid://bomxxc8qi6eke" path="res://scripts/Multiplayer/multiplayer_input.gd" id="2_ql3ps"]
-[ext_resource type="Texture2D" uid="uid://cq4f50uf7pnaw" path="res://icon.svg" id="4_i7h06"]
+[ext_resource type="Texture2D" uid="uid://c1mtr207ingrk" path="res://ICONS/player portraits temp/rxx82us-1-306x305.jpg" id="4_l2o4u"]
 [ext_resource type="PackedScene" uid="uid://c3fgf484hca30" path="res://Scenes/Player/health_meter.tscn" id="4_ql3ps"]
 [ext_resource type="Script" uid="uid://bv8vfsflrvprv" path="res://scripts/mouse_window_detection.gd" id="5_ql3ps"]
+[ext_resource type="Texture2D" uid="uid://dp5cqmh1ucrwx" path="res://ICONS/player portraits temp/archive_gio.jpg" id="5_rlkiy"]
 
 [sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_ql3ps"]
 properties/0/path = NodePath(".:player_id")
@@ -53,14 +54,14 @@ position = Vector2(118, 32)
 [node name="Avatar" type="Sprite2D" parent="."]
 unique_name_in_owner = true
 position = Vector2(96.50001, 0.5000057)
-scale = Vector2(1.4921876, 1.4921876)
-texture = ExtResource("4_i7h06")
+scale = Vector2(0.63521856, 0.63521856)
+texture = ExtResource("4_l2o4u")
 
 [node name="mini_avatar" type="Sprite2D" parent="."]
 unique_name_in_owner = true
 position = Vector2(35.25, 62.75)
-scale = Vector2(0.5273437, 0.5273437)
-texture = ExtResource("4_i7h06")
+scale = Vector2(0.227, 0.227)
+texture = ExtResource("5_rlkiy")
 
 [node name="Control" type="Control" parent="."]
 unique_name_in_owner = true
@@ -70,14 +71,16 @@ offset_right = 40.0
 offset_bottom = 40.0
 
 [node name="ready" type="Button" parent="Control"]
+unique_name_in_owner = true
 layout_mode = 0
 offset_left = 5.0
 offset_top = -94.0
 offset_right = 82.0
 offset_bottom = -63.0
-text = "READY"
+text = "READY UP!"
 
 [node name="bet" type="Button" parent="Control"]
+unique_name_in_owner = true
 layout_mode = 0
 offset_left = 5.0
 offset_top = -57.0
@@ -101,20 +104,21 @@ offset_right = 142.0
 offset_bottom = 32.0
 text = "SCORE :"
 
-[node name="ready_text" type="Label" parent="Control"]
+[node name="status_text" type="Label" parent="Control"]
 layout_mode = 0
-offset_left = 86.0
-offset_top = -89.0
-offset_right = 145.0
-offset_bottom = -66.0
+offset_left = 72.0
+offset_top = 42.0
+offset_right = 156.0
+offset_bottom = 65.0
 text = "untouched"
 
 [node name="player_hand" type="Node2D" parent="."]
-position = Vector2(-1258, 0)
+position = Vector2(-361, 0)
 
 [node name="health meter" parent="." instance=ExtResource("4_ql3ps")]
-position = Vector2(-36, 72)
-scale = Vector2(6, 6)
+position = Vector2(79.00001, 82.99999)
+rotation = 1.5707941
+scale = Vector2(2.5472593, 2.5472593)
 
 [node name="player_role_marker_position" type="Node2D" parent="."]
 position = Vector2(13, -159)
