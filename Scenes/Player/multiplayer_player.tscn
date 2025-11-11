@@ -1,8 +1,11 @@
-[gd_scene load_steps=10 format=3 uid="uid://bqtpu7j6665bn"]
+[gd_scene load_steps=13 format=3 uid="uid://bqtpu7j6665bn"]
 
 [ext_resource type="Script" uid="uid://ryrvaexjy5si" path="res://scripts/Multiplayer/multiplayer_player.gd" id="1_a61r2"]
 [ext_resource type="PackedScene" uid="uid://dw4rp4xr3fy7k" path="res://Scenes/Player/hand_cursor.tscn" id="2_4ea1o"]
 [ext_resource type="Script" uid="uid://bomxxc8qi6eke" path="res://scripts/Multiplayer/multiplayer_input.gd" id="2_ql3ps"]
+[ext_resource type="Theme" uid="uid://d0uidb0k47w4o" path="res://Scenes/main_UI_theme.tres" id="2_rlkiy"]
+[ext_resource type="StyleBox" uid="uid://bs5cku8ovu0be" path="res://UI_SPRITES/mid_middle_light_raised_outline_stylebox.tres" id="3_dgqwy"]
+[ext_resource type="StyleBox" uid="uid://cu3bvgll0lxg8" path="res://UI_SPRITES/Dark_purple_stylebox.tres" id="3_nelj4"]
 [ext_resource type="Texture2D" uid="uid://c1mtr207ingrk" path="res://ICONS/player portraits temp/rxx82us-1-306x305.jpg" id="4_l2o4u"]
 [ext_resource type="PackedScene" uid="uid://c3fgf484hca30" path="res://Scenes/Player/health_meter.tscn" id="4_ql3ps"]
 [ext_resource type="Script" uid="uid://bv8vfsflrvprv" path="res://scripts/mouse_window_detection.gd" id="5_ql3ps"]
@@ -39,6 +42,122 @@ properties/4/replication_mode = 1
 [node name="multiplayer_player" type="Node2D"]
 script = ExtResource("1_a61r2")
 
+[node name="Control" type="Control" parent="."]
+unique_name_in_owner = true
+z_index = -10
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="Player_frame" type="Panel" parent="Control"]
+layout_mode = 0
+offset_left = -721.0
+offset_top = -137.0
+offset_right = 231.0
+offset_bottom = 113.0
+mouse_behavior_recursive = 1
+theme = ExtResource("2_rlkiy")
+theme_override_styles/panel = ExtResource("3_nelj4")
+
+[node name="Avatar_frame" type="Panel" parent="Control"]
+layout_mode = 0
+offset_left = -9.0
+offset_top = -133.0
+offset_right = 227.0
+offset_bottom = 110.0
+theme = ExtResource("2_rlkiy")
+theme_override_styles/panel = ExtResource("3_dgqwy")
+
+[node name="Buttons_panel" type="Panel" parent="Control"]
+unique_name_in_owner = true
+layout_mode = 0
+offset_left = -9.0
+offset_top = -133.0
+offset_right = 227.0
+offset_bottom = 110.0
+theme = ExtResource("2_rlkiy")
+theme_override_styles/panel = ExtResource("3_dgqwy")
+
+[node name="current_hand" type="Label" parent="Control/Buttons_panel"]
+layout_mode = 0
+offset_left = 15.0
+offset_top = 126.0
+offset_right = 138.0
+offset_bottom = 149.0
+theme = ExtResource("2_rlkiy")
+text = "Current Hand :"
+
+[node name="Score" type="Label" parent="Control/Buttons_panel"]
+layout_mode = 0
+offset_left = 15.0
+offset_top = 149.0
+offset_right = 152.0
+offset_bottom = 172.0
+theme = ExtResource("2_rlkiy")
+text = "SCORE :"
+
+[node name="status_text" type="Label" parent="Control/Buttons_panel"]
+layout_mode = 0
+offset_left = 83.0
+offset_top = 174.0
+offset_right = 167.0
+offset_bottom = 197.0
+text = "untouched"
+
+[node name="bet" type="Button" parent="Control/Buttons_panel"]
+unique_name_in_owner = true
+layout_mode = 0
+offset_left = 5.0
+offset_top = 68.0
+offset_right = 110.0
+offset_bottom = 133.0
+theme = ExtResource("2_rlkiy")
+theme_override_font_sizes/font_size = 32
+text = "BET"
+
+[node name="ready" type="Button" parent="Control/Buttons_panel"]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+offset_left = 5.0
+offset_top = 5.0
+offset_right = -5.0
+offset_bottom = 84.0
+grow_horizontal = 2
+theme = ExtResource("2_rlkiy")
+theme_override_font_sizes/font_size = 32
+text = "READY UP!"
+
+[node name="Button" type="Button" parent="Control/Buttons_panel"]
+layout_mode = 0
+offset_left = 93.0
+offset_top = 68.0
+offset_right = 170.0
+offset_bottom = 133.0
+
+[node name="Button2" type="Button" parent="Control/Buttons_panel"]
+layout_mode = 0
+offset_left = 153.0
+offset_top = 68.0
+offset_right = 231.0
+offset_bottom = 133.0
+
+[node name="Avatar" type="Sprite2D" parent="Control"]
+unique_name_in_owner = true
+visible = false
+position = Vector2(109.00001, -11.5)
+scale = Vector2(0.6732026, 0.6983607)
+texture = ExtResource("4_l2o4u")
+
+[node name="mini_avatar" type="Sprite2D" parent="Control"]
+unique_name_in_owner = true
+visible = false
+position = Vector2(34, 65.99999)
+scale = Vector2(0.17885949, 0.17885949)
+texture = ExtResource("5_rlkiy")
+
 [node name="playerSynchronizer" type="MultiplayerSynchronizer" parent="."]
 replication_config = SubResource("SceneReplicationConfig_ql3ps")
 
@@ -49,74 +168,13 @@ script = ExtResource("2_ql3ps")
 
 [node name="Hand_Cursor" parent="." instance=ExtResource("2_4ea1o")]
 z_index = 5
-position = Vector2(118, 32)
-
-[node name="Avatar" type="Sprite2D" parent="."]
-unique_name_in_owner = true
-position = Vector2(96.50001, 0.5000057)
-scale = Vector2(0.63521856, 0.63521856)
-texture = ExtResource("4_l2o4u")
-
-[node name="mini_avatar" type="Sprite2D" parent="."]
-unique_name_in_owner = true
-position = Vector2(35.25, 62.75)
-scale = Vector2(0.227, 0.227)
-texture = ExtResource("5_rlkiy")
-
-[node name="Control" type="Control" parent="."]
-unique_name_in_owner = true
-layout_mode = 3
-anchors_preset = 0
-offset_right = 40.0
-offset_bottom = 40.0
-
-[node name="ready" type="Button" parent="Control"]
-unique_name_in_owner = true
-layout_mode = 0
-offset_left = 5.0
-offset_top = -94.0
-offset_right = 82.0
-offset_bottom = -63.0
-text = "READY UP!"
-
-[node name="bet" type="Button" parent="Control"]
-unique_name_in_owner = true
-layout_mode = 0
-offset_left = 5.0
-offset_top = -57.0
-offset_right = 103.0
-offset_bottom = -26.0
-text = "BET"
-
-[node name="current_hand" type="Label" parent="Control"]
-layout_mode = 0
-offset_left = 5.0
-offset_top = -14.0
-offset_right = 119.0
-offset_bottom = 9.0
-text = "Current Hand :"
-
-[node name="Score" type="Label" parent="Control"]
-layout_mode = 0
-offset_left = 5.0
-offset_top = 9.0
-offset_right = 142.0
-offset_bottom = 32.0
-text = "SCORE :"
-
-[node name="status_text" type="Label" parent="Control"]
-layout_mode = 0
-offset_left = 72.0
-offset_top = 42.0
-offset_right = 156.0
-offset_bottom = 65.0
-text = "untouched"
+position = Vector2(-98, -2)
 
 [node name="player_hand" type="Node2D" parent="."]
-position = Vector2(-361, 0)
+position = Vector2(-700, -7)
 
 [node name="health meter" parent="." instance=ExtResource("4_ql3ps")]
-position = Vector2(79.00001, 82.99999)
+position = Vector2(83, 79)
 rotation = 1.5707941
 scale = Vector2(2.5472593, 2.5472593)
 
@@ -126,6 +184,6 @@ position = Vector2(13, -159)
 [node name="mouse_window_detection" type="Node" parent="."]
 script = ExtResource("5_ql3ps")
 
-[connection signal="pressed" from="Control/ready" to="." method="_on_ready_button_pressed"]
-[connection signal="pressed" from="Control/ready" to="input_synchronizer" method="_on_ready_button_pressed"]
-[connection signal="pressed" from="Control/bet" to="." method="_on_play_button_pressed"]
+[connection signal="pressed" from="Control/Buttons_panel/bet" to="." method="_on_bet_pressed"]
+[connection signal="pressed" from="Control/Buttons_panel/ready" to="." method="_on_ready_button_pressed"]
+[connection signal="pressed" from="Control/Buttons_panel/ready" to="input_synchronizer" method="_on_ready_button_pressed"]

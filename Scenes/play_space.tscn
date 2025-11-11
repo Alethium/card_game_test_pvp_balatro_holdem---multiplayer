@@ -1,8 +1,9 @@
-[gd_scene load_steps=27 format=3 uid="uid://bstgicllg5jw4"]
+[gd_scene load_steps=28 format=3 uid="uid://bstgicllg5jw4"]
 
 [ext_resource type="PackedScene" uid="uid://dvdg2bxoihq32" path="res://Scenes/card_slot.tscn" id="1_pe22w"]
 [ext_resource type="Script" uid="uid://cvvna1si82h41" path="res://scripts/play_space.gd" id="1_yahnq"]
 [ext_resource type="PackedScene" uid="uid://bvp2lq0xadoi2" path="res://Scenes/game_manager.tscn" id="2_5lyoa"]
+[ext_resource type="Theme" uid="uid://d0uidb0k47w4o" path="res://Scenes/main_UI_theme.tres" id="2_hia5p"]
 [ext_resource type="PackedScene" uid="uid://dykqpm7wklekq" path="res://Scenes/Cards/Minor_Arcana/Minor_Arcana_Deck.tscn" id="2_i6akn"]
 [ext_resource type="PackedScene" uid="uid://cmw07kbi54r1n" path="res://Scenes/Hexas_Hold_Em_Card_Manager.tscn" id="2_osk37"]
 [ext_resource type="Theme" uid="uid://bl5r56swuu6ll" path="res://Hexes_theme.tres" id="2_vksat"]
@@ -97,11 +98,13 @@ layout_mode = 3
 anchors_preset = 0
 offset_right = 40.0
 offset_bottom = 40.0
+theme = ExtResource("2_hia5p")
 
 [node name="Buttons" type="Control" parent="UI"]
 anchors_preset = 0
 offset_right = 40.0
 offset_bottom = 40.0
+theme = ExtResource("2_hia5p")
 
 [node name="Shuffle" type="Button" parent="UI/Buttons"]
 layout_mode = 0
@@ -110,7 +113,7 @@ offset_top = 747.0
 offset_right = 395.00003
 offset_bottom = 856.0
 scale = Vector2(0.9354083, 0.9354083)
-theme = ExtResource("2_vksat")
+theme_override_font_sizes/font_size = 77
 text = "SHUFFLE"
 
 [node name="Deal_to_community" type="Button" parent="UI/Buttons"]
@@ -120,7 +123,7 @@ offset_top = 534.0
 offset_right = 289.00006
 offset_bottom = 643.0
 scale = Vector2(0.9354085, 0.9354085)
-theme = ExtResource("2_vksat")
+theme_override_font_sizes/font_size = 77
 text = "DEAL"
 
 [node name="clear_minor_arcana" type="Button" parent="UI/Buttons"]
@@ -130,7 +133,7 @@ offset_top = 534.00006
 offset_right = 553.0
 offset_bottom = 643.00006
 scale = Vector2(0.9354085, 0.9354085)
-theme = ExtResource("2_vksat")
+theme_override_font_sizes/font_size = 77
 text = "CLEAR"
 
 [node name="Deal_to_Major_Arcana" type="Button" parent="UI/Buttons"]
@@ -140,7 +143,7 @@ offset_top = 221.00002
 offset_right = 296.0
 offset_bottom = 330.0
 scale = Vector2(0.9354085, 0.9354085)
-theme = ExtResource("2_vksat")
+theme_override_font_sizes/font_size = 77
 text = "DEAL"
 
 [node name="clear_minor_arcana2" type="Button" parent="UI/Buttons"]
@@ -150,7 +153,7 @@ offset_top = 219.0
 offset_right = 564.00006
 offset_bottom = 328.0
 scale = Vector2(0.9354085, 0.9354085)
-theme = ExtResource("2_vksat")
+theme_override_font_sizes/font_size = 77
 text = "CLEAR"
 
 [node name="Deal_to_players" type="Button" parent="UI/Buttons"]
@@ -160,7 +163,7 @@ offset_top = 640.00006
 offset_right = 840.00006
 offset_bottom = 749.00006
 scale = Vector2(0.9354085, 0.9354085)
-theme = ExtResource("2_vksat")
+theme_override_font_sizes/font_size = 77
 text = "DEAL"
 
 [node name="clear_discards" type="Button" parent="UI/Buttons"]
@@ -170,7 +173,7 @@ offset_top = 747.00006
 offset_right = 718.0
 offset_bottom = 856.00006
 scale = Vector2(0.9354085, 0.9354085)
-theme = ExtResource("2_vksat")
+theme_override_font_sizes/font_size = 77
 text = "DISCARD"
 
 [node name="Score" type="Button" parent="UI/Buttons"]
@@ -180,7 +183,7 @@ offset_top = 640.0
 offset_right = 320.0
 offset_bottom = 749.0
 scale = Vector2(0.9354083, 0.9354083)
-theme = ExtResource("2_vksat")
+theme_override_font_sizes/font_size = 77
 text = "SCORE"
 
 [node name="Reload" type="Button" parent="UI/Buttons"]
@@ -190,7 +193,7 @@ offset_top = 640.0
 offset_right = 630.0
 offset_bottom = 749.0
 scale = Vector2(0.9354083, 0.9354083)
-theme = ExtResource("2_vksat")
+theme_override_font_sizes/font_size = 77
 text = "RELOAD"
 
 [node name="spawned_cards" type="Control" parent="UI"]
@@ -390,6 +393,21 @@ _spawnable_scenes = PackedStringArray("uid://d4bg2fjkyscq2", "uid://mhajchtk424d
 spawn_path = NodePath("../UI/spawned_cards")
 script = ExtResource("6_a7jki")
 
+[node name="Players" type="Node2D" parent="."]
+script = ExtResource("6_m4s6i")
+
+[node name="Player1_location" type="Node2D" parent="Players"]
+position = Vector2(1640, 138)
+
+[node name="Player2_location" type="Node2D" parent="Players"]
+position = Vector2(1640, 376)
+
+[node name="Player3_location" type="Node2D" parent="Players"]
+position = Vector2(1640, 622)
+
+[node name="Player4_location" type="Node2D" parent="Players"]
+position = Vector2(1640, 836)
+
 [node name="Minor_Arcana_Community_Slots" type="Node2D" parent="."]
 position = Vector2(-523, -216)
 
@@ -467,21 +485,6 @@ position = Vector2(453, 954)
 
 [node name="Major_Arcana_Discard_Slot" parent="." instance=ExtResource("1_pe22w")]
 position = Vector2(453, 954)
-
-[node name="Players" type="Node2D" parent="."]
-script = ExtResource("6_m4s6i")
-
-[node name="Player1_location" type="Node2D" parent="Players"]
-position = Vector2(1646, 140)
-
-[node name="Player2_location" type="Node2D" parent="Players"]
-position = Vector2(1642, 378)
-
-[node name="Player3_location" type="Node2D" parent="Players"]
-position = Vector2(1648, 624)
-
-[node name="Player4_location" type="Node2D" parent="Players"]
-position = Vector2(1642, 838)
 
 [connection signal="pressed" from="UI/Buttons/Shuffle" to="card_manager" method="_on_shuffle_button_pressed"]
 [connection signal="pressed" from="UI/Buttons/Deal_to_community" to="card_manager" method="_on_deal_to_community_pressed"]

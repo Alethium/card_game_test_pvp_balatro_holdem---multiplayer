@@ -89,6 +89,7 @@ script = ExtResource("1_0qqmn")
 replication_config = SubResource("SceneReplicationConfig_eumee")
 
 [node name="Visuals" type="Node2D" parent="."]
+unique_name_in_owner = true
 scale = Vector2(2, 2)
 
 [node name="bg" type="Sprite2D" parent="Visuals"]

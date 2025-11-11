@@ -391,6 +391,7 @@ func _on_shuffle_button_pressed() -> void:
 		#current_hovered_slot = null
 
 func _on_clear_pressed()-> void:
+	
 	if multiplayer.is_server():
 		server_clear_from_community()
 	else:
@@ -560,7 +561,7 @@ func server_deal_to_major_arcana():
 				for slot in major_arcana_slots.get_children():
 					if slot.stored_cards.size() == 0:
 						print("drawing card  : ",Current_Major_Deck.deck_of_cards[0])
-						var drawn_major_arcana_card = draw_single_card(-1,Current_Major_Deck) #add what deck to draw a card from in the utility function. 
+						var drawn_major_arcana_card = draw_single_card(-2,Current_Major_Deck) #add what deck to draw a card from in the utility function. 
 						drawn_major_arcana_card.target_slot = slot
 						drawn_major_arcana_card.visible = true
 						Current_Major_Deck.deck_of_cards.erase(drawn_major_arcana_card)
@@ -621,8 +622,8 @@ func server_discard_from_players(player_id):
 		card.owner_id = 0  # zero is for discarded cards
 		
 		## Remove from player's selection
-		#if card in target_player.selected_cards:
-			#target_player.selected_cards.erase(card)
+		if card in target_player.selected_cards:
+			target_player.selected_cards.erase(card)
 		
 		# Move to discard slot
 		var original_slot = card.target_slot
@@ -654,6 +655,8 @@ func debug_selection_state():
 			  " | sync.selected: ", card.sync.selected, 
 			  " | local selected: ", card.selected,
 			  " | In player selection: ", selection_owner)
+		for player in players.current_players:
+			print(player.selected_cards)
 
 
 
@@ -666,15 +669,11 @@ func request_clear_from_community():
 		request_clear_from_community.rpc_id(1)
 
 #@rpc("authority", "call_local", "reliable")
+
 func server_clear_from_community():
 #	remove cards from players selections if they are community cards
-	for player in players.current_players:		
-		var cards = player.selected_cards
-		for card in cards: 
-			if card.owner_id == -1:
-				print("clearing selection for players")
-				player.toggle_card_selection(card)
-				player.selected_cards.erase(card)
+	for player in players.current_players:
+		player.clear_community_discards_from_selection.rpc()
 				
 	for slot in minor_arcana_community_slots:
 		if slot.stored_cards.size() > 0:
@@ -690,6 +689,7 @@ func server_clear_from_community():
 			minor_card_discard_slot.stored_cards.append(slot.stored_cards[0])
 			slot.stored_cards.remove_at(0)
 			
+
 			
 #----------------reload discarded cards to deck---------------------------------------------------
 @rpc("any_peer", "call_local", "reliable")

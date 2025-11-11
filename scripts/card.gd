@@ -53,25 +53,28 @@ func select(select_by_id):
 	print("selected by" , select_by_id)
 	if !selected_by.has(select_by_id):
 		selected = true
+		%Visuals.position.y -= 15
 		selected_by.append(select_by_id)
 		
 @rpc ("any_peer", "call_local", "reliable")
 func deselect(select_by_id):
-	
-	if select_by_id == 0:
-		print("deselected community")
-		outline.visible = false
-		selected = false
-		selected_by = []
-		
-	else:	
-			# Add any other visual feedback for selected cards
-		print("deselected by" , select_by_id)
-		if multiplayer.get_unique_id() ==  select_by_id:
+	if selected == true :
+		if select_by_id == 0:
+			print("deselected community")
 			outline.visible = false
-		if selected_by.has(select_by_id):
 			selected = false
-			selected_by.erase(select_by_id)
+			%Visuals.position.y += 15
+			selected_by = []
+			
+		else:	
+				# Add any other visual feedback for selected cards
+			print("deselected by" , select_by_id)
+			if multiplayer.get_unique_id() ==  select_by_id:
+				outline.visible = false
+			if selected_by.has(select_by_id):
+				selected = false
+				%Visuals.position.y += 15
+				selected_by.erase(select_by_id)
 	
 		
 
@@ -94,10 +97,14 @@ func flip():
 
 func _on_card_body_mouse_entered() -> void:
 	if face_down == false:
+		print("card hovered")
 		z_index = 3
 		scale.x = 1.2
 		scale.y = 1.2
 		wiggle()
+		
+		
+		
 	# Update local state before reading
 	#update_status()
 	
@@ -123,6 +130,7 @@ func _on_card_body_mouse_entered() -> void:
 		##emit_signal("on_hover",self)
 
 func _on_card_body_mouse_exited() -> void:
+	print("card unhovered")
 	if face_down == false:
 		z_index = 1
 		scale.x = 1

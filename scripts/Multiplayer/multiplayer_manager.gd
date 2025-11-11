@@ -83,4 +83,3 @@ func delete_player(id:int):
 		return
 	players.current_players.erase(players.get_node(str(id)))
 	players.get_node(str(id)).queue_free()
-	

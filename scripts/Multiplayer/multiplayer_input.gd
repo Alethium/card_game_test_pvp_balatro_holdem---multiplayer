@@ -78,23 +78,24 @@ func server_player_click(player_id,click_position):
 	print("yay!",player_id,click_position)
 	#if multiplayer.get_unique_id() == player_id:
 	var card = raycast_for_card(click_position)
-	if card != null and card is Card:
+	if card != null and card is Minor_Arcana:
 		if !card.selected_by.has(player_id):
 			if (card.owner_id == player_id or card.owner_id == -1) and selected_cards.size() <= player.max_hand_size - 1 :
 				#select_card.rpc(card.card_id)  # Send ID instead of card object
 				card.select.rpc(player_id)
 				selected_cards.append(card)
 				print("num of cards selected : ",selected_cards.size())
+				print("cards selected : ",selected_cards)
 				print("yay!",card," clicked!, clicker is: ",player_id,"clicked at : ",click_position)
 				print("clicked card is  allowed to be selected by this user  : ",card.selected)
 			else:
-				print("clicked card is NOT allowed to be selected by this user  : ",card.sync.selected)
+				print("clicked card is NOT allowed to be selected by this user  : ",card.selected)
 		else :
 			if card.owner_id == player_id or card.owner_id == -1 :
-				#deselect_card.rpc(card.card_id)
+				
 				card.deselect.rpc(player_id)
 				selected_cards.erase(card)
-				print("selected card clicked for deselect", card.sync.selected)
+				print("selected card clicked for deselect", card.selected)
 			else:
 				print("clicked card is NOT allowed to be selected by this user")
 				

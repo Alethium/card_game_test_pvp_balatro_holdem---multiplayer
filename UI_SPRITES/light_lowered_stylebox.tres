@@ -1,0 +1,10 @@
+[gd_resource type="StyleBoxTexture" load_steps=2 format=3 uid="uid://bb3i7tqfc6wlk"]
+
+[ext_resource type="Texture2D" uid="uid://bh86hj5ebk2lg" path="res://UI_SPRITES/mid_lowered_theme.png" id="1_n84qa"]
+
+[resource]
+texture = ExtResource("1_n84qa")
+texture_margin_left = 16.0
+texture_margin_top = 16.0
+texture_margin_right = 16.0
+texture_margin_bottom = 16.0
