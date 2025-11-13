@@ -63,7 +63,6 @@ func _add_player_to_game(id:int):
 		added_player.player_position = 1
 		player_to_add.global_position = players.get_node("Player1_location").global_position 
 		added_player.hand_cursor.modulate = Color.HOT_PINK
-		
 	elif players.current_num_of_players == 2:
 		added_player.player_position = 2
 		player_to_add.global_position = players.get_node("Player2_location").global_position 

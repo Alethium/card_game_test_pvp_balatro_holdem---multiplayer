@@ -16,6 +16,11 @@ var selected_cards = []
 @onready var view = get_viewport()
 var screen_size 
 var is_ready = false
+
+
+
+
+
 func _ready() -> void:
 	
 	curr_hand_state = 0

@@ -73,6 +73,11 @@ signal player_added
 		is_ready = value
 		update_ready_display()
 
+@export var has_bet: bool = false:
+	set(value):
+		has_bet = value
+		#update_bet_display()
+
 var direction : Vector2
 var player_position : int
 
@@ -80,9 +85,7 @@ var player_position : int
 func _ready() -> void:
 	if multiplayer.get_unique_id() != player_id:
 		#%Control.visible = false
-		%Buttons_panel.queue_free()
-		%Control.mouse_filter =Control.MOUSE_FILTER_PASS
-		%Control.process_mode = Node.PROCESS_MODE_DISABLED
+		%Control.mouse_filter =Control.MOUSE_FILTER_IGNORE
 		%mini_avatar.visible = false
 		%Avatar.visible = true
 	else:
@@ -155,12 +158,12 @@ func remove_slot(slot):
 
 func handle_hand_slots(delta):
 	# Calculate the center position in local space (relative to player)
-	var local_center_x = player_hand.position.x + (current_slots.size() * 125)
+	var local_center_x = -700 + (current_slots.size() * 125)
 	
 	for i in current_slots.size():
 		# Calculate each card's position in local space
 		var local_x_offset = local_center_x - (i * 140)
-		var local_target_pos = Vector2(local_x_offset,player_hand.position.y)
+		var local_target_pos = Vector2(local_x_offset, 0)
 		
 		# Convert local position to global space, applying player's rotation
 		var global_target_pos = to_global(local_target_pos)
@@ -218,53 +221,30 @@ func update_ready_display():
 			%Avatar.modulate = Color.WHITE
 			#%mini_avatar.modulate = Color.WHITE
 			
+			
 
-func _on_bet_pressed() -> void:
+func on_bet_pressed() -> void:
 	if multiplayer.get_unique_id() == player_id:
 		print("player bet button pressed")
-		#request_player_bet.rpc()
+		request_player_bet.rpc()
+
+@rpc ("any_peer","call_local", "reliable")
+func request_player_bet():	
+	if multiplayer.is_server():
+		print("player : ", player_id, " is betting")
+		set_player_bet.rpc(true)
 	
-
-
-
-@rpc("any_peer", "call_local", "reliable")			
-func clear_community_discards_from_selection():
-	print("removing player %s cards",player_id)	
-	print(%input_synchronizer.selected_cards)
-	for card in %input_synchronizer.selected_cards:
-		print("removing ", card ) 
-		if card.owner_id == -1:
-			%input_synchronizer.selected_cards.erase(card)		
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 	
+@rpc("any_peer", "call_local", "reliable")
+func set_player_bet(bet_state: bool):
+	has_bet = bet_state	
+	%bet.text = "ANTE"
+	
+	
+@rpc("any_peer", "call_local", "reliable")	
+func set_button_text(button,text):
+	if button == "bet":
+		%bet.text = "ANTE"
 #@rpc("any_peer","reliable")	
 #func request_player_ready():
 	#print("player ready requested")

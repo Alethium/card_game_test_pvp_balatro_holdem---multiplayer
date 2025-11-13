@@ -17,19 +17,25 @@ extends game_state
 
 func enter_state() -> void:
 	print("its time to ANTE UP")
+	for player in players.current_players:
+		player.set_button_text.rpc("bet","ANTE")
+		player.request_player_unready.rpc()
 	
 func exit_state() -> void:
-	pass # Replace with function body.
-# Called every frame. 'delta' is the elapsed time since the previous frame.
+	for player in players.current_players:
+		player.set_button_text.rpc("bet","BET")
+		player.set_player_bet.rpc(false)
 func update(_delta: float) -> void:
-	pass
+	check_players_ante()
 #if all players have clicked the bet button move to next state
-func check_players_ready():
+
+func check_players_ante():
 	if multiplayer.is_server() and players.current_players.size() > 0:
-		var players_ready = 0
+		var players_bet = 0
 		for player in players.current_players:
-			if player.is_ready == true:
-				players_ready += 1
-			if players_ready == players.current_players.size():
-				print("all players ready")
-				states.change_state(states.bet_ante)
+			if player.has_bet == true:
+				
+				players_bet += 1
+			if players_bet == players.current_players.size():
+				print("all players have ANTE")
+				states.change_state(states.deal_players)

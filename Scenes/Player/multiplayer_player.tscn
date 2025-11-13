@@ -184,6 +184,6 @@ position = Vector2(13, -159)
 [node name="mouse_window_detection" type="Node" parent="."]
 script = ExtResource("5_ql3ps")
 
-[connection signal="pressed" from="Control/Buttons_panel/bet" to="." method="_on_bet_pressed"]
+[connection signal="pressed" from="Control/Buttons_panel/bet" to="." method="on_bet_pressed"]
 [connection signal="pressed" from="Control/Buttons_panel/ready" to="." method="_on_ready_button_pressed"]
 [connection signal="pressed" from="Control/Buttons_panel/ready" to="input_synchronizer" method="_on_ready_button_pressed"]

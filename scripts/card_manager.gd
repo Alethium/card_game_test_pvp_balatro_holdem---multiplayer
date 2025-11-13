@@ -130,6 +130,11 @@ func _process(delta: float) -> void:
 
 	if reloading == true:
 		do_reload()
+	if dealing == true  :
+		print("dealing timer lowering")
+		if dealing_timer > 0 :
+			dealing_timer -=1
+			print("lowering the dealing timer by 1 :", dealing_timer)
 
 
 #_____________signal functions_________________________
@@ -488,32 +493,32 @@ func server_deal_to_players():
 				if Current_Minor_Deck.deck_of_cards.size() == 0 and reloading_timer == 0 and reloading == false:
 					print("deck empty")
 					_on_reload_pressed()
-					
-				if dealing_timer == 0 and reloading_timer == 0:
-					var curr_deal = players.current_players[dealing_index]
-						
-					if curr_deal.current_hand_size < curr_deal.max_hand_size:
+				print(dealing_timer)	
+				
+				var curr_deal = players.current_players[dealing_index]
+				print("dealing to : ",curr_deal)	
+				if curr_deal.current_hand_size < curr_deal.max_hand_size:
 
-						var drawn_player_card = draw_single_card(curr_deal.player_id,Current_Minor_Deck)
-						
-						
-					#	assign the target slot for the card to move to.
-						
-						var new_slot = curr_deal.add_slot()
-						drawn_player_card.target_slot = new_slot
-						drawn_player_card.visible = true
-						curr_deal.current_hand.append(drawn_player_card)
-						Current_Minor_Deck.deck_of_cards.erase(drawn_player_card)
-						if dealing_index < players.current_players.size()-1:
-							dealing_index += 1
-						else:
-							dealing_index = 0
+					var drawn_player_card = draw_single_card(curr_deal.player_id,Current_Minor_Deck)
+					print("dealing card : ",drawn_player_card)
+					
+				#	assign the target slot for the card to move to.
+					
+					var new_slot = curr_deal.add_slot()
+					drawn_player_card.target_slot = new_slot
+					drawn_player_card.visible = true
+					curr_deal.current_hand.append(drawn_player_card)
+					Current_Minor_Deck.deck_of_cards.erase(drawn_player_card)
+					if dealing_index < players.current_players.size()-1:
+						dealing_index += 1
 					else:
-						if dealing_index < players.current_players.size()-1:
-							dealing_index += 1
-						else:
-							dealing_index = 0	
-						server_deal_to_players.rpc()
+						dealing_index = 0
+				else:
+					if dealing_index < players.current_players.size()-1:
+						dealing_index += 1
+					else:
+						dealing_index = 0	
+					server_deal_to_players.rpc()
 			else:
 				print("all_players_full")
 					
