@@ -12,6 +12,7 @@ var cursed = false
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
+	super._ready()
 	front.frame_coords.x = rank + 1
 	front.frame_coords.y = suit 
 	if rank == 0:
@@ -27,6 +28,5 @@ func _ready() -> void:
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(_delta: float) -> void:
-	pass
+
 	

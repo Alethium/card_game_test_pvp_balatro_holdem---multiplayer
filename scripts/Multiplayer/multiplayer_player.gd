@@ -107,8 +107,6 @@ func _physics_process(delta: float) -> void:
 	if multiplayer.is_server():
 		update_input(delta) 
 		
-
- 
 func _input(event: InputEvent) -> void:
 	if multiplayer.get_unique_id() == player_id:
 
@@ -137,12 +135,12 @@ func get_current_hand():
 			
 func get_slots():
 	return player_hand.get_children()
-	
+
 func get_current_slot_target_pos():
 	for slot in get_slots():
 		if slot.stored_cards.size() == 0:
 			return slot.global_position
-			
+
 func add_slot():
 	var new_slot = CARD_SLOT.instantiate()
 	current_slots.push_front(new_slot)
@@ -177,6 +175,11 @@ func handle_hand_slots(delta):
 		# Rotate cards to match player orientation
 		current_slots[i].global_rotation = global_rotation
 		
+func on_bet_pressed() -> void:
+	if multiplayer.get_unique_id() == player_id:
+		print("player bet button pressed")
+		request_player_bet.rpc()
+
 func _on_ready_button_pressed() -> void:
 	
 	if multiplayer.get_unique_id() == player_id:
@@ -220,13 +223,7 @@ func update_ready_display():
 			status_text.modulate = Color.WHITE
 			%Avatar.modulate = Color.WHITE
 			#%mini_avatar.modulate = Color.WHITE
-			
-			
 
-func on_bet_pressed() -> void:
-	if multiplayer.get_unique_id() == player_id:
-		print("player bet button pressed")
-		request_player_bet.rpc()
 
 @rpc ("any_peer","call_local", "reliable")
 func request_player_bet():	
@@ -264,3 +261,14 @@ func set_button_text(button,text):
 		#else:
 			#print("player : ", player_id, " is not ready")
 			#is_ready = false
+
+
+
+
+@rpc("any_peer", "call_local", "reliable")			
+func clear_community_discards_from_selection():
+	print("removing player %s cards : player id  :  ",% player_id)	
+	print(%input_synchronizer.selected_cards)
+	%input_synchronizer.selected_cards = %input_synchronizer.selected_cards.filter(
+	func(card): return card.owner_id != -1
+	)

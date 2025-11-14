@@ -8,7 +8,7 @@
 blend_mode = 2
 
 [node name="Card_slot" type="Node2D" groups=["Card_Slot", "card"]]
-z_index = -2
+z_as_relative = false
 script = ExtResource("1_dd0t8")
 
 [node name="card_slot_body" type="Area2D" parent="."]

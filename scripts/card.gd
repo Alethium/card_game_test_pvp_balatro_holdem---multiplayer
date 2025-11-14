@@ -8,6 +8,8 @@ extends Button
 @onready var front: Sprite2D = $Visuals/Front
 @onready var outline: Sprite2D = $Visuals/card_outline
 @onready var visuals: Node2D = $Visuals
+
+
 var current_slot_id
 var selected = false
 var selected_by = []
@@ -16,9 +18,13 @@ var marked_for_discard = false
 var card_id: int = -1
 var owner_id: int = -1
 var network_position: Vector2
+var in_transit = false
+var discarded = false
 
 signal on_hover
 signal off_hover
+enum HEIGHT_STATE {BASE,LOWERED,LIFTED}
+var current_height_state : HEIGHT_STATE = HEIGHT_STATE.BASE
 
 @export var face_down : bool = false
 @onready var anim: AnimationPlayer = $AnimationPlayer
@@ -98,13 +104,22 @@ func flip():
 func _on_card_body_mouse_entered() -> void:
 	if face_down == false:
 		print("card hovered")
-		z_index = 3
 		scale.x = 1.2
 		scale.y = 1.2
 		wiggle()
 		
-		
-		
+@rpc ("any_peer", "call_local", "reliable")		
+func change_height(height:HEIGHT_STATE):
+	
+	if height == HEIGHT_STATE.BASE:
+		z_index = 1
+		scale = lerp(scale,Vector2(1,1),0.1)
+	if height == HEIGHT_STATE.LOWERED:
+		z_index = 0
+		scale = lerp(scale,Vector2(0.9,0.9),0.1)
+	if height == HEIGHT_STATE.LIFTED:
+		z_index = 2
+		scale = lerp(scale,Vector2(1.2,1.2),0.1)
 	# Update local state before reading
 	#update_status()
 	
@@ -132,7 +147,6 @@ func _on_card_body_mouse_entered() -> void:
 func _on_card_body_mouse_exited() -> void:
 	print("card unhovered")
 	if face_down == false:
-		z_index = 1
 		scale.x = 1
 		scale.y = 1
 		wiggle()
@@ -142,7 +156,20 @@ func _on_card_body_mouse_exited() -> void:
 #the server will run this function	
 func move_to_target(delta):
 	if target_slot:
-		global_position = lerp(global_position, target_slot.global_position,delta * 10)
+		if global_position.distance_to(target_slot.global_position) < 0.01:
+			in_transit = false
+			%Debug.text = str( "stationary :" , z_index )
+		if global_position.distance_to(target_slot.global_position) < 25 :
+			change_height.rpc(HEIGHT_STATE.BASE)
+			global_position = lerp(global_position, target_slot.global_position,delta * 10)
+			
+		else :
+			%Debug.text = str( "in transit :" , z_index )
+			in_transit = true
+			change_height.rpc(HEIGHT_STATE.LIFTED)
+			global_position = lerp(global_position, target_slot.global_position,delta * 10)
+			
+		
 	else:
 		pass
 		

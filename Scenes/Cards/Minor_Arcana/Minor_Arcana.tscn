@@ -1,17 +1,42 @@
-[gd_scene load_steps=5 format=3 uid="uid://by3far74b8x5s"]
+[gd_scene load_steps=12 format=3 uid="uid://by3far74b8x5s"]
 
 [ext_resource type="PackedScene" uid="uid://c3rq0tkr3lvf5" path="res://Scenes/card.tscn" id="1_0s87a"]
 [ext_resource type="Script" uid="uid://dooyyrdmo2rux" path="res://Scenes/Cards/Minor_Arcana/Minor_Arcana.gd" id="2_mdjes"]
 [ext_resource type="Texture2D" uid="uid://bu04xpr65t45s" path="res://Cards/card_sprites/PC _ Computer - Balatro - Playing Cards - Playing Cards.png" id="3_8cajy"]
 [ext_resource type="Script" uid="uid://dqdyeq7nod3d1" path="res://Scenes/Cards/Minor_Arcana/multiplayer_synchronizer.gd" id="3_ddece"]
 
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_8cajy"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_ddece"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_l2bfa"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_51eta"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_2pwvd"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_aq3cx"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_mljoi"]
+
 [node name="Minor_Arcana" groups=["Card"] instance=ExtResource("1_0s87a")]
+z_as_relative = false
+theme_override_styles/normal = SubResource("StyleBoxEmpty_8cajy")
+theme_override_styles/normal_mirrored = SubResource("StyleBoxEmpty_ddece")
+theme_override_styles/pressed = SubResource("StyleBoxEmpty_l2bfa")
+theme_override_styles/pressed_mirrored = SubResource("StyleBoxEmpty_51eta")
+theme_override_styles/hover = SubResource("StyleBoxEmpty_2pwvd")
+theme_override_styles/disabled = SubResource("StyleBoxEmpty_aq3cx")
+theme_override_styles/focus = SubResource("StyleBoxEmpty_mljoi")
 script = ExtResource("2_mdjes")
 suit = 0
 rank = 0
 
 [node name="MultiplayerSynchronizer" parent="." index="0"]
 script = ExtResource("3_ddece")
+
+[node name="Visuals" parent="." index="1"]
+z_as_relative = false
 
 [node name="Front" parent="Visuals" index="1"]
 texture = ExtResource("3_8cajy")

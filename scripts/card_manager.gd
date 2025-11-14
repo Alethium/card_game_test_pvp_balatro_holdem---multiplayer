@@ -229,7 +229,7 @@ func draw_single_card(owner_id,deck) -> Card:
 		return null
 	#get the node for the card we want to spawn in	
 	var card_scene = deck.deck_of_cards.pop_front()
-	card_scene.z_index = 5
+	
 	#remove the card from the deck
 	
 	deck.decrease_deck_height.rpc()
@@ -325,13 +325,7 @@ func handle_card_visibility(card):
 
 	card.handle_facing()
 
-func highlight_hovered_card(card,hovered):
-	if hovered:
-		card.scale = Vector2(1.1,1.1)
-		card.z_index = 2
-	else:
-		card.scale = Vector2(1,1)
-		card.z_index = 1
+
 
 
 #_______________________________________________________________________________
@@ -507,6 +501,7 @@ func server_deal_to_players():
 					var new_slot = curr_deal.add_slot()
 					drawn_player_card.target_slot = new_slot
 					drawn_player_card.visible = true
+					
 					curr_deal.current_hand.append(drawn_player_card)
 					Current_Minor_Deck.deck_of_cards.erase(drawn_player_card)
 					if dealing_index < players.current_players.size()-1:
@@ -636,7 +631,7 @@ func server_discard_from_players(player_id):
 			target_player.remove_slot(original_slot)
 		minor_discard_pile.increase_deck_height()
 		print(minor_discard_pile.deck_height, " : current deck height")
-		card.z_index = - 5
+		
 		card.target_slot = card.discard_slot
 		minor_card_discard_slot.stored_cards.append(card)
 		
@@ -688,7 +683,6 @@ func server_clear_from_community():
 			slot.stored_cards[0].selectable = false
 			slot.stored_cards[0].owner_id = 0 # set to zero for discard pile
 			slot.stored_cards[0].target_slot = minor_card_discard_slot 
-			slot.stored_cards[0].z_index = - 5
 			minor_discard_pile.increase_deck_height()
 			print(minor_discard_pile.deck_height, " : current deck height")
 			minor_card_discard_slot.stored_cards.append(slot.stored_cards[0])
@@ -729,9 +723,9 @@ func do_reload():
 				print("adding to deck height")
 				Current_Minor_Deck.increase_deck_height.rpc()
 				
-				card.z_index = - 5
 				card.selectable = true
 				card.target_slot = minor_card_deck_slot
+				
 				print("reloading deck with : ", card)
 				minor_card_deck_slot.stored_cards.append(card)
 				print(minor_card_deck_slot.stored_cards)

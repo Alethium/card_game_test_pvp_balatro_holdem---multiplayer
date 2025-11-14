@@ -23,3 +23,5 @@ func update(_delta: float) -> void:
 		num_cards -= 1
 		print("state machine calling for card deal to player")
 		card_manager._on_deal_to_players_pressed()
+	if card_manager.dealing_timer == 0 and num_cards == 0 :
+		card_manager.dealing = false
