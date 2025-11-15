@@ -179,34 +179,3 @@ func find_card_by_id(card_id):
 		if card.card_id == card_id:
 			return card
 	return null
-
-
-#func _on_ready_button_pressed() -> void:
-	#print("player ready button pressed")
-	#if multiplayer.is_server():	
-		#if multiplayer.get_unique_id() == player.player_id:
-			#server_player_ready.rpc(player.player_id)
-	#else:
-			#
-		#if multiplayer.get_unique_id() == player.player_id:
-			#request_player_ready.rpc(player.player_id)
-	#
-#@rpc("any_peer","reliable")	
-#func request_player_ready(player_id):
-	#print("player ready requested")
-	#if multiplayer.is_server():
-		#server_player_ready.rpc(player_id)
-	#else:
-		#request_player_ready.rpc_id(1,player_id)
-#
-#
-#@rpc("any_peer", "call_local", "reliable")	
-#func server_player_ready(player_id):
-	#if multiplayer.is_server():	
-		#if !is_ready:
-			#print("player : ", player_id, " is ready")
-			#is_ready = true
-#
-		#else:
-			#print("player : ", player_id, " is not ready")
-			#is_ready = false

@@ -105,18 +105,7 @@ offset_right = 167.0
 offset_bottom = 197.0
 text = "untouched"
 
-[node name="bet" type="Button" parent="Control/Buttons_panel"]
-unique_name_in_owner = true
-layout_mode = 0
-offset_left = 5.0
-offset_top = 68.0
-offset_right = 110.0
-offset_bottom = 133.0
-theme = ExtResource("2_rlkiy")
-theme_override_font_sizes/font_size = 32
-text = "BET"
-
-[node name="ready" type="Button" parent="Control/Buttons_panel"]
+[node name="Action_Button" type="Button" parent="Control/Buttons_panel"]
 unique_name_in_owner = true
 layout_mode = 1
 anchors_preset = 10
@@ -130,14 +119,27 @@ theme = ExtResource("2_rlkiy")
 theme_override_font_sizes/font_size = 32
 text = "READY UP!"
 
-[node name="Button" type="Button" parent="Control/Buttons_panel"]
+[node name="Button1" type="Button" parent="Control/Buttons_panel"]
+unique_name_in_owner = true
+layout_mode = 0
+offset_left = 5.0
+offset_top = 68.0
+offset_right = 110.0
+offset_bottom = 133.0
+theme = ExtResource("2_rlkiy")
+theme_override_font_sizes/font_size = 32
+
+[node name="Button2" type="Button" parent="Control/Buttons_panel"]
+unique_name_in_owner = true
 layout_mode = 0
 offset_left = 93.0
 offset_top = 68.0
 offset_right = 170.0
 offset_bottom = 133.0
+theme_override_font_sizes/font_size = 18
 
-[node name="Button2" type="Button" parent="Control/Buttons_panel"]
+[node name="Button3" type="Button" parent="Control/Buttons_panel"]
+unique_name_in_owner = true
 layout_mode = 0
 offset_left = 153.0
 offset_top = 68.0
@@ -184,6 +186,5 @@ position = Vector2(13, -159)
 [node name="mouse_window_detection" type="Node" parent="."]
 script = ExtResource("5_ql3ps")
 
-[connection signal="pressed" from="Control/Buttons_panel/bet" to="." method="on_bet_pressed"]
-[connection signal="pressed" from="Control/Buttons_panel/ready" to="." method="_on_ready_button_pressed"]
-[connection signal="pressed" from="Control/Buttons_panel/ready" to="input_synchronizer" method="_on_ready_button_pressed"]
+[connection signal="pressed" from="Control/Buttons_panel/Action_Button" to="." method="_on_action_button_pressed"]
+[connection signal="pressed" from="Control/Buttons_panel/Button1" to="." method="on_button1_pressed"]

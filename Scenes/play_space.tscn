@@ -198,6 +198,7 @@ text = "RELOAD"
 
 [node name="spawned_cards" type="Control" parent="UI"]
 process_priority = 1
+z_as_relative = false
 anchors_preset = 0
 
 [node name="Score_Display" type="Control" parent="UI"]

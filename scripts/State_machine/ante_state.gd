@@ -17,14 +17,17 @@ extends game_state
 
 func enter_state() -> void:
 	print("its time to ANTE UP")
+	label.text = "Ante state, Please Ante up"
 	for player in players.current_players:
-		player.set_button_text.rpc("bet","ANTE")
+		player.set_button_text.rpc("button1","ANTE")
 		player.request_player_unready.rpc()
 	
 func exit_state() -> void:
 	for player in players.current_players:
-		player.set_button_text.rpc("bet","BET")
+		player.set_button_text.rpc("button1","BET")
 		player.set_player_bet.rpc(false)
+
+
 func update(_delta: float) -> void:
 	check_players_ante()
 #if all players have clicked the bet button move to next state
@@ -34,7 +37,6 @@ func check_players_ante():
 		var players_bet = 0
 		for player in players.current_players:
 			if player.has_bet == true:
-				
 				players_bet += 1
 			if players_bet == players.current_players.size():
 				print("all players have ANTE")

@@ -34,8 +34,8 @@ var current_chips : Array[Chip]
 const CHIP = preload("res://Scenes/chip.tscn")
 
 
-@onready var ready_btn_text = %ready.text
-@onready var bet_btn_text = %bet.text
+
+
 @onready var status_text: Label = $Control/Buttons_panel/status_text
 
 
@@ -58,8 +58,20 @@ var current_hand : Array[Card]
 var number_of_cards_selected = 0
 var screen_size
 
+var signals_connected
 signal player_added
+signal button1_pressed
+signal button2_pressed
+signal button3_pressed
+signal action_button_pressed
 
+
+
+@onready var action_btn_text = %Action_Button.text
+@onready var button1: Button = %Button1
+@onready var button2: Button = %Button2
+@onready var button3: Button = %Button3
+# connect signals when player joins the game. 
 
 @onready var button_container = $Control
 
@@ -99,8 +111,6 @@ func _ready() -> void:
 	Input.set_mouse_mode(Input.MOUSE_MODE_HIDDEN)
 	update_ready_display()
 	
-	
-
 func _physics_process(delta: float) -> void:
 	
 	
@@ -175,20 +185,34 @@ func handle_hand_slots(delta):
 		# Rotate cards to match player orientation
 		current_slots[i].global_rotation = global_rotation
 		
-func on_bet_pressed() -> void:
+func on_button1_pressed() -> void:
 	if multiplayer.get_unique_id() == player_id:
-		print("player bet button pressed")
+		print("button 1 pressed for :" , player_id)
 		request_player_bet.rpc()
+		button1_pressed.emit(player_id)
+	
+		
+		
+func on_button2_pressed() -> void:
+	if multiplayer.get_unique_id() == player_id:
+		print("player 2 button pressed")
+		button2_pressed.emit(player_id)
+		
+func on_button3_pressed() -> void:
+	if multiplayer.get_unique_id() == player_id:
+		print("player 2 button pressed")
+		button3_pressed.emit(player_id)
+		
 
-func _on_ready_button_pressed() -> void:
+func _on_action_button_pressed() -> void:
 	
 	if multiplayer.get_unique_id() == player_id:
+		action_button_pressed.emit(player_id)
 		print("player ready button pressed")
 		if !is_ready:
 			request_player_ready.rpc()
 		else:
 			request_player_unready.rpc()
-
 
 @rpc ("any_peer","call_local", "reliable")
 func request_player_ready():
@@ -197,7 +221,6 @@ func request_player_ready():
 		set_player_ready.rpc(true)
 		#status_text.text = str( "ready? : ", is_ready)
 
-	
 @rpc ("any_peer","call_local", "reliable")
 func request_player_unready():
 	if multiplayer.is_server():
@@ -225,23 +248,28 @@ func update_ready_display():
 			#%mini_avatar.modulate = Color.WHITE
 
 
+
+
+
 @rpc ("any_peer","call_local", "reliable")
 func request_player_bet():	
 	if multiplayer.is_server():
 		print("player : ", player_id, " is betting")
 		set_player_bet.rpc(true)
 	
-	
 @rpc("any_peer", "call_local", "reliable")
 func set_player_bet(bet_state: bool):
 	has_bet = bet_state	
-	%bet.text = "ANTE"
+	%Button1.text = "BET"
 	
 	
 @rpc("any_peer", "call_local", "reliable")	
 func set_button_text(button,text):
-	if button == "bet":
-		%bet.text = "ANTE"
+	if button == "button1":
+		%Button1.text = text
+		
+		
+		
 #@rpc("any_peer","reliable")	
 #func request_player_ready():
 	#print("player ready requested")
@@ -263,11 +291,9 @@ func set_button_text(button,text):
 			#is_ready = false
 
 
-
-
 @rpc("any_peer", "call_local", "reliable")			
 func clear_community_discards_from_selection():
-	print("removing player %s cards : player id  :  ",% player_id)	
+	#print("removing player %s cards : player id  :  ",% player_id)	
 	print(%input_synchronizer.selected_cards)
 	%input_synchronizer.selected_cards = %input_synchronizer.selected_cards.filter(
 	func(card): return card.owner_id != -1

@@ -178,12 +178,15 @@ func instantiate_cards():
 			#int_card.card_id = randi()
 			int_card.visible = false
 			int_card.owner_id = 0
+			int_card.z_as_relative = false
+			int_card.z_index = 0  # Start with lowest z-index
 			Current_Minor_Deck.deck_of_cards.append(int_card)
 			int_card.global_position = minor_card_deck_slot.global_position
 			int_card.card_id = card_id_counter
 			int_card.discard_slot = minor_card_discard_slot
 			card_id_counter += 1
 			spawned_cards.add_child(int_card)
+			int_card.z_index = 0 
 			
 			
 			print(int_card," : added to deck of cards from base set at index : ",deck_index)

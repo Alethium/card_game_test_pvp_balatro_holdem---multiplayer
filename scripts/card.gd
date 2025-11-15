@@ -37,6 +37,7 @@ var current_height_state : HEIGHT_STATE = HEIGHT_STATE.BASE
 
 func _ready():
 	visible = false
+	
 	# Only the server should control the card's authoritative state
 	if multiplayer.is_server():
 		sync.set_multiplayer_authority(1)  # Server has authority

@@ -83,6 +83,7 @@ _data = {
 }
 
 [node name="card" type="Button"]
+z_as_relative = false
 script = ExtResource("1_0qqmn")
 
 [node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="."]
@@ -91,6 +92,14 @@ replication_config = SubResource("SceneReplicationConfig_eumee")
 [node name="Visuals" type="Node2D" parent="."]
 unique_name_in_owner = true
 scale = Vector2(2, 2)
+
+[node name="card_outline" type="Sprite2D" parent="Visuals"]
+visible = false
+modulate = Color(1, 1, 0, 1)
+scale = Vector2(1.05, 1.05)
+texture = ExtResource("2_brehn")
+hframes = 15
+vframes = 4
 
 [node name="bg" type="Sprite2D" parent="Visuals"]
 material = SubResource("ShaderMaterial_e6po8")
@@ -104,15 +113,6 @@ vframes = 4
 texture = ExtResource("3_eumee")
 hframes = 7
 vframes = 5
-
-[node name="card_outline" type="Sprite2D" parent="Visuals"]
-visible = false
-modulate = Color(1, 1, 0, 1)
-z_index = -3
-scale = Vector2(1.05, 1.05)
-texture = ExtResource("2_brehn")
-hframes = 15
-vframes = 4
 
 [node name="card_body" type="Area2D" parent="." groups=["Card"]]
 monitorable = false

@@ -16,6 +16,7 @@ var curr_state
 @onready var game_start: Node = $game_start
 @onready var bet_ante: Node = $bet_ante
 @onready var deal_players: Node = $deal_players
+@onready var discard_players: Node = $discard_players
 @onready var deal_hole: Node = $deal_hole
 @onready var bet_hole: Node = $bet_hole
 @onready var deal_flop: Node = $deal_flop
@@ -29,6 +30,7 @@ var curr_state
 @onready var store: Node = $store
 @onready var game_state_label: Label = $"../UI/Game_State_Display/Game State"
 @onready var game_state_display: Control = $"../UI/Game_State_Display"
+
 @onready var play_space: Node2D = $".."
 
 
@@ -41,11 +43,10 @@ func _ready() -> void:
 	set_starting_state()
 	
 func _process(delta: float) -> void:
-	
-	if player_signals_connected == false :
-		for player in players.current_players:
+	for player in players.current_players:
+		if player.signals_connected == false :
 			connect_player_signals(player)			
-		player_signals_connected = true
+			player.signals_connected = true
 #build a state machine, that commands the card manager to deal cards, locks and unlocks what players can do. 
 	run_current_state(delta)
 	for player in players.current_players:
@@ -79,9 +80,19 @@ func set_starting_state():
 	curr_state = game_start
 	curr_state.enter_state()
 
-func connect_player_signals(_player):
+func connect_player_signals(player):
 	print("player signal connected")
-	
+	player.connect("action_button_pressed",_on_action_button_pressed)
+	#player.button1_pressed.connect(_on_button1_pressed)
+	#player.button2_pressed.connect(_on_button2_pressed)
+	#player.button3_pressed.connect(_on_button3_pressed)
+
+
+func _on_action_button_pressed(player_id):
+	print("player : ",player_id, "action button pressed")
+
+
+
 		
 func _on_play_request(player,hand):
 	print("hand sent to play :", hand)
