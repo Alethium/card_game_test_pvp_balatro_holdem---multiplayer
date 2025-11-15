@@ -22,6 +22,7 @@ func become_host():
 	%Enet_Multiplayer_HUD.hide()
 	MultiplayerManager.become_host()
 	play_space.visible = true
+	play_space.game_manager.curr_state.enter_state()
 	play_space.process_mode = Node.PROCESS_MODE_INHERIT
 	
 
@@ -30,4 +31,5 @@ func join_game():
 	%Enet_Multiplayer_HUD.hide()
 	MultiplayerManager.join_as_player()
 	play_space.visible = true
+	play_space.game_manager.curr_state.enter_state()
 	play_space.process_mode = Node.PROCESS_MODE_INHERIT

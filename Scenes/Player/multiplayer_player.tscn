@@ -117,7 +117,6 @@ offset_bottom = 84.0
 grow_horizontal = 2
 theme = ExtResource("2_rlkiy")
 theme_override_font_sizes/font_size = 32
-text = "READY UP!"
 
 [node name="Button1" type="Button" parent="Control/Buttons_panel"]
 unique_name_in_owner = true

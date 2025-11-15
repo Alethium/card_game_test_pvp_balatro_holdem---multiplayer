@@ -11,8 +11,10 @@ var current_small_blind : Player
 
 var prev_state
 var curr_state 
+var next_state
 
 #states
+@onready var menu_state: Node = $menu_state
 @onready var game_start: Node = $game_start
 @onready var bet_ante: Node = $bet_ante
 @onready var deal_players: Node = $deal_players
@@ -40,13 +42,10 @@ var player_signals_connected = false
 
 
 func _ready() -> void:	
+	
 	set_starting_state()
 	
 func _process(delta: float) -> void:
-	for player in players.current_players:
-		if player.signals_connected == false :
-			connect_player_signals(player)			
-			player.signals_connected = true
 #build a state machine, that commands the card manager to deal cards, locks and unlocks what players can do. 
 	run_current_state(delta)
 	for player in players.current_players:
@@ -56,12 +55,12 @@ func _process(delta: float) -> void:
 func run_current_state(delta):
 	curr_state.update(delta)	 
 	
-func change_state(next_state):
-	if next_state != null:
+func change_state(new_state):
+	if new_state != null:
 		curr_state.exit_state()
 		prev_state=curr_state
 		
-		curr_state=next_state
+		curr_state=new_state
 		curr_state.enter_state()
 
 func set_starting_state():
@@ -76,35 +75,10 @@ func set_starting_state():
 		state.label = game_state_label
 
 		
-	prev_state = game_start
-	curr_state = game_start
+	prev_state = menu_state
+	curr_state = menu_state
+	next_state = game_start
 	curr_state.enter_state()
-
-func connect_player_signals(player):
-	print("player signal connected")
-	#player.connect("action_button_pressed",_on_action_button_pressed)
-	#player.connect("button1_pressed",_on_button1_pressed)
-	#player.connect("button2_pressed",_on_button2_pressed)
-	#player.connect("button3_pressed",_on_button3_pressed)
-	##player.button1_pressed.connect(_on_button1_pressed)
-	##player.button2_pressed.connect(_on_button2_pressed)
-	##player.button3_pressed.connect(_on_button3_pressed)
-#
-#
-#func _on_action_button_pressed(player_id):
-	#print("player : ",player_id, "action button pressed")
-#
-#func _on_button1_pressed(player_id):
-	#print("player : ",player_id, "button 1 pressed")
-	#
-#func _on_button2_pressed(player_id):
-	#print("player : ",player_id, "button 2 pressed")
-		#
-#func _on_button3_pressed(player_id):
-	#print("player : ",player_id, "button 3 pressed")
-	#
-
-
 
 		
 func _on_play_request(player,hand):

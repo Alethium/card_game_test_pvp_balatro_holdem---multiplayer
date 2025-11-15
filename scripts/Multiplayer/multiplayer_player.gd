@@ -65,9 +65,12 @@ var button2_pressed = false
 var button3_pressed = false
 var action_button_pressed = false
 
+#@onready var action_btn_text = %Action_Button.text
 
 
-@onready var action_btn_text = %Action_Button.text
+
+
+@onready var action_button: Button = %Action_Button
 @onready var button1: Button = %Button1
 @onready var button2: Button = %Button2
 @onready var button3: Button = %Button3
@@ -284,31 +287,18 @@ func _on_button3_pressed() -> void:
 	
 @rpc("any_peer", "call_local", "reliable")	
 func set_button_text(button,text):
+	if button == "action_button":
+		%Action_Button.text = text
+	
 	if button == "button1":
 		%Button1.text = text
+	
+	if button == "button2":
+		%Button2.text = text
 
 
 
 
-
-
-
-
-
-		
-#@rpc ("any_peer","call_local", "reliable")
-#func request_action_press():
-	#if multiplayer.is_server():
-		#print("player : ", player_id, " is ready")
-		
-		
-		
-		
-		
-		
-		
-		
-		
 func toggle_ready():
 		print("player : ", player_id, " is ready")			
 		
@@ -316,17 +306,6 @@ func toggle_ready():
 			request_player_ready.rpc()
 		else:
 			request_player_unready.rpc()
-
-
-
-
-
-
-
-
-
-
-
 
 
 

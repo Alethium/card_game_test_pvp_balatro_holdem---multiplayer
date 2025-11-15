@@ -51,11 +51,12 @@ func _add_player_to_game(id:int):
 	players.add_child(player_to_add, true)
 	players.current_num_of_players += 1
 	players.current_players.append(player_to_add)
+	player_to_add.set_button_text.rpc("action_button", "Ready Up!")
 	#card_manager.sync_deck_order.rpc(card_manager.deck_seed,card_manager.deck_order)
 	
 	var added_player = players.get_node(str(id))
-	card_manager.connect_player_signals(added_player)
-	game_manager.connect_player_signals(added_player)
+	#card_manager.connect_player_signals(added_player)
+	#game_manager.connect_player_signals(added_player)
 	added_player.hand_cursor.modulate = Color.HOT_PINK
 	 
 	

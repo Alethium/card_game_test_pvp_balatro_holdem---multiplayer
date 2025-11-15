@@ -1,6 +1,7 @@
-[gd_scene load_steps=17 format=3 uid="uid://bvp2lq0xadoi2"]
+[gd_scene load_steps=18 format=3 uid="uid://bvp2lq0xadoi2"]
 
 [ext_resource type="Script" uid="uid://fyjtmnu0p70k" path="res://scripts/game_manager.gd" id="1_sq00h"]
+[ext_resource type="Script" uid="uid://blvurhqc4wbnm" path="res://scripts/State_machine/menu_state.gd" id="2_5tjy5"]
 [ext_resource type="Script" uid="uid://d3edgbt58ajfm" path="res://scripts/State_machine/game_start_state.gd" id="2_mmt5l"]
 [ext_resource type="Script" uid="uid://dxqc5w5eoico7" path="res://scripts/State_machine/ante_state.gd" id="3_fgdfb"]
 [ext_resource type="Script" uid="uid://ticfbi074bym" path="res://scripts/State_machine/deal_players_state.gd" id="4_yqty0"]
@@ -19,6 +20,9 @@
 
 [node name="game_manager" type="Node2D"]
 script = ExtResource("1_sq00h")
+
+[node name="menu_state" type="Node" parent="."]
+script = ExtResource("2_5tjy5")
 
 [node name="game_start" type="Node" parent="."]
 script = ExtResource("2_mmt5l")
