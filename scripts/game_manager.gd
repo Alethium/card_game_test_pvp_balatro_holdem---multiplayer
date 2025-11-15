@@ -82,14 +82,27 @@ func set_starting_state():
 
 func connect_player_signals(player):
 	print("player signal connected")
-	player.connect("action_button_pressed",_on_action_button_pressed)
-	#player.button1_pressed.connect(_on_button1_pressed)
-	#player.button2_pressed.connect(_on_button2_pressed)
-	#player.button3_pressed.connect(_on_button3_pressed)
-
-
-func _on_action_button_pressed(player_id):
-	print("player : ",player_id, "action button pressed")
+	#player.connect("action_button_pressed",_on_action_button_pressed)
+	#player.connect("button1_pressed",_on_button1_pressed)
+	#player.connect("button2_pressed",_on_button2_pressed)
+	#player.connect("button3_pressed",_on_button3_pressed)
+	##player.button1_pressed.connect(_on_button1_pressed)
+	##player.button2_pressed.connect(_on_button2_pressed)
+	##player.button3_pressed.connect(_on_button3_pressed)
+#
+#
+#func _on_action_button_pressed(player_id):
+	#print("player : ",player_id, "action button pressed")
+#
+#func _on_button1_pressed(player_id):
+	#print("player : ",player_id, "button 1 pressed")
+	#
+#func _on_button2_pressed(player_id):
+	#print("player : ",player_id, "button 2 pressed")
+		#
+#func _on_button3_pressed(player_id):
+	#print("player : ",player_id, "button 3 pressed")
+	#
 
 
 

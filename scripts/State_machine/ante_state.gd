@@ -19,12 +19,12 @@ func enter_state() -> void:
 	print("its time to ANTE UP")
 	label.text = "Ante state, Please Ante up"
 	for player in players.current_players:
-		player.set_button_text.rpc("button1","ANTE")
+		player.set_button_text.rpc("action_button","ANTE")
 		player.request_player_unready.rpc()
 	
 func exit_state() -> void:
 	for player in players.current_players:
-		player.set_button_text.rpc("button1","BET")
+		#player.set_button_text.rpc("button1","BET")
 		player.set_player_bet.rpc(false)
 
 

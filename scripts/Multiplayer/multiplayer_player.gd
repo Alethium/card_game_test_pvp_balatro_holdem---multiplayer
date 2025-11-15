@@ -60,10 +60,10 @@ var screen_size
 
 var signals_connected
 signal player_added
-signal button1_pressed
-signal button2_pressed
-signal button3_pressed
-signal action_button_pressed
+var button1_pressed = false
+var button2_pressed = false
+var button3_pressed = false
+var action_button_pressed = false
 
 
 
@@ -185,34 +185,150 @@ func handle_hand_slots(delta):
 		# Rotate cards to match player orientation
 		current_slots[i].global_rotation = global_rotation
 		
-func on_button1_pressed() -> void:
-	if multiplayer.get_unique_id() == player_id:
-		print("button 1 pressed for :" , player_id)
-		request_player_bet.rpc()
-		button1_pressed.emit(player_id)
-	
-		
-		
-func on_button2_pressed() -> void:
-	if multiplayer.get_unique_id() == player_id:
-		print("player 2 button pressed")
-		button2_pressed.emit(player_id)
-		
-func on_button3_pressed() -> void:
-	if multiplayer.get_unique_id() == player_id:
-		print("player 2 button pressed")
-		button3_pressed.emit(player_id)
-		
-
 func _on_action_button_pressed() -> void:
 	
 	if multiplayer.get_unique_id() == player_id:
-		action_button_pressed.emit(player_id)
-		print("player ready button pressed")
+		#toggle_ready()
+		request_action_button_press.rpc()
+		print("player action button pressed : ", player_id)
+
+
+@rpc ("any_peer","call_local", "reliable")
+func request_action_button_press():	
+	if multiplayer.is_server():
+		print("player : ", player_id, " action button pressed : ", action_button_pressed)
+		
+		if action_button_pressed == false:
+			set_action_button_pressed.rpc(true)
+		elif action_button_pressed == true:
+			set_action_button_pressed.rpc(false)
+	return
+
+@rpc("any_peer", "call_local", "reliable")
+func set_action_button_pressed(button: bool):
+	if multiplayer.is_server():
+		action_button_pressed = button
+		print("player : ", player_id, " action button pressed : ", action_button_pressed)	
+		#set_action_button_text()		
+		
+		
+func _on_button1_pressed() -> void:
+	if multiplayer.get_unique_id() == player_id:
+		request_button1_press.rpc()
+		print("button 1 pressed  from player : " , player_id)
+		
+@rpc ("any_peer","call_local", "reliable")
+func request_button1_press():	
+	if multiplayer.is_server():
+		print("player : ", player_id, " button 1 pressed : ", button1_pressed)
+		
+		if button1_pressed == false:
+			set_button1_pressed.rpc(true)
+		elif button1_pressed == true:
+			set_button1_pressed.rpc(false)
+	
+@rpc("any_peer", "call_local", "reliable")
+func set_button1_pressed(button: bool):
+	
+	button1_pressed = button
+	print("player : ", player_id, " button 1 pressed : ", button1_pressed)	
+	set_button1_text()
+	
+
+func set_button1_text():
+	if button1_pressed == true:
+		%Button1.text = "T"
+	elif button1_pressed == false:
+		%Button1.text = "F"	
+
+
+
+
+
+
+
+		
+func _on_button2_pressed() -> void:
+	if multiplayer.get_unique_id() == player_id:
+		print("button 2 pressed signal sent from player : " , player_id)
+		
+
+
+
+
+
+
+
+
+		
+func _on_button3_pressed() -> void:
+	if multiplayer.get_unique_id() == player_id:
+		print("button 3 pressed signal sent from player : " , player_id)
+		
+		
+
+
+
+
+
+
+
+
+
+
+		
+		
+
+
+
+	
+@rpc("any_peer", "call_local", "reliable")	
+func set_button_text(button,text):
+	if button == "button1":
+		%Button1.text = text
+
+
+
+
+
+
+
+
+
+		
+#@rpc ("any_peer","call_local", "reliable")
+#func request_action_press():
+	#if multiplayer.is_server():
+		#print("player : ", player_id, " is ready")
+		
+		
+		
+		
+		
+		
+		
+		
+		
+func toggle_ready():
+		print("player : ", player_id, " is ready")			
+		
 		if !is_ready:
 			request_player_ready.rpc()
 		else:
 			request_player_unready.rpc()
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 @rpc ("any_peer","call_local", "reliable")
 func request_player_ready():
@@ -262,11 +378,7 @@ func set_player_bet(bet_state: bool):
 	has_bet = bet_state	
 	%Button1.text = "BET"
 	
-	
-@rpc("any_peer", "call_local", "reliable")	
-func set_button_text(button,text):
-	if button == "button1":
-		%Button1.text = text
+
 		
 		
 		
