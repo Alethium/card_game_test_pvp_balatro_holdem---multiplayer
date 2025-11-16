@@ -23,9 +23,8 @@ func enter_state() -> void:
 	
 func exit_state() -> void:
 	for player in players.current_players:
-		#player.set_button_text.rpc("button1","BET")
-		player.set_player_bet.rpc(false)
-
+		player.set_action_button_pressed.rpc(false)
+		player.request_player_unready.rpc()
 
 func update(_delta: float) -> void:
 	check_players_ante()

@@ -1,6 +1,7 @@
 #DISCARD PLAYERS STATE
 extends game_state
 var num_cards
+var players_ready = []
 #dealer has an opportunity to alter the deck in this moment 
 #apply modifiers to specific cards ala tarot cards. change suit, value, lucky, glass, gold, stone. 
 # all players are dealt their hand
@@ -9,22 +10,35 @@ var num_cards
 # once all the players # once all the players have the hand they want to keep
 func enter_state() -> void:
 	label.text = "please discard cards you do not want, \n and you wll be dealt new cards. "
-	#num_cards = 5*players.current_players.size()
-	#card_manager.dealing = true
-	#card_manager.Current_Minor_Deck.deck_of_cards.shuffle()
-	#print("it is time to deal cards!!!!!")
+	print("its time to DISCARD THOSE CARDS!")
+	label.text = "discard state, discarding and redrawing to players"
+	for player in players.current_players:
+		player.set_button_text.rpc("action_button","Discard")
 	
 		
 func exit_state() -> void:
 	pass # Replace with function body.
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func update(_delta: float) -> void:
-	pass
-	#if card_manager.dealing_timer == 0 and num_cards > 0 :
-		#card_manager.dealing_timer += 20
-		#num_cards -= 1
-		#print("state machine calling for card deal to player")
-		#card_manager._on_deal_to_players_pressed()
-	#if card_manager.dealing_timer == 0 and num_cards == 0 :
-		#card_manager.dealing = false
-		#states.change_state(states.discard_players)
+	check_players_discard()
+
+func check_players_discard():
+#	 if players select cards and press the discard button, it locks them in and when all players have selected the discard, to the discard and redraw. 
+
+	if multiplayer.is_server() and players.current_players.size() > 0:
+		for player in players.current_players:
+			if player.action_button_pressed and player.is_ready == false:
+				player.request_player_ready.rpc()
+				print("discarding cards for player : " , player.player_id)
+				player.set_button_text.rpc("action_button","Discarding!")
+				card_manager._on_discard_pressed(player.player_id)
+				if !players_ready.has(player.player_id):
+					players_ready.append(player.player_id)
+			#elif !player.action_button_pressed and player.is_ready == true:
+				#player.request_player_unready.rpc()
+				#if players_ready.has(player.player_id):
+					#players_ready.erase(player.player_id)
+				#player.set_button_text.rpc("action_button","Not Ready!")
+		if players_ready.size() == players.current_players.size():
+			print("all players discard, redraw now")
+			states.change_state(states.deal_players)

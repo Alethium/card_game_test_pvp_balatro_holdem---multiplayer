@@ -399,13 +399,13 @@ func _on_clear_pressed()-> void:
 	else:
 		request_clear_from_community.rpc()
 		
-func _on_discard_pressed() -> void:
-	print("Discard pressed by: ", multiplayer.get_unique_id())
+func _on_discard_pressed(player_id) -> void:
+	print("Discard pressed by: ", player_id)
 	for card in currently_spawned_cards:
 		print("card :", card, "selected? :", card.selected)
 	if multiplayer.is_server():
 		print("Server processing own discard")
-		server_discard_from_players(multiplayer.get_unique_id())
+		server_discard_from_players(player_id)
 	else:
 		print("Client requesting discard from server")
 		request_discard_from_players.rpc_id(1, multiplayer.get_unique_id())

@@ -17,7 +17,7 @@ var selected_cards = []
 var screen_size 
 var is_ready = false
 
-
+var input_locked = false
 
 
 
