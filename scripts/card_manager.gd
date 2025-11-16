@@ -518,6 +518,7 @@ func server_deal_to_players():
 						dealing_index = 0	
 					server_deal_to_players.rpc()
 			else:
+				dealing = false
 				print("all_players_full")
 					
 func handle_players_served():
@@ -611,7 +612,7 @@ func server_discard_from_players(player_id):
 	print(currently_spawned_cards)
 	for card in currently_spawned_cards:
 		
-		if card.owner_id == player_id and card.selected:
+		if card.owner_id == player_id and !card.selected:
 			
 			cards_to_discard.append(card)
 			print("Found selected card to discard: ", card)

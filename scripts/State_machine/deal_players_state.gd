@@ -16,6 +16,7 @@ func enter_state() -> void:
 		for card in card_manager.currently_spawned_cards:
 			
 			if card.owner_id > 1 :
+				
 				current_card_count += 1
 		num_cards = 5*players.current_players.size() - current_card_count
 		
