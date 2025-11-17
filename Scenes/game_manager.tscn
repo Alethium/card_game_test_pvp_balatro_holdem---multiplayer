@@ -27,7 +27,7 @@ script = ExtResource("2_5tjy5")
 [node name="game_start" type="Node" parent="."]
 script = ExtResource("2_mmt5l")
 
-[node name="bet_ante" type="Node" parent="."]
+[node name="ante_up" type="Node" parent="."]
 script = ExtResource("3_fgdfb")
 play_state = 1
 
@@ -37,6 +37,10 @@ play_state = 2
 
 [node name="discard_players" type="Node" parent="."]
 script = ExtResource("5_y8n5u")
+
+[node name="bet_ante" type="Node" parent="."]
+script = ExtResource("3_fgdfb")
+play_state = 1
 
 [node name="deal_hole" type="Node" parent="."]
 script = ExtResource("5_71d4j")

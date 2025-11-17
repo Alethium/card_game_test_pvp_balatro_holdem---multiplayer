@@ -389,3 +389,18 @@ func clear_community_discards_from_selection():
 	%input_synchronizer.selected_cards = %input_synchronizer.selected_cards.filter(
 	func(card): return card.owner_id != -1
 	)
+	
+	
+@rpc("any_peer", "call_local", "reliable")			
+func clear_player_selection():
+	#print("removing player %s cards : player id  :  ",% player_id)	
+	print(%input_synchronizer.selected_cards)
+	%input_synchronizer.selected_cards = []
+	
+	
+	
+	
+	
+	
+	
+	

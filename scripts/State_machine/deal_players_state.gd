@@ -10,14 +10,17 @@ var num_cards
 func enter_state() -> void:
 	for player in players.current_players:
 		player.set_button_text.rpc("action_button","Dealing")
+
 	label.text = "Dealing cards to players"
 	if game_manager.prev_state == states.discard_players : 
 		var current_card_count = 0
 		for card in card_manager.currently_spawned_cards:
-			
+
 			if card.owner_id > 1 :
-				
+#				find a way to deselect like when clear community
 				current_card_count += 1
+			for player in players.current_players:
+				card.deselect.rpc(0)
 		num_cards = 5*players.current_players.size() - current_card_count
 		
 	else:
@@ -40,5 +43,11 @@ func update(_delta: float) -> void:
 		print("state machine calling for card deal to player")
 		card_manager._on_deal_to_players_pressed()
 	if card_manager.dealing_timer == 0 and num_cards == 0 :
+		print("done dealing state ")
 		card_manager.dealing = false
-		states.change_state(states.discard_players)
+		if game_manager.prev_state == states.discard_players : 
+			print("time to go to  deal hole")
+			states.change_state(states.deal_hole)
+		else:
+			print("time to go to  discard")
+			states.change_state(states.discard_players)

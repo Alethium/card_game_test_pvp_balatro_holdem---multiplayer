@@ -518,7 +518,7 @@ func server_deal_to_players():
 						dealing_index = 0	
 					server_deal_to_players.rpc()
 			else:
-				dealing = false
+				
 				print("all_players_full")
 					
 func handle_players_served():
