@@ -4,6 +4,8 @@ extends Node2D
 @onready var card_manager: Node2D = $"../card_manager"
 @onready var players: Node2D = $"../Players"
 @onready var current_player_index = 0
+
+
 var current_dealer = Player
 var current_big_blind : Player
 var current_small_blind : Player
@@ -12,8 +14,12 @@ var current_ante = 1
 var current_bet = 1
 var current_pot = 0
 
-@onready var active_player_index = 0
+var current_score = 0
+# will be used when displaying the growing score for each players hand as doinks com inasthe for loopmoves through the players cards
 
+@onready var active_player_index = 0
+var active_player = null
+var previous_player = null
 
 var prev_state
 var curr_state 
@@ -37,8 +43,8 @@ var next_state
 @onready var showdown: Node = $showdown
 @onready var payout: Node = $payout
 @onready var store: Node = $store
-@onready var game_state_label: Label = $"../UI/Game_State_Display/Game State"
-@onready var game_state_display: Control = $"../UI/Game_State_Display"
+@onready var game_status_label: Label = %Game_Status_text
+@onready var game_status_display: Control = $"../UI/Game_Status_Display"
 
 @onready var play_space: Node2D = $".."
 
@@ -73,13 +79,14 @@ func change_state(new_state):
 func set_starting_state():
 	print("setting_start_state")
 	for state in get_children():
+		state.play_space = play_space
 		state.states = self
 		state.players = players
 		state.card_manager = card_manager
 		state.game_manager = self
 		state.score_manager = score_manager
-		state.display = game_state_display
-		state.label = game_state_label
+		state.display = game_status_display
+		state.label = game_status_label
 
 		
 	prev_state = menu_state
@@ -94,9 +101,17 @@ func set_active_player():
 	for player in players.current_players:
 		player.request_player_inactive.rpc()
 #	 set active player to active index
-	players.current_players[active_player_index].request_player_active.rpc()		
 	
-
+	players.current_players[active_player_index].request_player_active.rpc()
+	if active_player != null:
+		previous_player = active_player
+	active_player = players.current_players[active_player_index]		
+	
+func set_previous_player():
+#	 set all players to inactive
+#	 set active player to active index
+	players.current_players[active_player_index].request_player_active.rpc()
+	active_player = players.current_players[active_player_index]	
 
 
 

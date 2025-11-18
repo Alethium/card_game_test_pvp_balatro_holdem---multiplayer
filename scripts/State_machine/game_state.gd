@@ -12,6 +12,7 @@ var game_manager
 var score_manager
 var display
 var label
+var play_space
 
 func enter_state() -> void:
 	pass # Replace with function body.

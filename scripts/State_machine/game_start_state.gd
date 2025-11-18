@@ -16,20 +16,24 @@ func enter_state() -> void:
 	#add in each player(not sure how MP handles this yet. )
 	#display a waiting for players to ready up display. 
 	print("game is starting")
+	play_space.request_status_text_change.rpc(str("pre game, when game is hosted \n and all players ready we will begin",))
+	
+	
 	for player in players.current_players:
 		player.set_button_text.rpc("action_button","Ready Up!")
-	
+		
 	print("when all players have loaded in we will begin")
 func exit_state() -> void:
 	print("proceeding to ante")
 	for player in players.current_players:
 		player.set_action_button_pressed.rpc(false)
 		player.request_player_unready.rpc()
+	game_manager.set_active_player()
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func update(_delta: float) -> void:
-	label.text = str("pre game, when game is hosted \n and all players ready we will begin",)
+	
 	check_players_ready()
-#
+	
 	#
 	##states.change_state(states.bet_ante)
 func check_players_ready():

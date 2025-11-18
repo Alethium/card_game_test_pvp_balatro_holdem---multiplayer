@@ -4,6 +4,7 @@ const SERVER_PORT = 8080
 const SERVER_IP = "127.0.0.1"
 
 
+
 var multiplayer_player_scene = preload("res://Scenes/Player/multiplayer_player.tscn")
 
 
@@ -43,6 +44,7 @@ func join_as_player():
 	client_peer.create_client(SERVER_IP,SERVER_PORT)
 	multiplayer.multiplayer_peer = client_peer
 	
+	
 func _add_player_to_game(id:int):
 	var player_to_add = multiplayer_player_scene.instantiate()
 	print("player %s joined the game!" % id)
@@ -52,13 +54,14 @@ func _add_player_to_game(id:int):
 	players.current_num_of_players += 1
 	players.current_players.append(player_to_add)
 	player_to_add.set_button_text.rpc("action_button", "Ready Up!")
+	
 	#card_manager.sync_deck_order.rpc(card_manager.deck_seed,card_manager.deck_order)
 	
 	var added_player = players.get_node(str(id))
 	#card_manager.connect_player_signals(added_player)
 	#game_manager.connect_player_signals(added_player)
 	added_player.hand_cursor.modulate = Color.HOT_PINK
-	 
+	
 	
 	if players.current_num_of_players == 1:
 		added_player.player_position = 1

@@ -14,21 +14,13 @@ var prev_move : BET_STATE = BET_STATE.none
 func enter_state() -> void:
 	print("its time to bet on your dealt hand.")
 #	 set buttonsto stay hold raise
-	game_manager.set_active_player()
+	
 	for player in players.current_players:
-
-		if player == players.current_players[game_manager.active_player_index]:
-			player.set_button_text.rpc("action_button","Stay")
-			player.set_button_text.rpc("button1","Bet")
-			player.set_button_text.rpc("button2","Raise")
-			player.set_button_text.rpc("button3","Fold")
-			player.set_player_bet_state.rpc(BET_STATE.none)
-		else:
-			player.set_button_text.rpc("action_button","Stay")
-			player.set_button_text.rpc("button1","See")
-			player.set_button_text.rpc("button2","Raise")
-			player.set_button_text.rpc("button3","Fold")
-			player.set_player_bet_state.rpc(BET_STATE.none)
+		player.set_button_text.rpc("action_button","Stay")
+		player.set_button_text.rpc("button1","See")
+		player.set_button_text.rpc("button2","Raise")
+		player.set_button_text.rpc("button3","Fold")
+		player.set_player_bet_state.rpc(BET_STATE.none)
 	
 	
 	
@@ -37,8 +29,41 @@ func exit_state() -> void:
 	pass # Replace with function body.
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func update(_delta: float) -> void:
-	pass
+#	if previous is null, that means this is the very first bet in the betting round. this thould be the state that this and all betting states start on. 
+# always start with the active player, which should be getting rotated each round. handle that later for now its always host. 
 	
+	if game_manager.previous_player == null:
+#		waits for player to make first choice
+		if game_manager.active_player.bet_state == BET_STATE.none:
+			game_manager.active_player.set_button_disabled("button1",true)
+#			call player rpc to set button1 disabled
+#			this means they have yet to make any bet, use this to disable see button , stay(add 0 to betting amount and pool),raise(+1 to betting amount. +1 to pool), fold, discard all cards, set player state to out of play. 
+		if game_manager.active_player.bet_state == BET_STATE.stay:
+			pass
+#			stay(add 0 to betting amount and pool)
+		if game_manager.active_player.bet_state == BET_STATE.see:
+			pass
+		if game_manager.active_player.bet_state == BET_STATE.raise:
+			pass
+#			raise(+1 to betting amount. +1 to pool)
+		if game_manager.active_player.bet_state == BET_STATE.fold:
+			pass
+	
+	#elif game_manager.previous_player != null:
+		#if game_manager.previous_player.bet_state == BET_STATE.none:
+			#pass
+	#
+		#if game_manager.active_player.bet_state == BET_STATE.none:
+			#pass
+		#if game_manager.active_player.bet_state == BET_STATE.stay:
+			#pass
+		#if game_manager.active_player.bet_state == BET_STATE.see:
+			#pass
+		#if game_manager.active_player.bet_state == BET_STATE.raise:
+			#pass
+		#if game_manager.active_player.bet_state == BET_STATE.fold:
+			#pass
+	#
 #	for all of the players, starting at the dealer make them the active player and make the others active player false
 # active player can now stay, and pass to the next player, raise to add 1 to the current hands pool, and see is greyed out because they are first.
 # one they have made a choice it moves to the next player, if previous player placed a bet , stay is greyed out, you can See, Raise, or Fold. 

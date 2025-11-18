@@ -196,7 +196,14 @@ func handle_hand_slots(delta):
 		
 		# Rotate cards to match player orientation
 		current_slots[i].global_rotation = global_rotation
-		
+
+
+func on_player_join():
+	if multiplayer.get_unique_id() == player_id:
+		print("player_joined : " ,multiplayer.get_unique_id())
+		%Game_Status_text.text = "textfuck"
+	pass
+	
 func _on_action_button_pressed() -> void:
 	
 	if multiplayer.get_unique_id() == player_id:
@@ -317,6 +324,20 @@ func set_button_text(button,text):
 	if button == "button3":
 		%Button3.text = text
 
+@rpc("any_peer", "call_local", "reliable")	
+func set_button_disabled(button,state):
+	if button == "action_button":
+		%Action_Button.disabled = state
+	
+	if button == "button1":
+		%Button1.disabled = state
+		%Button1.focus_mode = 0
+	
+	if button == "button2":
+		%Button2.disabled = state
+		
+	if button == "button3":
+		%Button3.disabled = state
 
 
 
@@ -405,6 +426,24 @@ func clear_player_selection():
 	print(%input_synchronizer.selected_cards)
 	%input_synchronizer.selected_cards = []
 	
+
+
+
+@rpc("any_peer", "call_local", "reliable")
+func request_status_text_change(text):
+	if multiplayer.is_server():
+		print("changing status text to : " , text)
+		server_change_status_text(text)
+	else:
+		request_status_text_change.rpc_id(1,text)
+
+@rpc("authority","call_local" ,"reliable")
+func server_change_status_text(text):
+	update_status_display(text)
+	
+
+func update_status_display(text):
+	get_tree().get_node(3).game_status_text.text = text
 	
 	#
 #func update_active_display():

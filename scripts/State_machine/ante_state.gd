@@ -17,9 +17,11 @@ var players_ready = []
 
 func enter_state() -> void:
 	print("its time to ANTE UP")
-	label.text = "Ante state, Please Ante up"
+	
+	play_space.request_status_text_change.rpc("Ante state, Please Ante up")
 	for player in players.current_players:
 		player.set_button_text.rpc("action_button","Ante Up!")
+		
 	
 func exit_state() -> void:
 	for player in players.current_players:
