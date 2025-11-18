@@ -33,7 +33,7 @@ enum PLAYER_STATE {dealer,in_play,out_of_play}
 enum BET_STATE {stay,see,raise,fold,none}
 #var bet_state : BET_STATE
 
-var active_turn = false
+
 
 var empty_slots = 5
 var selected_cards : Array[Card]
@@ -76,6 +76,12 @@ signal player_added
 var current_chips : Array[Chip]
 const CHIP = preload("res://Scenes/chip.tscn")
 const CARD_SLOT = preload("res://Scenes/card_slot.tscn")
+
+
+@export var active_player : bool = false:
+	set(value):
+		active_player = value
+
 
 @export var bet_state : BET_STATE = BET_STATE.none :
 	set(state):
@@ -347,58 +353,41 @@ func set_player_bet_state(new_bet_state: BET_STATE):
 	bet_state = new_bet_state
 	
 	
-func update_ready_display():
-	if status_text:
-		status_text.text = "READY: " + str(is_ready)
-	
-	# Optional: Visual feedback like color change
-		if is_ready:
-			%Avatar.modulate = Color.GREEN
-			#%mini_avatar.modulate = Color.GREEN
-			status_text.modulate = Color.GREEN
-		else:
-			status_text.modulate = Color.WHITE
-			%Avatar.modulate = Color.WHITE
-			#%mini_avatar.modulate = Color.WHITE
-
-
-
-
 
 @rpc ("any_peer","call_local", "reliable")
 func request_player_bet():	
 	if multiplayer.is_server():
 		print("player : ", player_id, " is betting")
 		set_player_bet.rpc(true)
+		
 	
 @rpc("any_peer", "call_local", "reliable")
-func set_player_bet(bet_state: bool):
-	has_bet = bet_state	
+func set_player_bet(new_bet_state: bool):
+	has_bet = new_bet_state	
 	%Button1.text = "BET"
 	
-
+	
+@rpc ("any_peer","call_local", "reliable")
+func request_player_active():
+	if multiplayer.is_server():
+		print("player : ", player_id, " is active")
+		set_player_active.rpc(true)	
 		
 		
+@rpc ("any_peer","call_local", "reliable")
+func request_player_inactive():
+	if multiplayer.is_server():
+		print("player : ", player_id, " is inactive")
+		set_player_active.rpc(false)	
+	
+@rpc("any_peer", "call_local", "reliable")
+func set_player_active(active_state: bool):
+	active_player = active_state	
+	if active_state == true:
+		%Player_frame_outline.visible = true
+	else:
+		%Player_frame_outline.visible = false
 		
-#@rpc("any_peer","reliable")	
-#func request_player_ready():
-	#print("player ready requested")
-	#if multiplayer.is_server():
-		#server_player_ready.rpc()
-	#else:
-		#request_player_ready.rpc_id(1)
-#
-#
-#@rpc("any_peer", "call_local", "reliable")	
-#func server_player_ready():
-	#if multiplayer.is_server():	
-		#if !is_ready:
-			#print("player : ", player_id, " is ready")
-			#is_ready = true
-#
-		#else:
-			#print("player : ", player_id, " is not ready")
-			#is_ready = false
 
 
 @rpc("any_peer", "call_local", "reliable")			
@@ -417,9 +406,26 @@ func clear_player_selection():
 	%input_synchronizer.selected_cards = []
 	
 	
+	#
+#func update_active_display():
+	#if active_player:
+		#%Player_frame_outline.visible = true
+	#else:
+		#%Player_frame_outline.visible = false
+			
 	
 	
 	
+func update_ready_display():
+	if status_text:
+		status_text.text = "READY: " + str(is_ready)
 	
-	
-	
+	# Optional: Visual feedback like color change
+		if is_ready:
+			%Avatar.modulate = Color.GREEN
+			#%mini_avatar.modulate = Color.GREEN
+			status_text.modulate = Color.GREEN
+		else:
+			status_text.modulate = Color.WHITE
+			%Avatar.modulate = Color.WHITE
+			#%mini_avatar.modulate = Color.WHITE	

@@ -7,7 +7,13 @@ extends Node2D
 var current_dealer = Player
 var current_big_blind : Player
 var current_small_blind : Player
-@onready var current_players = 0
+
+var current_ante = 1
+var current_bet = 1
+var current_pot = 0
+
+@onready var active_player_index = 0
+
 
 var prev_state
 var curr_state 
@@ -80,6 +86,21 @@ func set_starting_state():
 	curr_state = menu_state
 	next_state = game_start
 	curr_state.enter_state()
+
+
+
+func set_active_player():
+#	 set all players to inactive
+	for player in players.current_players:
+		player.request_player_inactive.rpc()
+#	 set active player to active index
+	players.current_players[active_player_index].request_player_active.rpc()		
+	
+
+
+
+
+
 
 		
 func _on_play_request(player,hand):

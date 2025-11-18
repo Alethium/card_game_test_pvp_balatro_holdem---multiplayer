@@ -1,35 +1,57 @@
-[gd_scene load_steps=3 format=3 uid="uid://c3fgf484hca30"]
+[gd_scene load_steps=7 format=3 uid="uid://c3fgf484hca30"]
 
-[ext_resource type="Texture2D" uid="uid://bluej74nvmh1h" path="res://ICONS/poker buttons.png" id="1_ipg2f"]
 [ext_resource type="Script" uid="uid://mt35ylygqk3f" path="res://scripts/health_meter.gd" id="1_m1brx"]
+[ext_resource type="Texture2D" uid="uid://b8n5w85t3cptc" path="res://UI_SPRITES/health_bar_filler.png" id="2_slg77"]
+[ext_resource type="Texture2D" uid="uid://c5rqa2pn8rrrq" path="res://UI_SPRITES/health_excess_filler.png" id="3_ruwqr"]
+[ext_resource type="Texture2D" uid="uid://tjer1ua7c8s6" path="res://UI_SPRITES/Healthbar frame full.png" id="3_slg77"]
 
-[node name="health meter" type="Node2D"]
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_2m7vp"]
+texture = ExtResource("2_slg77")
+texture_margin_left = 16.0
+texture_margin_top = 16.0
+texture_margin_right = 16.0
+texture_margin_bottom = 16.0
+expand_margin_left = 12.0
+expand_margin_top = 13.0
+expand_margin_right = 12.0
+expand_margin_bottom = 12.0
+axis_stretch_horizontal = 1
+axis_stretch_vertical = 1
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_cccc8"]
+texture = ExtResource("3_ruwqr")
+texture_margin_left = 16.0
+texture_margin_top = 16.0
+texture_margin_right = 16.0
+texture_margin_bottom = 16.0
+expand_margin_left = 12.0
+expand_margin_top = 13.0
+expand_margin_right = 12.0
+expand_margin_bottom = 12.0
+axis_stretch_horizontal = 1
+axis_stretch_vertical = 1
+
+[node name="health meter" type="Control"]
+layout_mode = 3
+anchors_preset = 0
 scale = Vector2(2, 2)
 script = ExtResource("1_m1brx")
 
-[node name="health_bar" type="Sprite2D" parent="."]
-scale = Vector2(1, 6)
-texture = ExtResource("1_ipg2f")
-offset = Vector2(0, -2)
-region_enabled = true
-region_rect = Rect2(288, 72, 4, 4)
+[node name="Health_remaining" type="Panel" parent="."]
+texture_repeat = 2
+layout_mode = 0
+offset_left = -104.5
+offset_top = -9.0
+offset_bottom = 9.0
+theme_override_styles/panel = SubResource("StyleBoxTexture_2m7vp")
 
-[node name="container_bottom" type="Sprite2D" parent="."]
-texture = ExtResource("1_ipg2f")
-offset = Vector2(0, 1.5)
-region_enabled = true
-region_rect = Rect2(272, 75, 12, 5)
+[node name="Health_excess" type="Panel" parent="."]
+texture_repeat = 2
+layout_mode = 0
+offset_top = -9.0
+offset_right = 104.5
+offset_bottom = 9.0
+theme_override_styles/panel = SubResource("StyleBoxTexture_cccc8")
 
-[node name="container_middle" type="Sprite2D" parent="."]
-position = Vector2(0, -1)
-texture = ExtResource("1_ipg2f")
-offset = Vector2(0, -11)
-region_enabled = true
-region_rect = Rect2(272, 53, 12, 22)
-
-[node name="container_top" type="Sprite2D" parent="."]
-position = Vector2(0, -23)
-texture = ExtResource("1_ipg2f")
-offset = Vector2(0, -3)
-region_enabled = true
-region_rect = Rect2(272, 47, 12, 6)
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("3_slg77")

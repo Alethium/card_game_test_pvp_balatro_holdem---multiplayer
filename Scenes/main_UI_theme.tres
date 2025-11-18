@@ -1,13 +1,29 @@
-[gd_resource type="Theme" load_steps=11 format=3 uid="uid://d0uidb0k47w4o"]
+[gd_resource type="Theme" load_steps=15 format=3 uid="uid://d0uidb0k47w4o"]
 
 [ext_resource type="Texture2D" uid="uid://b61a25r41lpnr" path="res://UI_SPRITES/Panel3_theme.png" id="1_3jujd"]
 [ext_resource type="FontFile" uid="uid://bvox705qhd1er" path="res://Uncial.ttf" id="1_s4pq2"]
+[ext_resource type="Texture2D" uid="uid://cbalb5loc17y3" path="res://UI_SPRITES/hightlighted8_Panel_theme.png" id="2_7ryrw"]
 [ext_resource type="Texture2D" uid="uid://duw5qosqqirgu" path="res://UI_SPRITES/Panel1_theme.png" id="2_282ud"]
 [ext_resource type="StyleBox" uid="uid://bs5cku8ovu0be" path="res://UI_SPRITES/mid_middle_light_raised_outline_stylebox.tres" id="2_khp6c"]
 [ext_resource type="StyleBox" uid="uid://opmgkabkl8qh" path="res://UI_SPRITES/lightest_raised_stylebox.tres" id="2_x5d5b"]
 [ext_resource type="StyleBox" uid="uid://bb3i7tqfc6wlk" path="res://UI_SPRITES/light_lowered_stylebox.tres" id="3_khp6c"]
 [ext_resource type="StyleBox" uid="uid://c8bjou3a3pim5" path="res://UI_SPRITES/Highlighted_frame_stylebox.tres" id="3_x5d5b"]
+[ext_resource type="Texture2D" uid="uid://bmrrsyswiysv" path="res://UI_SPRITES/hightlighted2_Panel_theme.png" id="5_5ux0j"]
 [ext_resource type="FontFile" uid="uid://cr6c62tsuq0vc" path="res://NotJamBlkltr16.ttf" id="5_x5d5b"]
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_vev6x"]
+texture = ExtResource("2_7ryrw")
+texture_margin_left = 16.0
+texture_margin_top = 16.0
+texture_margin_right = 16.0
+texture_margin_bottom = 16.0
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_u0foy"]
+texture = ExtResource("5_5ux0j")
+texture_margin_left = 16.0
+texture_margin_top = 16.0
+texture_margin_right = 16.0
+texture_margin_bottom = 16.0
 
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_erfbw"]
 texture = ExtResource("1_3jujd")
@@ -28,9 +44,12 @@ texture_margin_right = 16.0
 texture_margin_bottom = 16.0
 
 [resource]
+Button/colors/font_color = Color(0.875, 0.875, 0.875, 1)
 Button/fonts/font = ExtResource("1_s4pq2")
+Button/styles/disabled = SubResource("StyleBoxTexture_vev6x")
 Button/styles/focus = ExtResource("3_x5d5b")
 Button/styles/hover = ExtResource("2_x5d5b")
+Button/styles/hover_pressed = SubResource("StyleBoxTexture_u0foy")
 Button/styles/normal = ExtResource("2_khp6c")
 Button/styles/pressed = ExtResource("3_khp6c")
 Label/fonts/font = ExtResource("5_x5d5b")
