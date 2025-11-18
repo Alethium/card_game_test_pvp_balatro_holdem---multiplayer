@@ -1,4 +1,4 @@
-[gd_scene load_steps=13 format=3 uid="uid://bqtpu7j6665bn"]
+[gd_scene load_steps=15 format=3 uid="uid://bqtpu7j6665bn"]
 
 [ext_resource type="Script" uid="uid://ryrvaexjy5si" path="res://scripts/Multiplayer/multiplayer_player.gd" id="1_a61r2"]
 [ext_resource type="PackedScene" uid="uid://dw4rp4xr3fy7k" path="res://Scenes/Player/hand_cursor.tscn" id="2_4ea1o"]
@@ -10,6 +10,14 @@
 [ext_resource type="PackedScene" uid="uid://c3fgf484hca30" path="res://Scenes/Player/health_meter.tscn" id="4_ql3ps"]
 [ext_resource type="Script" uid="uid://bv8vfsflrvprv" path="res://scripts/mouse_window_detection.gd" id="5_ql3ps"]
 [ext_resource type="Texture2D" uid="uid://dp5cqmh1ucrwx" path="res://ICONS/player portraits temp/archive_gio.jpg" id="5_rlkiy"]
+[ext_resource type="Texture2D" uid="uid://ds4iy4dprry8l" path="res://UI_SPRITES/Panel2_theme.png" id="7_j5uc4"]
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_ggwyl"]
+texture = ExtResource("7_j5uc4")
+texture_margin_left = 16.0
+texture_margin_top = 16.0
+texture_margin_right = 16.0
+texture_margin_bottom = 16.0
 
 [sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_ql3ps"]
 properties/0/path = NodePath(".:player_id")
@@ -158,6 +166,20 @@ visible = false
 position = Vector2(34, 65.99999)
 scale = Vector2(0.17885949, 0.17885949)
 texture = ExtResource("5_rlkiy")
+
+[node name="external_status" type="Label" parent="Control"]
+unique_name_in_owner = true
+visible = false
+layout_mode = 0
+offset_left = -3.0
+offset_top = 10.0
+offset_right = 221.0
+offset_bottom = 70.0
+theme = ExtResource("2_rlkiy")
+theme_override_styles/normal = SubResource("StyleBoxTexture_ggwyl")
+text = "Betting"
+horizontal_alignment = 1
+vertical_alignment = 1
 
 [node name="playerSynchronizer" type="MultiplayerSynchronizer" parent="."]
 replication_config = SubResource("SceneReplicationConfig_ql3ps")

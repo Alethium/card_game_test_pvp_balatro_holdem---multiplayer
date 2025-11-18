@@ -1,74 +1,64 @@
 class_name MultiplayerPlayer
 extends Node2D
-@onready var input_synchronizer: MultiplayerSynchronizer = %input_synchronizer
 
 
-
-@onready var player_hand: Node2D = $player_hand
-
-@onready var current_hand_display: Label = $Control/Buttons_panel/current_hand
-@onready var score_display: Label = $Control/Buttons_panel/Score
-@onready var player_role_marker_position: Node2D = $player_role_marker_position
-@onready var mouse_window_detection: Node = $mouse_window_detection
-
-
-var discarding = false
-
-
-
-
-enum HandState {point,grab}
+# PLAYER info
 var display_name : String
-@onready var curr_hand_state = 0
-var max_hand_size = 5
-var current_hand_size = 0
-
-var discard_count = 2
-
-var current_slots = []
 
 var starting_health = 100
 var remaining_health : int
 
-var current_chips : Array[Chip]
-const CHIP = preload("res://Scenes/chip.tscn")
-
-
-
-
-@onready var status_text: Label = $Control/Buttons_panel/status_text
-
-
-
-
 var starting_mana = 0
 var current_mana : int
+
+enum HAND_STATE {point,grab}
+
+var direction : Vector2
+var player_position : int
+
+@onready var hand_cursor: HandCursor = $Hand_Cursor
+@onready var player_hand: Node2D = $player_hand
+@onready var curr_hand_state = 0
+
+# player card info
+var current_slots = []
+var discarding = false
+var discard_count = 2
+var max_hand_size = 5
+var current_hand_size = 0
+
+#player state controls
+enum PLAYER_STATE {dealer,in_play,out_of_play}
+
+enum BET_STATE {stay,see,raise,fold,none}
+#var bet_state : BET_STATE
 
 var active_turn = false
 
 var empty_slots = 5
-
-
-@onready var hand_cursor: HandCursor = $Hand_Cursor
-
-const CARD_SLOT = preload("res://Scenes/card_slot.tscn")
 var selected_cards : Array[Card]
 var hand_to_play : Array[Card]
 var current_hand : Array[Card] 
 var number_of_cards_selected = 0
+
+@onready var input_synchronizer: MultiplayerSynchronizer = %input_synchronizer
+
+# UI ELEMENTS
+@onready var current_hand_display: Label = $Control/Buttons_panel/current_hand
+@onready var score_display: Label = $Control/Buttons_panel/Score
+@onready var player_role_marker_position: Node2D = $player_role_marker_position
+@onready var mouse_window_detection: Node = $mouse_window_detection
+@onready var status_text: Label = $Control/Buttons_panel/status_text
+
 var screen_size
 
-var signals_connected
-signal player_added
+
 var button1_pressed = false
 var button2_pressed = false
 var button3_pressed = false
 var action_button_pressed = false
 
 #@onready var action_btn_text = %Action_Button.text
-
-
-
 
 @onready var action_button: Button = %Action_Button
 @onready var button1: Button = %Button1
@@ -78,6 +68,20 @@ var action_button_pressed = false
 
 @onready var button_container = $Control
 
+
+var signals_connected
+signal player_added
+
+
+var current_chips : Array[Chip]
+const CHIP = preload("res://Scenes/chip.tscn")
+const CARD_SLOT = preload("res://Scenes/card_slot.tscn")
+
+@export var bet_state : BET_STATE = BET_STATE.none :
+	set(state):
+		bet_state = state
+
+
 @export var player_id := 1:
 	set(id):
 		player_id = id
@@ -86,15 +90,13 @@ var action_button_pressed = false
 @export var is_ready: bool = false:
 	set(value):
 		is_ready = value
-		update_ready_display()
+		
 
 @export var has_bet: bool = false:
 	set(value):
 		has_bet = value
-		#update_bet_display()
+		
 
-var direction : Vector2
-var player_position : int
 
 
 func _ready() -> void:
@@ -103,6 +105,7 @@ func _ready() -> void:
 		%Control.mouse_filter =Control.MOUSE_FILTER_IGNORE
 		%mini_avatar.visible = false
 		%Avatar.visible = true
+		%external_status.visible = true
 	else:
 		%mini_avatar.visible = true
 		%Avatar.visible = false
@@ -235,14 +238,6 @@ func set_button1_pressed(button: bool):
 	
 	button1_pressed = button
 	print("player : ", player_id, " button 1 pressed : ", button1_pressed)	
-	set_button1_text()
-	
-
-func set_button1_text():
-	if button1_pressed == true:
-		%Button1.text = "T"
-	elif button1_pressed == false:
-		%Button1.text = "F"	
 
 
 
@@ -253,34 +248,51 @@ func set_button1_text():
 		
 func _on_button2_pressed() -> void:
 	if multiplayer.get_unique_id() == player_id:
+		request_button2_press.rpc()
 		print("button 2 pressed signal sent from player : " , player_id)
 		
-
-
-
-
-
-
+@rpc ("any_peer","call_local", "reliable")
+func request_button2_press():	
+	if multiplayer.is_server():
+		print("player : ", player_id, " button 2 pressed : ", button2_pressed)
+		
+		if button2_pressed == false:
+			set_button2_pressed.rpc(true)
+		elif button2_pressed == true:
+			set_button2_pressed.rpc(false)
+	
+@rpc("any_peer", "call_local", "reliable")
+func set_button2_pressed(button: bool):
+	
+	button2_pressed = button
+	print("player : ", player_id, " button 2 pressed : ", button2_pressed)	
 
 
 		
 func _on_button3_pressed() -> void:
 	if multiplayer.get_unique_id() == player_id:
+		request_button3_press.rpc()
 		print("button 3 pressed signal sent from player : " , player_id)
 		
+@rpc ("any_peer","call_local", "reliable")
+func request_button3_press():	
+	if multiplayer.is_server():
+		print("player : ", player_id, " button 3 pressed : ", button3_pressed)
 		
+		if button3_pressed == false:
+			set_button3_pressed.rpc(true)
+		elif button3_pressed == true:
+			set_button3_pressed.rpc(false)
+	
+@rpc("any_peer", "call_local", "reliable")
+func set_button3_pressed(button: bool):
+	
+	button3_pressed = button
+	print("player : ", player_id, " button 3 pressed : ", button3_pressed)			
 
 
 
 
-
-
-
-
-
-
-		
-		
 
 
 
@@ -295,6 +307,9 @@ func set_button_text(button,text):
 	
 	if button == "button2":
 		%Button2.text = text
+		
+	if button == "button3":
+		%Button3.text = text
 
 
 
@@ -327,7 +342,11 @@ func request_player_unready():
 func set_player_ready(ready_state: bool):
 	is_ready = ready_state
 	# This will automatically call the setter and update_ready_display()
-
+@rpc("any_peer", "call_local", "reliable")
+func set_player_bet_state(new_bet_state: BET_STATE):
+	bet_state = new_bet_state
+	
+	
 func update_ready_display():
 	if status_text:
 		status_text.text = "READY: " + str(is_ready)

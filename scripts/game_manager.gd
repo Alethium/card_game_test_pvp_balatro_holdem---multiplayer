@@ -16,9 +16,10 @@ var next_state
 #states
 @onready var menu_state: Node = $menu_state
 @onready var game_start: Node = $game_start
-@onready var bet_ante: Node = $bet_ante
+@onready var ante_up: Node = $ante_up
 @onready var deal_players: Node = $deal_players
 @onready var discard_players: Node = $discard_players
+@onready var bet_deal: Node = $bet_deal
 @onready var deal_hole: Node = $deal_hole
 @onready var bet_hole: Node = $bet_hole
 @onready var deal_flop: Node = $deal_flop

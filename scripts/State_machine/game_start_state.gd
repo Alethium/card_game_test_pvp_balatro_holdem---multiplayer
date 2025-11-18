@@ -46,7 +46,7 @@ func check_players_ready():
 				if players_ready.has(player.player_id):
 					players_ready.erase(player.player_id)
 				player.set_button_text.rpc("action_button","Not Ready!")
-		print(players_ready)		
+		#print(players_ready)		
 		if players_ready.size() == players.current_players.size():
 			print("all players ready")
-			states.change_state(states.bet_ante)
+			states.change_state(states.ante_up)

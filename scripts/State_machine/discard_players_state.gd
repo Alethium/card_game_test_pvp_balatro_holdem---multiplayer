@@ -13,7 +13,7 @@ func enter_state() -> void:
 	print("its time to DISCARD THOSE CARDS!")
 	label.text = "discard state, discarding and redrawing to players"
 	for player in players.current_players:
-		player.set_button_text.rpc("action_button","Discard")
+		player.set_button_text.rpc("action_button","Hold")
 	
 		
 func exit_state() -> void:

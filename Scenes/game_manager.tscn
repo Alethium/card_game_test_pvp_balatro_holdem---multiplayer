@@ -1,4 +1,4 @@
-[gd_scene load_steps=18 format=3 uid="uid://bvp2lq0xadoi2"]
+[gd_scene load_steps=19 format=3 uid="uid://bvp2lq0xadoi2"]
 
 [ext_resource type="Script" uid="uid://fyjtmnu0p70k" path="res://scripts/game_manager.gd" id="1_sq00h"]
 [ext_resource type="Script" uid="uid://blvurhqc4wbnm" path="res://scripts/State_machine/menu_state.gd" id="2_5tjy5"]
@@ -8,6 +8,7 @@
 [ext_resource type="Script" uid="uid://chexwyd36fp87" path="res://scripts/State_machine/deal_hole_state.gd" id="5_71d4j"]
 [ext_resource type="Script" uid="uid://yh63mj18sy5v" path="res://scripts/State_machine/discard_players_state.gd" id="5_y8n5u"]
 [ext_resource type="Script" uid="uid://fmsvyje2qukp" path="res://scripts/State_machine/hole_bet_state.gd" id="6_efn8y"]
+[ext_resource type="Script" uid="uid://cekc46ocit8w5" path="res://scripts/State_machine/bet_deal_state.gd" id="7_iu5vk"]
 [ext_resource type="Script" uid="uid://d0xvomu7q4q1v" path="res://scripts/State_machine/deal_flop_state.gd" id="7_jencv"]
 [ext_resource type="Script" uid="uid://bbhlaainaqp" path="res://scripts/State_machine/flop_bet_state.gd" id="8_kmrvs"]
 [ext_resource type="Script" uid="uid://05xu534xu4e0" path="res://scripts/State_machine/deal_turn_state.gd" id="9_e6ru4"]
@@ -38,9 +39,8 @@ play_state = 2
 [node name="discard_players" type="Node" parent="."]
 script = ExtResource("5_y8n5u")
 
-[node name="bet_ante" type="Node" parent="."]
-script = ExtResource("3_fgdfb")
-play_state = 1
+[node name="bet_deal" type="Node" parent="."]
+script = ExtResource("7_iu5vk")
 
 [node name="deal_hole" type="Node" parent="."]
 script = ExtResource("5_71d4j")
