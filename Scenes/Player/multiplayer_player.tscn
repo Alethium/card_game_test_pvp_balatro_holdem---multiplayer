@@ -37,6 +37,15 @@ properties/1/replication_mode = 1
 properties/2/path = NodePath(".:position")
 properties/2/spawn = false
 properties/2/replication_mode = 1
+properties/3/path = NodePath("Control/external_status:text")
+properties/3/spawn = true
+properties/3/replication_mode = 1
+properties/4/path = NodePath(".:bet_state")
+properties/4/spawn = true
+properties/4/replication_mode = 1
+properties/5/path = NodePath(".:active_player")
+properties/5/spawn = true
+properties/5/replication_mode = 1
 
 [sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_i7h06"]
 properties/0/path = NodePath("input_synchronizer:player_mouse_cursor_direction")

@@ -369,24 +369,25 @@ func request_player_unready():
 func set_player_ready(ready_state: bool):
 	is_ready = ready_state
 	# This will automatically call the setter and update_ready_display()
+
 @rpc("any_peer", "call_local", "reliable")
 func set_player_bet_state(new_bet_state: BET_STATE):
 	bet_state = new_bet_state
 	
 	
 
-@rpc ("any_peer","call_local", "reliable")
-func request_player_bet():	
-	if multiplayer.is_server():
-		print("player : ", player_id, " is betting")
-		set_player_bet.rpc(true)
-		
-	
-@rpc("any_peer", "call_local", "reliable")
-func set_player_bet(new_bet_state: bool):
-	has_bet = new_bet_state	
-	%Button1.text = "BET"
-	
+#@rpc ("any_peer","call_local", "reliable")
+#func request_player_bet():	
+	#if multiplayer.is_server():
+		#print("player : ", player_id, " is betting")
+		#set_player_bet.rpc(true)
+		#
+	#
+#@rpc("any_peer", "call_local", "reliable")
+#func set_player_bet(new_bet_state: bool):
+	#has_bet = new_bet_state	
+	#%Button1.text = "BET"
+	#
 	
 @rpc ("any_peer","call_local", "reliable")
 func request_player_active():

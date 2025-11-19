@@ -7,7 +7,7 @@ var play_state : PlayState
 @onready var multiplayer_manager: Node2D = $multiplayer_manager
 @onready var game_manager: GameManager = $game_manager
 @onready var play_space: Node2D = $"."
-@onready var game_status_text : String = ""
+
 
 
 

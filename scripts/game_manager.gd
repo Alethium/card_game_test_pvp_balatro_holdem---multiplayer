@@ -44,7 +44,7 @@ var next_state
 @onready var payout: Node = $payout
 @onready var store: Node = $store
 @onready var game_status_label: Label = %Game_Status_text
-@onready var game_status_display: Control = $"../UI/Game_Status_Display"
+#@onready var game_status_display: Control = $"../UI/Game_Status_Display"
 
 @onready var play_space: Node2D = $".."
 
@@ -94,7 +94,19 @@ func set_starting_state():
 	next_state = game_start
 	curr_state.enter_state()
 
-
+func make_next_player_active():
+	var num_players = players.current_players.size()
+	print("next player active ")
+	print("currently %s players" %num_players)
+	if !active_player_index >= num_players-1:
+		active_player_index += 1
+		print("increasing player index to ", active_player_index)
+	else:
+		active_player_index = 0
+		print("resetting player index to ", active_player_index)
+	set_previous_player()
+	set_active_player()
+	
 
 func set_active_player():
 #	 set all players to inactive
@@ -107,11 +119,15 @@ func set_active_player():
 		previous_player = active_player
 	active_player = players.current_players[active_player_index]		
 	
+
+
+
+
 func set_previous_player():
 #	 set all players to inactive
 #	 set active player to active index
-	players.current_players[active_player_index].request_player_active.rpc()
-	active_player = players.current_players[active_player_index]	
+	previous_player = active_player
+	
 
 
 

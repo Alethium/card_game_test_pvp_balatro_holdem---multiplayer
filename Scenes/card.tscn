@@ -25,6 +25,9 @@ properties/4/replication_mode = 1
 properties/5/path = NodePath(".:owner_id")
 properties/5/spawn = true
 properties/5/replication_mode = 1
+properties/6/path = NodePath("Debug:text")
+properties/6/spawn = true
+properties/6/replication_mode = 1
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_e6po8"]
 shader = ExtResource("1_e6po8")
