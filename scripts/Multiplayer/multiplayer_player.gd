@@ -307,7 +307,19 @@ func set_button3_pressed(button: bool):
 	print("player : ", player_id, " button 3 pressed : ", button3_pressed)			
 
 
-
+@rpc("any_peer", "call_local", "reliable")	
+func set_button_visibility(button,visible):
+	if button == "action_button":
+		%Action_Button.visible = visible
+	
+	if button == "button1":
+		%Button1.visible = visible
+	
+	if button == "button2":
+		%Button2.visible = visible
+		
+	if button == "button3":
+		%Button3.visible = visible
 
 
 

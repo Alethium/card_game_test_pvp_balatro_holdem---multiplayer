@@ -61,7 +61,12 @@ func _add_player_to_game(id:int):
 	#card_manager.connect_player_signals(added_player)
 	#game_manager.connect_player_signals(added_player)
 	added_player.hand_cursor.modulate = Color.HOT_PINK
-	
+	added_player.set_button_visibility.rpc("button1",false)
+	added_player.set_button_visibility.rpc("button2",false)
+	added_player.set_button_visibility.rpc("button3",false)
+	added_player.set_button_disabled.rpc("button1",true)
+	added_player.set_button_disabled.rpc("button2",true)
+	added_player.set_button_disabled.rpc("button3",true) 
 	
 	if players.current_num_of_players == 1:
 		added_player.player_position = 1

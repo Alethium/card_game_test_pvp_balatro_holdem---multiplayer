@@ -14,6 +14,12 @@ func enter_state() -> void:
 	label.text = "discard state, discarding and redrawing to players"
 	for player in players.current_players:
 		player.set_button_text.rpc("action_button","Hold")
+		player.set_button_visibility("button1",false)
+		player.set_button_visibility("button2",false)
+		player.set_button_visibility("button3",false)
+		player.set_button_disabled.rpc("button1",true)
+		player.set_button_disabled.rpc("button2",true)
+		player.set_button_disabled.rpc("button3",true)
 	
 		
 func exit_state() -> void:

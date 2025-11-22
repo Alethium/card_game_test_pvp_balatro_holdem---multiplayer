@@ -5,7 +5,7 @@ extends game_state
 
 
 func enter_state() -> void:
-	pass # Replace with function body.
+	print("ITS TIME FOR A MOTHERFUCKIN SHOWDOWN")
 func exit_state() -> void:
 	pass # Replace with function body.
 # Called every frame. 'delta' is the elapsed time since the previous frame.

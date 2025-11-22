@@ -17,10 +17,11 @@ var players_ready = []
 
 func enter_state() -> void:
 	print("its time to ANTE UP")
-	
-	play_space.request_status_text_change.rpc("Ante state, Please Ante up")
 	for player in players.current_players:
 		player.set_button_text.rpc("action_button","Ante Up!")
+	play_space.request_status_text_change.rpc("Ante state, Please Ante up")
+
+		
 		
 	
 func exit_state() -> void:
@@ -30,6 +31,13 @@ func exit_state() -> void:
 
 func update(_delta: float) -> void:
 	check_players_ante()
+	for player in players.current_players:
+		player.set_button_visibility.rpc("button1",false)
+		player.set_button_visibility.rpc("button2",false)
+		player.set_button_visibility.rpc("button3",false)
+		player.set_button_disabled.rpc("button1",true)
+		player.set_button_disabled.rpc("button2",true)
+		player.set_button_disabled.rpc("button3",true) 
 #if all players have clicked the bet button move to next state
 
 func check_players_ante():

@@ -43,11 +43,22 @@ func update(_delta: float) -> void:
 			player.set_button_disabled.rpc("button2",true)
 			player.set_button_disabled.rpc("button3",true)
 			player.set_button_disabled.rpc("action_button",true)
+			
+			player.set_button_visibility.rpc("action_button",false)
+			player.set_button_visibility.rpc("button1",false)
+			player.set_button_visibility.rpc("button2",false)
+			player.set_button_visibility.rpc("button3",false)
+
 		else:
 			player.set_button_disabled.rpc("button1",false)
 			player.set_button_disabled.rpc("button2",false)
 			player.set_button_disabled.rpc("button3",false)
 			player.set_button_disabled.rpc("action_button",false)
+			
+			player.set_button_visibility.rpc("action_button",true)
+			player.set_button_visibility.rpc("button1",true)
+			player.set_button_visibility.rpc("button2",true)
+			player.set_button_visibility.rpc("button3",true)
 				
 	
 #	 IF THE TURN IS THE FIRST TURN OF BETTING
@@ -107,7 +118,7 @@ func update(_delta: float) -> void:
 		
 		
 	if players_stayed == players.current_players.size():
-		states.change_state(states.deal_hole)
+		states.change_state(states.deal_flop)
 			
 
 

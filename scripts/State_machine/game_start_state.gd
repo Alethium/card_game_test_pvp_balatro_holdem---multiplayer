@@ -33,7 +33,7 @@ func exit_state() -> void:
 func update(_delta: float) -> void:
 	
 	check_players_ready()
-	
+
 	#
 	##states.change_state(states.bet_ante)
 func check_players_ready():

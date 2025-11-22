@@ -1,13 +1,26 @@
-#DEAL FLOP
-
+#DEAL HOLE STATE
 extends game_state
-
-#DEAL ONE Major and One Minor Arcan to the Community
+var num_cards = 3
+# once all the players are locked in on thier card choice
+#then we deal in 3 cards to the community cards.
+#deal 3 major arcana to the field as well. -the triumverate?  
 
 func enter_state() -> void:
-	pass # Replace with function body.
+	print("its time to deal some hole")
+	card_manager.dealing = true
+	
+	
 func exit_state() -> void:
 	pass # Replace with function body.
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func update(_delta: float) -> void:
-	pass
+	if card_manager.dealing_timer == 0 and num_cards > 0 :
+		card_manager.dealing_timer += 20
+		num_cards -= 1
+		print("state machine calling for card deal to player")
+		card_manager._on_deal_to_community_pressed()
+	if card_manager.dealing_timer == 0 and num_cards == 0 :
+		print("done dealing state ")
+		card_manager.dealing = false
+		print("time to go to  betting on your hand")
+		states.change_state(states.bet_flop)

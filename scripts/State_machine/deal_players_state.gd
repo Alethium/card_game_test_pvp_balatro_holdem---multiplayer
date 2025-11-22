@@ -8,8 +8,18 @@ var num_cards
 # will this game deal just two like normal and a larger hand of spells and hijinx?
 # once all the players # once all the players have the hand they want to keep
 func enter_state() -> void:
+	
+	
 	for player in players.current_players:
 		player.set_button_text.rpc("action_button","Dealing")
+		player.set_button_visibility("button1",false)
+		player.set_button_visibility("button2",false)
+		player.set_button_visibility("button3",false)
+		player.set_button_disabled.rpc("button1",true)
+		player.set_button_disabled.rpc("button2",true)
+		player.set_button_disabled.rpc("button3",true)
+
+
 
 	label.text = "Dealing cards to players"
 	if game_manager.prev_state == states.discard_players : 
