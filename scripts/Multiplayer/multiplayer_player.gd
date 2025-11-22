@@ -6,7 +6,7 @@ extends Node2D
 var display_name : String
 
 var starting_health = 100
-var remaining_health : int
+var current_health : int
 
 var starting_mana = 0
 var current_mana : int
@@ -31,6 +31,9 @@ var current_hand_size = 0
 enum PLAYER_STATE {dealer,in_play,out_of_play}
 
 enum BET_STATE {stay,see,raise,fold,none}
+var current_bet = 0
+
+
 #var bet_state : BET_STATE
 
 

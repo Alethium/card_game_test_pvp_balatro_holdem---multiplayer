@@ -18,23 +18,8 @@ func _ready() -> void:
 	
 	
 func _process(_delta: float) -> void:
-	pass
- 
-@rpc("any_peer", "call_local", "reliable")
-func request_pot_value_increase(value):
-	if multiplayer.is_server():
-		print("increasing potby : " , value)
-		server_increase_pot_value(value)
-	else:
-		request_pot_value_increase.rpc_id(1,value)
-
-@rpc("authority", "call_local", "reliable")
-func server_increase_pot_value(value):
-	game_manager.current_pot += value
 	update_pot_display()
-	
-func update_pot_display():
-	%current_pot_text.text = str(game_manager.current_pot)
+ 
 
 
 @rpc("any_peer", "call_local", "reliable")
@@ -72,3 +57,22 @@ func server_change_status_text(text):
 
 func update_status_display(text):
 	%Game_Status_text.text = text
+	
+	
+	
+	
+@rpc("any_peer", "call_local", "reliable")
+func request_pot_value_increase(value):
+	if multiplayer.is_server():
+		print("increasing potby : " , value)
+		server_increase_pot_value(value)
+	else:
+		request_pot_value_increase.rpc_id(1,value)
+
+@rpc("authority", "call_local", "reliable")
+func server_increase_pot_value(value):
+	game_manager.current_pot += value
+	update_pot_display()
+	
+func update_pot_display():
+	%current_pot_text.text = str(game_manager.current_pot ," / ", game_manager.current_bet)

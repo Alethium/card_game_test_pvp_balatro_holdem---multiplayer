@@ -1,4 +1,4 @@
-[gd_scene load_steps=28 format=3 uid="uid://bstgicllg5jw4"]
+[gd_scene load_steps=29 format=3 uid="uid://bstgicllg5jw4"]
 
 [ext_resource type="PackedScene" uid="uid://dvdg2bxoihq32" path="res://Scenes/card_slot.tscn" id="1_pe22w"]
 [ext_resource type="Script" uid="uid://cvvna1si82h41" path="res://scripts/play_space.gd" id="1_yahnq"]
@@ -77,6 +77,14 @@ texture_margin_bottom = 16.0
 axis_stretch_horizontal = 1
 axis_stretch_vertical = 1
 
+[sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_62gg8"]
+properties/0/path = NodePath(".:current_pot")
+properties/0/spawn = true
+properties/0/replication_mode = 1
+properties/1/path = NodePath(".:current_bet")
+properties/1/spawn = true
+properties/1/replication_mode = 1
+
 [sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_5lyoa"]
 properties/0/path = NodePath("card_manager:networked_cards")
 properties/0/spawn = true
@@ -87,6 +95,15 @@ properties/1/replication_mode = 1
 properties/2/path = NodePath("UI/Game_Status_Display/Game_Status_text:text")
 properties/2/spawn = true
 properties/2/replication_mode = 1
+properties/3/path = NodePath("UI/Score_Display/current_pot_text:text")
+properties/3/spawn = true
+properties/3/replication_mode = 1
+properties/4/path = NodePath("UI/Score_Display/BG/Score_Upper_Frame/Score_Text:text")
+properties/4/spawn = true
+properties/4/replication_mode = 1
+properties/5/path = NodePath("UI/Score_Display/Current_pot_text:text")
+properties/5/spawn = true
+properties/5/replication_mode = 1
 
 [node name="Play_Space" type="Node2D"]
 script = ExtResource("1_yahnq")
@@ -355,11 +372,23 @@ theme = ExtResource("2_vksat")
 theme_override_constants/line_spacing = -15
 theme_override_font_sizes/font_size = 64
 text = "Current
-Pot"
+Pot/Bet"
 horizontal_alignment = 1
 
 [node name="current_pot_text" type="Label" parent="UI/Score_Display"]
 unique_name_in_owner = true
+layout_mode = 0
+offset_left = -143.02228
+offset_top = -45.70579
+offset_right = 331.8853
+offset_bottom = 100.294205
+theme = ExtResource("2_vksat")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Current_pot_text" type="Label" parent="UI/Score_Display"]
+unique_name_in_owner = true
+visible = false
 layout_mode = 0
 offset_left = -143.02228
 offset_top = -45.70579
@@ -414,6 +443,10 @@ Current_Minor_Deck = NodePath("../Minor_Arcana")
 [node name="game_manager" parent="." instance=ExtResource("2_5lyoa")]
 position = Vector2(1617, 66)
 rotation = 3.14159
+
+[node name="game_manager_sync" type="MultiplayerSynchronizer" parent="."]
+root_path = NodePath("../game_manager")
+replication_config = SubResource("SceneReplicationConfig_62gg8")
 
 [node name="multiplayer_manager" type="Node2D" parent="."]
 script = ExtResource("8_5lyoa")
