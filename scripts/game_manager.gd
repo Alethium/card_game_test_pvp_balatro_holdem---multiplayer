@@ -11,7 +11,7 @@ var current_big_blind : Player
 var current_small_blind : Player
 
 var current_ante = 1
-var current_bet = 1
+var current_bet = 0
 var current_pot = 0
 
 var current_score = 0
@@ -116,8 +116,13 @@ func set_active_player():
 	
 	players.current_players[active_player_index].request_player_active.rpc()
 	if active_player != null:
+		active_player.set_action_button_pressed(false)
+		active_player.set_button1_pressed(false)
+		active_player.set_button2_pressed(false)
+		active_player.set_button3_pressed(false)
 		previous_player = active_player
-	active_player = players.current_players[active_player_index]		
+	active_player = players.current_players[active_player_index]
+			
 #	 check to see if they have a current bet state of folded before moving to make them active. 
 # 	maybe player. waiting_players, can collect losers, folders, and new joiners who wait for the hand to end to ante in ont he next go around. 
 func ante_in():
@@ -126,14 +131,16 @@ func ante_in():
 	
 func raise_bet():
 	active_player.current_bet += 1
-	current_pot += current_bet - active_player.current_bet + 1
+	current_bet += 1
+	current_pot += current_bet
 	active_player.current_health -= current_bet - active_player.current_bet
 #	0 + 1-1+1 = 1
 #   1 + 1 - 1 + 1 = 2
 
 func see_bet():
-	current_pot += current_bet - active_player.current_bet 
-	active_player.current_health -= current_bet - active_player.current_bet
+	active_player.current_bet = current_bet
+	current_pot += current_bet 
+	active_player.current_health -= current_bet
 	
 func reset_pot():
 	

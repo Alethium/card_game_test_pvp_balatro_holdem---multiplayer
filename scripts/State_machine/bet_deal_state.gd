@@ -15,13 +15,17 @@ func enter_state() -> void:
 	print("its time to bet on your dealt hand.")
 #	 set buttonsto stay hold raise
 	label.text = "Its time to Bet, do you want to \n Stay , Raise, or Fold"
+	game_manager.set_active_player()
+	game_manager.set_previous_player()
+	game_manager.set_active_player()
 	for player in players.current_players:
 		player.set_button_text.rpc("action_button","Stay")
 		player.set_button_text.rpc("button1","See")
 		player.set_button_text.rpc("button2","Raise")
 		player.set_button_text.rpc("button3","Fold")
 		player.set_player_bet_state.rpc(BET_STATE.none)
-	
+
+
 	
 	
 	
@@ -33,90 +37,105 @@ func update(_delta: float) -> void:
 # always start with the active player, which should be getting rotated each round. handle that later for now its always host. 
 	
 #	 now i have to use the tracking of player bets and the current bet to orchestrate the growing bet 
-	
+	for player in players.current_players:
+		if player.player_id != game_manager.active_player.player_id:
+			player.set_button_disabled.rpc("button1",true)
+			player.set_button_disabled.rpc("button2",true)
+			player.set_button_disabled.rpc("button3",true)
+			player.set_button_disabled.rpc("action_button",true)
+		else:
+			player.set_button_disabled.rpc("button1",false)
+			player.set_button_disabled.rpc("button2",false)
+			player.set_button_disabled.rpc("button3",false)
+			player.set_button_disabled.rpc("action_button",false)
+				
 	
 #	 IF THE TURN IS THE FIRST TURN OF BETTING
-	if game_manager.previous_player == null:
-#		waits for player to make first choice
-		if game_manager.active_player.bet_state == BET_STATE.none:
-#			disable see because theres no previous bet to see. 
-			game_manager.active_player.set_button_disabled("button1",true)
-			if game_manager.active_player.action_button_pressed:
-				print("1st better chose to stay")
-				game_manager.active_player.set_player_bet_state(BET_STATE.stay)
-				game_manager.active_player.set_button_disabled("button1",false)
-				game_manager.active_player.set_action_button_pressed(false)
-				game_manager.make_next_player_active()
-			if game_manager.active_player.button2_pressed:
-				print("better chose to raise the bet")
-#				current_pot += current_bet - player_bet + 1
-				
-				game_manager.active_player.set_player_bet_state(BET_STATE.raise)
-				
-				game_manager.make_next_player_active()
-				
-			if game_manager.active_player.button3_pressed:
-				print("better chose to see your bet")
-				game_manager.active_player.set_player_bet_state(BET_STATE.fold)
-	#			remove active player from rotation somehow
-				game_manager.make_next_player_active()
+	#if game_manager.previous_player == null:
+##		waits for player to make first choice
+#
+			#if game_manager.active_player.action_button_pressed:
+				#print("1st better chose to stay")
+				#game_manager.active_player.set_player_bet_state.rpc(BET_STATE.stay)
+				#game_manager.active_player.set_button_disabled.rpc("button1",false)
+				#game_manager.active_player.set_action_button_pressed.rpc(false)
+				#game_manager.make_next_player_active()
+			#if game_manager.active_player.button2_pressed:
+				#print("better chose to raise the bet")
+##				current_pot += current_bet - player_bet + 1
+				#game_manager.raise_bet()
+				#game_manager.active_player.set_player_bet_state.rpc(BET_STATE.raise)
+				#game_manager.active_player.set_action_button_pressed.rpc(false)
+				#game_manager.make_next_player_active()
+				#
+			#if game_manager.active_player.button3_pressed:
+				#print("better chose to see your bet")
+				#game_manager.active_player.set_player_bet_state(BET_STATE.fold)
+	##			remove active player from rotation somehow
+				#game_manager.make_next_player_active()
 			
 #	 EVERY TURN AFTER THAT
 	if game_manager.previous_player != null:
+		if game_manager.previous_player.bet_state == BET_STATE.none:
+#			disable see because theres no previous bet to see. 
+			game_manager.active_player.set_button_disabled.rpc("button1",true)
+
 #		waits for player to make first choice
 		if game_manager.previous_player.bet_state == BET_STATE.stay:
 			#print("previous player chose to stay")
 			
-			game_manager.active_player.set_button_disabled("button1",true)
+			game_manager.active_player.set_button_disabled.rpc("button1",true)
 			
 		if game_manager.previous_player.bet_state == BET_STATE.see:
 			#print("previous player chose to see")
 			
 			
-			game_manager.active_player.set_button_disabled("button1",true)
+			game_manager.active_player.set_button_disabled.rpc("button1",true)
 		if game_manager.previous_player.bet_state == BET_STATE.raise:
 			#print("previous player chose to raise")
 			
-			
-			game_manager.active_player.set_button_disabled("button1",false)
+			game_manager.active_player.set_button_disabled.rpc("action_button",true)
+			game_manager.active_player.set_button_disabled.rpc("button1",false)
+
 		if game_manager.previous_player.bet_state == BET_STATE.fold:
 			#print("previous player chose to fold")
 			
-			game_manager.active_player.set_button_disabled("button1",false)		
+			game_manager.active_player.set_button_disabled.rpc("button1",false)		
 			
+		
 		handle_player_input()
 		
 		
 			
-		if game_manager.active_player.bet_state == BET_STATE.none:
-			game_manager.active_player.set_button_disabled("button1",true)
-			if game_manager.active_player.action_button_pressed:
-				print("better chose to stay")
-				game_manager.active_player.set_player_bet_state(BET_STATE.stay)
-				game_manager.make_next_player_active()
-			if game_manager.active_player.bet_state == BET_STATE.stay:
-				pass
-#			stay(add 0 to betting amount and pool)
-			if game_manager.active_player.bet_state == BET_STATE.see:
-				pass
-			if game_manager.active_player.bet_state == BET_STATE.raise:
-				pass
-	#			raise(+1 to betting amount. +1 to pool)
-			if game_manager.active_player.bet_state == BET_STATE.fold:
-				pass				
-#			call player rpc to set button1 disabled
-#			this means they have yet to make any bet, use this to disable see button , stay(add 0 to betting amount and pool),raise(+1 to betting amount. +1 to pool), fold, discard all cards, set player state to out of play. 
-		if game_manager.active_player.bet_state == BET_STATE.stay:
-			pass
-#			stay(add 0 to betting amount and pool)
-		if game_manager.active_player.bet_state == BET_STATE.see:
-			pass
-		if game_manager.active_player.bet_state == BET_STATE.raise:
-			pass
-#			raise(+1 to betting amount. +1 to pool)
-		if game_manager.active_player.bet_state == BET_STATE.fold:
-			pass
-	
+		#if game_manager.active_player.bet_state == BET_STATE.none:
+			#game_manager.active_player.set_button_disabled.rpc("button1",true)
+			#if game_manager.active_player.action_button_pressed:
+				#print("better chose to stay")
+				#game_manager.active_player.set_player_bet_state(BET_STATE.stay)
+				#game_manager.make_next_player_active()
+			#if game_manager.active_player.bet_state == BET_STATE.stay:
+				#pass
+##			stay(add 0 to betting amount and pool)
+			#if game_manager.active_player.bet_state == BET_STATE.see:
+				#pass
+			#if game_manager.active_player.bet_state == BET_STATE.raise:
+				#pass
+	##			raise(+1 to betting amount. +1 to pool)
+			#if game_manager.active_player.bet_state == BET_STATE.fold:
+				#pass				
+##			call player rpc to set button1 disabled
+##			this means they have yet to make any bet, use this to disable see button , stay(add 0 to betting amount and pool),raise(+1 to betting amount. +1 to pool), fold, discard all cards, set player state to out of play. 
+		#if game_manager.active_player.bet_state == BET_STATE.stay:
+			#pass
+##			stay(add 0 to betting amount and pool)
+		#if game_manager.active_player.bet_state == BET_STATE.see:
+			#pass
+		#if game_manager.active_player.bet_state == BET_STATE.raise:
+			#pass
+##			raise(+1 to betting amount. +1 to pool)
+		#if game_manager.active_player.bet_state == BET_STATE.fold:
+			#pass
+	#
 	#elif game_manager.previous_player != null:
 		#if game_manager.previous_player.bet_state == BET_STATE.none:
 			#pass
@@ -148,28 +167,28 @@ func update(_delta: float) -> void:
 func handle_player_input():
 	if game_manager.active_player.action_button_pressed:
 		print("better chose to stay")
-		game_manager.active_player.set_player_bet_state(BET_STATE.stay)
-		game_manager.active_player.set_action_button_pressed(false)
+		game_manager.active_player.set_player_bet_state.rpc(BET_STATE.stay)
+		game_manager.active_player.set_action_button_pressed.rpc(false)
 		game_manager.make_next_player_active()	
 		
 	if game_manager.active_player.button1_pressed:
 		print("better chose to see your bet")
-		game_manager.active_player.set_player_bet_state(BET_STATE.see)
-		game_manager.active_player.set_button1_pressed(false)
+		game_manager.active_player.set_player_bet_state.rpc(BET_STATE.see)
+		game_manager.active_player.set_button1_pressed.rpc(false)
 		game_manager.see_bet()
 		game_manager.make_next_player_active()
 		
 	if game_manager.active_player.button2_pressed:
 		print("better chose to raise your bet")
-		game_manager.active_player.set_player_bet_state(BET_STATE.raise)
-		game_manager.active_player.set_button2_pressed(false)
 		game_manager.raise_bet()
+		game_manager.active_player.set_player_bet_state.rpc(BET_STATE.raise)
+		game_manager.active_player.set_button2_pressed.rpc(false)
 		game_manager.make_next_player_active()		
 			
 	if game_manager.active_player.button3_pressed:
 		print("better chose to fold")
-		game_manager.active_player.set_player_bet_state(BET_STATE.fold)
-		game_manager.active_player.set_button3_pressed(false)
-		game_manager.fold_player()
+		game_manager.active_player.set_player_bet_state.rpc(BET_STATE.fold)
+		game_manager.active_player.set_button3_pressed.rpc(false)
+		game_manager.fold_player(game_manager.active_player.player_id)
 #			remove active player from rotation somehow
 		game_manager.make_next_player_active()

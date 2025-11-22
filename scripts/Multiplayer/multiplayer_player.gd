@@ -331,16 +331,42 @@ func set_button_text(button,text):
 func set_button_disabled(button,state):
 	if button == "action_button":
 		%Action_Button.disabled = state
-	
+		if state == true:
+			%Action_Button.focus_mode = 0
+			%Action_Button.set_mouse_filter(Control.MouseFilter.MOUSE_FILTER_IGNORE)
+			
+		else:
+			%Action_Button.focus_mode = 1
+			%Action_Button.set_mouse_filter(Control.MouseFilter.MOUSE_FILTER_STOP)	
 	if button == "button1":
 		%Button1.disabled = state
-		%Button1.focus_mode = 0
+		if state == true:
+			%Button1.focus_mode = 0
+			%Button1.set_mouse_filter(Control.MouseFilter.MOUSE_FILTER_IGNORE)
+			
+		else:
+			%Button1.focus_mode = 1
+			%Button1.set_mouse_filter(Control.MouseFilter.MOUSE_FILTER_STOP)
 	
 	if button == "button2":
 		%Button2.disabled = state
+		if state == true:
+			%Button2.focus_mode = 0
+			%Button1.set_mouse_filter(Control.MouseFilter.MOUSE_FILTER_IGNORE)
+			
+		else:
+			%Button2.focus_mode = 1
+			%Button1.set_mouse_filter(Control.MouseFilter.MOUSE_FILTER_STOP)
 		
 	if button == "button3":
 		%Button3.disabled = state
+		if state == true:
+			%Button3.focus_mode = 0
+			%Button1.set_mouse_filter(Control.MouseFilter.MOUSE_FILTER_IGNORE)
+			
+		else:
+			%Button3.focus_mode = 1
+			%Button1.set_mouse_filter(Control.MouseFilter.MOUSE_FILTER_STOP)
 
 
 
