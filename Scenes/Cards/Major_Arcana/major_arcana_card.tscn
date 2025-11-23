@@ -5,10 +5,13 @@
 [ext_resource type="Texture2D" uid="uid://d2dan05le1frl" path="res://Cards/card_sprites/PC _ Computer - Balatro - Jokers and Consumables - Tarot, Planet and Spectral Cards.png" id="3_oasvo"]
 
 [node name="Major_Arcana_Card" instance=ExtResource("1_rowwm")]
+offset_right = 20.0
+offset_bottom = 20.0
 script = ExtResource("2_oasvo")
-joker_name = "Joker"
+card_name = "name"
 effect_description = "Rightside-up:
 Upside-down:"
+effect_type = 0
 sell_value = 3
 rarity = 0
 chip_modifier = 0
@@ -16,16 +19,20 @@ mult_modifier = 0
 money_modifier = 0
 probability_modifier = 0.0
 
-[node name="bg" parent="Visuals" index="0"]
+[node name="bg" parent="Visuals" index="1"]
 position = Vector2(1.66893e-06, 0.11821699)
 scale = Vector2(0.9295775, 1.0130152)
 
-[node name="Front" parent="Visuals" index="1"]
+[node name="Front" parent="Visuals" index="2"]
 texture = ExtResource("3_oasvo")
 hframes = 10
 vframes = 6
 
-[node name="Back" parent="Visuals" index="2"]
+[node name="Back" parent="Visuals" index="3"]
 position = Vector2(4.7683716e-07, 0)
 scale = Vector2(0.92957747, 1)
 frame = 31
+
+[connection signal="mouse_entered" from="." to="." method="_on_mouse_entered"]
+[connection signal="mouse_exited" from="." to="." method="_on_mouse_exited"]
+[connection signal="input_event" from="card_body" to="." method="_on_card_body_input_event"]

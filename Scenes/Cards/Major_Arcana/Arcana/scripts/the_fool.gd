@@ -31,3 +31,9 @@ func on_card_played(card):
 func on_hand_played(hand_type: String, cards: Array):
 	# Called after a hand is played
 	pass
+
+
+func _on_card_body_input_event(viewport: Node, event: InputEvent, shape_idx: int) -> void:
+	if event is InputEventMouseButton and event.button_index == MOUSE_BUTTON_LEFT:
+		if event.pressed:
+			upside_down = !upside_down

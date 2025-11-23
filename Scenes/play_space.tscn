@@ -154,20 +154,20 @@ text = "CLEAR"
 
 [node name="Deal_to_Major_Arcana" type="Button" parent="UI/Buttons"]
 layout_mode = 0
-offset_left = 72.0
-offset_top = 221.00002
-offset_right = 296.0
-offset_bottom = 330.0
+offset_left = 65.0
+offset_top = 227.00002
+offset_right = 289.0
+offset_bottom = 337.0
 scale = Vector2(0.9354085, 0.9354085)
 theme_override_font_sizes/font_size = 77
 text = "DEAL"
 
 [node name="clear_minor_arcana2" type="Button" parent="UI/Buttons"]
 layout_mode = 0
-offset_left = 293.00006
-offset_top = 219.0
-offset_right = 564.00006
-offset_bottom = 328.0
+offset_left = 282.00003
+offset_top = 227.00002
+offset_right = 553.0
+offset_bottom = 337.0
 scale = Vector2(0.9354085, 0.9354085)
 theme_override_font_sizes/font_size = 77
 text = "CLEAR"
@@ -481,7 +481,7 @@ position = Vector2(1640, 622)
 position = Vector2(1640, 836)
 
 [node name="Minor_Arcana_Community_Slots" type="Node2D" parent="."]
-position = Vector2(-523, -216)
+position = Vector2(-508, -207)
 
 [node name="Minor_Arcana_Slot" parent="Minor_Arcana_Community_Slots" instance=ExtResource("1_pe22w")]
 unique_name_in_owner = true
@@ -504,7 +504,7 @@ unique_name_in_owner = true
 position = Vector2(1300, 648)
 
 [node name="Major_arcana_Slots" type="Node2D" parent="."]
-position = Vector2(-523, -325)
+position = Vector2(-508, -316)
 
 [node name="Major_Arcana_Slot" parent="Major_arcana_Slots" instance=ExtResource("1_pe22w")]
 position = Vector2(651, 438)

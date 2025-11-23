@@ -314,6 +314,13 @@ func handle_card_visibility(card):
 				#print("community")
 				card.visible = true
 				card.face_down = false
+			elif card.owner_id == -2 :
+				#print("player is? ",multiplayer.get_unique_id())
+				#print("card is face down?",card.face_down)
+				#print("card owner id?",card.owner_id)
+				#print("community")
+				card.visible = true
+				card.face_down = false
 			else:
 				#print("player is? ",multiplayer.get_unique_id())
 				#print("card is face down?",card.face_down)
@@ -568,6 +575,10 @@ func server_deal_to_major_arcana():
 						var drawn_major_arcana_card = draw_single_card(-2,Current_Major_Deck) #add what deck to draw a card from in the utility function. 
 						drawn_major_arcana_card.target_slot = slot
 						drawn_major_arcana_card.visible = true
+						var turn_value = randi_range(0,1)
+						if turn_value == 1:
+							drawn_major_arcana_card.upside_down = true
+							
 						Current_Major_Deck.deck_of_cards.erase(drawn_major_arcana_card)
 						currently_spawned_major_arcana.append(drawn_major_arcana_card)
 						slot.stored_cards.append(drawn_major_arcana_card)
@@ -656,7 +667,7 @@ func debug_selection_state():
 		
 		print("Card ", card.card_id, 
 			  " | Owner: ", card.owner_id, 
-			  " | sync.selected: ", card.sync.selected, 
+			  " | sync.selected: ", card.selected, 
 			  " | local selected: ", card.selected,
 			  " | In player selection: ", selection_owner)
 		for player in players.current_players:

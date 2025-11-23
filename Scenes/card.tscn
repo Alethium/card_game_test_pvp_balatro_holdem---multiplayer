@@ -28,6 +28,15 @@ properties/5/replication_mode = 1
 properties/6/path = NodePath("Debug:text")
 properties/6/spawn = true
 properties/6/replication_mode = 1
+properties/7/path = NodePath(".:upside_down")
+properties/7/spawn = true
+properties/7/replication_mode = 1
+properties/8/path = NodePath(".:rotation")
+properties/8/spawn = true
+properties/8/replication_mode = 1
+properties/9/path = NodePath(".:scale")
+properties/9/spawn = true
+properties/9/replication_mode = 1
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_e6po8"]
 shader = ExtResource("1_e6po8")
