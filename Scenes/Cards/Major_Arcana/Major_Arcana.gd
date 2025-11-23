@@ -15,7 +15,7 @@ enum EffectType {on_card,on_hand}
 @export var mult_modifier: int = 0
 @export var money_modifier: int = 0
 @export var probability_modifier: float = 0.0
-var upside_down = false
+
 # Runtime variables
 var active: bool = true
 var edition: String = "Base"  # Foil, Holographic, Polychrome, etc.

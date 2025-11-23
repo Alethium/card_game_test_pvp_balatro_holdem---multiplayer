@@ -5,6 +5,12 @@
 
 [node name="The_Fool" instance=ExtResource("1_oldpi")]
 script = ExtResource("2_gfvtj")
+card_name = "The Fool"
+effect_description = "Rightside-up: + 50 chips
+Upside-down: + 4 mult"
+effect_type = 1
+chip_modifier = 50
+mult_modifier = 4
 
 [node name="bg" parent="Visuals" index="1"]
 material = null

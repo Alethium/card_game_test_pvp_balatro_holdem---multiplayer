@@ -1,0 +1,96 @@
+[gd_scene load_steps=6 format=3 uid="uid://25xtissm0ga3"]
+
+[ext_resource type="Theme" uid="uid://d0uidb0k47w4o" path="res://Scenes/main_UI_theme.tres" id="1_4c74e"]
+[ext_resource type="Texture2D" uid="uid://ds4iy4dprry8l" path="res://UI_SPRITES/Panel2_theme.png" id="2_8oqot"]
+[ext_resource type="Texture2D" uid="uid://b8754ejskxc1k" path="res://UI_SPRITES/hightlighted10_Panel_theme.png" id="3_dubm8"]
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_xrf6a"]
+texture = ExtResource("2_8oqot")
+texture_margin_left = 16.0
+texture_margin_top = 16.0
+texture_margin_right = 16.0
+texture_margin_bottom = 16.0
+expand_margin_left = 9.0
+expand_margin_top = 9.0
+expand_margin_right = 9.0
+expand_margin_bottom = 9.0
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_003oj"]
+texture = ExtResource("3_dubm8")
+texture_margin_left = 16.0
+texture_margin_top = 16.0
+texture_margin_right = 16.0
+texture_margin_bottom = 16.0
+expand_margin_left = 9.0
+expand_margin_top = 9.0
+expand_margin_right = 9.0
+expand_margin_bottom = 9.0
+
+[node name="Card_Info_Display" type="Control"]
+layout_mode = 3
+anchors_preset = 0
+offset_left = -65.0
+offset_top = 96.0
+offset_right = 65.0
+offset_bottom = 183.99995
+pivot_offset = Vector2(65.08, 0)
+
+[node name="Card_info_text2" type="Label" parent="."]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -63.0
+offset_top = -21.999977
+offset_right = 140.2258
+offset_bottom = 115.00002
+grow_horizontal = 2
+grow_vertical = 2
+scale = Vector2(0.62, 0.62)
+theme = ExtResource("1_4c74e")
+theme_override_font_sizes/font_size = 32
+text = "up: + 50 chips
+down: + 4 mult"
+horizontal_alignment = 1
+vertical_alignment = 1
+autowrap_mode = 2
+
+[node name="card_info_frame" type="Panel" parent="."]
+show_behind_parent = true
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_bottom = 21.000046
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("1_4c74e")
+theme_override_styles/panel = SubResource("StyleBoxTexture_xrf6a")
+
+[node name="Panel" type="Panel" parent="card_info_frame"]
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+offset_bottom = 22.0
+grow_horizontal = 2
+theme_override_styles/panel = SubResource("StyleBoxTexture_003oj")
+
+[node name="info_text" type="Label" parent="card_info_frame"]
+layout_mode = 1
+anchors_preset = -1
+anchor_right = 1.0
+anchor_bottom = 0.124000005
+offset_left = 6.9999995
+offset_top = 5.0000024
+offset_right = 66.958374
+offset_bottom = 11.298552
+grow_horizontal = 2
+scale = Vector2(0.62, 0.62)
+theme = ExtResource("1_4c74e")
+theme_override_font_sizes/font_size = 16
+text = "Card Info"
+horizontal_alignment = 1
+vertical_alignment = 1
+autowrap_mode = 2

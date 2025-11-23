@@ -31,13 +31,14 @@ var current_height_state : HEIGHT_STATE = HEIGHT_STATE.BASE
 
 @onready var sync: MultiplayerSynchronizer = $MultiplayerSynchronizer
 
-
+var upside_down = false
 
 
 
 func _ready():
 	visible = false
-	
+	#%Visuals.global_scale.x = 2
+	#%Visuals.global_scale.y = 2
 	# Only the server should control the card's authoritative state
 	if multiplayer.is_server():
 		sync.set_multiplayer_authority(1)  # Server has authority
@@ -105,22 +106,24 @@ func flip():
 func _on_card_body_mouse_entered() -> void:
 	if face_down == false:
 		print("card hovered")
-		scale.x = 1.2
-		scale.y = 1.2
-		wiggle()
+		#%Visuals.global_scale.x = 2.2
+		#%Visuals.global_scale.y = 2.2
+		#wiggle()
+		%Card_Info_Display.visible = true
+		
 		
 @rpc ("any_peer", "call_local", "reliable")		
 func change_height(height:HEIGHT_STATE):
 	
 	if height == HEIGHT_STATE.BASE:
 		z_index = 1
-		scale = lerp(scale,Vector2(1,1),0.1)
+		#%Visuals.global_scale = lerp(scale,Vector2(2,2),0.1)
 	if height == HEIGHT_STATE.LOWERED:
 		z_index = 0
-		scale = lerp(scale,Vector2(0.9,0.9),0.1)
+		#%Visuals.global_scale = lerp(scale,Vector2(1.9,1.9),0.1)
 	if height == HEIGHT_STATE.LIFTED:
 		z_index = 2
-		scale = lerp(scale,Vector2(1.2,1.2),0.1)
+		#%Visuals.global_scale = lerp(scale,Vector2(2.2,2.2),0.1)
 	# Update local state before reading
 	#update_status()
 	
@@ -148,9 +151,10 @@ func change_height(height:HEIGHT_STATE):
 func _on_card_body_mouse_exited() -> void:
 	print("card unhovered")
 	if face_down == false:
-		scale.x = 1
-		scale.y = 1
-		wiggle()
+		%Visuals.global_scale.x = 2
+		%Visuals.global_scale.y = 2
+		#wiggle()
+		%Card_Info_Display.visible = false
 	if is_multiplayer_authority():
 		off_hover.emit(self)
 		

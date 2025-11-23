@@ -25,6 +25,7 @@ func _ready() -> void:
 		score = 10
 		face_card = true
 	
+	
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.

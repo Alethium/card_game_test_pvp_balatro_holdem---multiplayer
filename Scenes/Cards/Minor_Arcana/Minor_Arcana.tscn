@@ -20,7 +20,6 @@
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_mljoi"]
 
 [node name="Minor_Arcana" groups=["Card"] instance=ExtResource("1_0s87a")]
-z_as_relative = false
 theme_override_styles/normal = SubResource("StyleBoxEmpty_8cajy")
 theme_override_styles/normal_mirrored = SubResource("StyleBoxEmpty_ddece")
 theme_override_styles/pressed = SubResource("StyleBoxEmpty_l2bfa")
@@ -32,16 +31,18 @@ script = ExtResource("2_mdjes")
 suit = 0
 rank = 0
 
-[node name="MultiplayerSynchronizer" parent="." index="0"]
+[node name="MultiplayerSynchronizer" parent="." index="1"]
 script = ExtResource("3_ddece")
 
-[node name="Visuals" parent="." index="1"]
+[node name="Visuals" parent="." index="2"]
 z_as_relative = false
 
-[node name="Front" parent="Visuals" index="1"]
+[node name="Front" parent="Visuals" index="2"]
 texture = ExtResource("3_8cajy")
 hframes = 15
 vframes = 4
 
-[node name="Back" parent="Visuals" index="2"]
+[node name="Back" parent="Visuals" index="3"]
 frame = 31
+
+[editable path="Card_Info_Display"]
