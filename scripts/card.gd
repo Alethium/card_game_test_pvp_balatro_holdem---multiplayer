@@ -8,7 +8,7 @@ extends Button
 @onready var front: Sprite2D = $Visuals/Front
 @onready var outline: Sprite2D = $Visuals/card_outline
 @onready var visuals: Node2D = $Visuals
-
+@export var info_text: String = "Card_Info"
 
 var current_slot_id
 var selected = false
@@ -48,6 +48,7 @@ func _ready():
 
 	if multiplayer.is_server():
 		card_id = randi()
+	
 	
 	 	
 
@@ -110,7 +111,27 @@ func _on_card_body_mouse_entered() -> void:
 		#%Visuals.global_scale.y = 2.2
 		#wiggle()
 		%Card_Info_Display.visible = true
+		#set_info_visible.rpc(true)
+	if is_multiplayer_authority():
+		on_hover.emit(self)	
+
 		
+func _on_card_body_mouse_exited() -> void:
+	print("card unhovered")
+	if face_down == false:
+		%Visuals.global_scale.x = 2
+		%Visuals.global_scale.y = 2
+		#wiggle()
+		#set_info_visible.rpc(false)
+		%Card_Info_Display.visible = false
+		
+	if is_multiplayer_authority():
+		off_hover.emit(self)
+
+
+@rpc ("any_peer", "call_local", "reliable")		
+func set_info_visible(state : bool):
+	%Card_Info_Display.visible = state		
 		
 @rpc ("any_peer", "call_local", "reliable")		
 func change_height(height:HEIGHT_STATE):
@@ -148,15 +169,7 @@ func change_height(height:HEIGHT_STATE):
 ##
 		##emit_signal("on_hover",self)
 
-func _on_card_body_mouse_exited() -> void:
-	print("card unhovered")
-	if face_down == false:
-		%Visuals.global_scale.x = 2
-		%Visuals.global_scale.y = 2
-		#wiggle()
-		%Card_Info_Display.visible = false
-	if is_multiplayer_authority():
-		off_hover.emit(self)
+
 		
 #the server will run this function	
 func move_to_target(delta):

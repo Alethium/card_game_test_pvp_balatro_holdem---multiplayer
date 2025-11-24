@@ -7,5 +7,7 @@
 script = ExtResource("2_8l7og")
 rank = 1
 
-[node name="card_body" parent="." index="2"]
+[node name="card_body" parent="." index="3"]
 monitoring = false
+
+[editable path="Card_Info_Display"]

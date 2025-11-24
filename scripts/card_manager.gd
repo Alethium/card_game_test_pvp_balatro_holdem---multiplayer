@@ -119,6 +119,7 @@ func _process(delta: float) -> void:
 	for card in spawned_cards.get_children():
 		card.move_to_target(delta)
 		handle_card_visibility(card)
+		
 	
 	#Current_Minor_Deck.handle_deck_height()
 	#minor_discard_pile.handle_deck_height()
@@ -307,6 +308,7 @@ func handle_card_visibility(card):
 				#print("own")
 				card.visible = true
 				card.face_down = false
+				
 			elif card.owner_id == -1 :
 				#print("player is? ",multiplayer.get_unique_id())
 				#print("card is face down?",card.face_down)
@@ -314,6 +316,7 @@ func handle_card_visibility(card):
 				#print("community")
 				card.visible = true
 				card.face_down = false
+				
 			elif card.owner_id == -2 :
 				#print("player is? ",multiplayer.get_unique_id())
 				#print("card is face down?",card.face_down)
@@ -321,6 +324,7 @@ func handle_card_visibility(card):
 				#print("community")
 				card.visible = true
 				card.face_down = false
+				
 			else:
 				#print("player is? ",multiplayer.get_unique_id())
 				#print("card is face down?",card.face_down)
@@ -328,8 +332,15 @@ func handle_card_visibility(card):
 				#print("opponent")
 				card.visible = true
 				card.face_down = true
+			
+				
 	else:
 		card.face_down = true
+		
+	
+		
+		
+		
 		
 		
 

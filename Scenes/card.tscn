@@ -38,12 +38,6 @@ properties/8/replication_mode = 1
 properties/9/path = NodePath(".:scale")
 properties/9/spawn = true
 properties/9/replication_mode = 1
-properties/10/path = NodePath("Card_Info_Display:visible")
-properties/10/spawn = true
-properties/10/replication_mode = 1
-properties/11/path = NodePath(".:info_text.text")
-properties/11/spawn = true
-properties/11/replication_mode = 1
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_e6po8"]
 shader = ExtResource("1_e6po8")
@@ -107,7 +101,6 @@ script = ExtResource("1_0qqmn")
 
 [node name="Card_Info_Display" parent="." instance=ExtResource("2_bnspj")]
 unique_name_in_owner = true
-visible = false
 layout_mode = 0
 offset_left = -85.0
 offset_top = 92.0

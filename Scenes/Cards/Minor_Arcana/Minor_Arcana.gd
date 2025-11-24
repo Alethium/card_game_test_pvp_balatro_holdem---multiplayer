@@ -10,6 +10,7 @@ var cursed = false
 
 
 
+
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	super._ready()
@@ -24,9 +25,12 @@ func _ready() -> void:
 	elif rank >= 10:
 		score = 10
 		face_card = true
+	info_text = str("+ ",score," Chips")
 	
 	
-
+	%Card_Info_Display.set_info_text.rpc()
+	
+	
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 
