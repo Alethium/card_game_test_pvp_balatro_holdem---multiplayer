@@ -12,6 +12,9 @@ func enter_state() -> void:
 	label.text = "please discard cards you do not want, \n and you wll be dealt new cards. "
 	print("its time to DISCARD THOSE CARDS!")
 	label.text = "discard state, discarding and redrawing to players"
+	for card in card_manager.currently_spawned_cards:
+		if card.owner_id > 0:
+			card.selectable = true
 	for player in players.current_players:
 		player.set_button_text.rpc("action_button","Discard")
 		player.set_button_visibility("button1",false)
@@ -26,6 +29,8 @@ func exit_state() -> void:
 	for player in players.current_players:
 		player.set_action_button_pressed.rpc(false)
 		player.request_player_unready.rpc()
+	for card in card_manager.currently_spawned_cards:
+		card.selectable = false
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func update(_delta: float) -> void:

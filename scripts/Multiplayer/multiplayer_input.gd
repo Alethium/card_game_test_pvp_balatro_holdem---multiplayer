@@ -85,7 +85,7 @@ func server_player_click(player_id,click_position):
 	var card = raycast_for_card(click_position)
 	if card != null and card is Minor_Arcana:
 		if !card.selected_by.has(player_id):
-			if (card.owner_id == player_id or card.owner_id == -1) and selected_cards.size() <= player.max_hand_size - 1 :
+			if (card.owner_id == player_id or card.owner_id == -1) and selected_cards.size() <= player.max_hand_size - 1 and card.selectable:
 				#select_card.rpc(card.card_id)  # Send ID instead of card object
 				card.select.rpc(player_id)
 				selected_cards.append(card)

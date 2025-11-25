@@ -13,7 +13,7 @@ extends Button
 var current_slot_id
 var selected = false
 var selected_by = []
-var selectable = true
+var selectable = false
 var marked_for_discard = false
 var card_id: int = -1
 var owner_id: int = -1
@@ -60,7 +60,7 @@ func select(select_by_id):
 	if multiplayer.get_unique_id() ==  select_by_id:
 		outline.visible = true
 	print("selected by" , select_by_id)
-	if !selected_by.has(select_by_id):
+	if !selected_by.has(select_by_id) :
 		selected = true
 		%Visuals.position.y -= 15
 		selected_by.append(select_by_id)
