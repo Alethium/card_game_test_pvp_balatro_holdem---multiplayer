@@ -20,7 +20,7 @@ var current_score = 0
 @onready var active_player_index = 0
 var active_player = null
 var previous_player = null
-
+var second_prev_state
 var prev_state
 var curr_state 
 var next_state
@@ -71,6 +71,7 @@ func run_current_state(delta):
 func change_state(new_state):
 	if new_state != null:
 		curr_state.exit_state()
+		second_prev_state = prev_state
 		prev_state=curr_state
 		
 		curr_state=new_state

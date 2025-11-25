@@ -634,7 +634,7 @@ func server_discard_from_players(player_id):
 	print(currently_spawned_cards)
 	for card in currently_spawned_cards:
 		
-		if card.owner_id == player_id and !card.selected:
+		if card.owner_id == player_id and card.selected:
 			
 			cards_to_discard.append(card)
 			print("Found selected card to discard: ", card)

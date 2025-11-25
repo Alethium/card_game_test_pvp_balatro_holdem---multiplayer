@@ -30,7 +30,16 @@ func enter_state() -> void:
 	
 	
 func exit_state() -> void:
-	pass # Replace with function body.
+	for player in players.current_players:
+		player.set_button_disabled.rpc("button1",false)
+		player.set_button_disabled.rpc("button2",false)
+		player.set_button_disabled.rpc("button3",false)
+		player.set_button_disabled.rpc("action_button",false)
+		
+		player.set_button_visibility.rpc("action_button",true)
+		player.set_button_visibility.rpc("button1",true)
+		player.set_button_visibility.rpc("button2",true)
+		player.set_button_visibility.rpc("button3",true)
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func update(_delta: float) -> void:
 #	if previous is null, that means this is the very first bet in the betting round. this thould be the state that this and all betting states start on. 

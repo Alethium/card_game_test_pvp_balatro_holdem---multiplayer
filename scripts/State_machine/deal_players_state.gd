@@ -56,8 +56,21 @@ func update(_delta: float) -> void:
 		print("done dealing state ")
 		card_manager.dealing = false
 		if game_manager.prev_state == states.discard_players : 
-			print("time to go to  betting on your hand")
-			states.change_state(states.bet_deal)
+			print("refilling hand")
+			
+			if game_manager.second_prev_state == states.deal_players : 
+				print("time to go to  betting on your hand")
+				states.change_state(states.bet_deal)
+			elif game_manager.second_prev_state == states.deal_hole : 
+				states.change_state(states.bet_hole)	
+			elif game_manager.second_prev_state == states.deal_flop : 
+				states.change_state(states.bet_flop)
+			elif game_manager.second_prev_state == states.deal_turn : 
+				states.change_state(states.bet_turn)
+			elif game_manager.second_prev_state == states.deal_river : 
+				states.change_state(states.bet_river)
+
+		
 		else:
 			print("time to go to  discard")
 			states.change_state(states.discard_players)

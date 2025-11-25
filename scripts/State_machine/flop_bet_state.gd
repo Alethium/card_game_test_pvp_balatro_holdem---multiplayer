@@ -30,7 +30,8 @@ func enter_state() -> void:
 	
 	
 func exit_state() -> void:
-	pass # Replace with function body.
+	pass
+
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func update(_delta: float) -> void:
 #	if previous is null, that means this is the very first bet in the betting round. this thould be the state that this and all betting states start on. 

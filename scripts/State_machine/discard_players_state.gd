@@ -13,17 +13,20 @@ func enter_state() -> void:
 	print("its time to DISCARD THOSE CARDS!")
 	label.text = "discard state, discarding and redrawing to players"
 	for player in players.current_players:
-		player.set_button_text.rpc("action_button","Hold")
+		player.set_button_text.rpc("action_button","Discard")
 		player.set_button_visibility("button1",false)
 		player.set_button_visibility("button2",false)
 		player.set_button_visibility("button3",false)
 		player.set_button_disabled.rpc("button1",true)
 		player.set_button_disabled.rpc("button2",true)
-		player.set_button_disabled.rpc("button3",true)
+		player.set_button_disabled.rpc("button3",true);
 	
 		
 func exit_state() -> void:
-	pass # Replace with function body.
+	for player in players.current_players:
+		player.set_action_button_pressed.rpc(false)
+		player.request_player_unready.rpc()
+
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func update(_delta: float) -> void:
 	check_players_discard()
@@ -47,4 +50,6 @@ func check_players_discard():
 				#player.set_button_text.rpc("action_button","Not Ready!")
 		if players_ready.size() == players.current_players.size():
 			print("all players discard, redraw now")
+			
+			players_ready = []
 			states.change_state(states.deal_players)
