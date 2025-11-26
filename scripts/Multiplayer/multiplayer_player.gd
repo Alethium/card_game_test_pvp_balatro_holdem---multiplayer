@@ -39,7 +39,7 @@ var current_bet = 0
 
 
 var empty_slots = 5
-var selected_cards : Array[Card]
+var selected_cards = []
 var hand_to_play : Array[Card]
 var current_hand : Array[Card] 
 var number_of_cards_selected = 0
@@ -127,7 +127,7 @@ func _ready() -> void:
 	update_ready_display()
 	
 func _physics_process(delta: float) -> void:
-	
+	selected_cards = %input_synchronizer.selected_cards
 	
 	if multiplayer.is_server():
 		update_input(delta) 
@@ -149,7 +149,7 @@ func update_input(_delta):
 	#hand_cursor.global_position += %input_synchronizer.player_mouse_cursor_direction
 	#is_ready = %input_synchronizer.is_ready
 	hand_cursor.global_position = %input_synchronizer.player_mouse_cursor_position
-	
+	selected_cards = %input_synchronizer.selected_cards
 	#also transfer clicking code from cardmanager over here
 	
 func get_current_hand():

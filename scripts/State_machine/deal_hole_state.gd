@@ -7,6 +7,7 @@ var num_cards = 2
 
 func enter_state() -> void:
 	print("its time to deal some hole")
+	play_space.request_status_text_change.rpc("please discard cards you do not want, \n and you wll be dealt new cards.")
 	card_manager.dealing = true
 	
 	

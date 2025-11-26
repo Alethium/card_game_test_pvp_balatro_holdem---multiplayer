@@ -9,17 +9,16 @@ var players_ready = []
 # will this game deal just two like normal and a larger hand of spells and hijinx?
 # once all the players # once all the players have the hand they want to keep
 func enter_state() -> void:
-	label.text = "please discard cards you do not want, \n and you wll be dealt new cards. "
-	print("its time to DISCARD THOSE CARDS!")
-	label.text = "discard state, discarding and redrawing to players"
+	
+	play_space.request_status_text_change.rpc("please discard cards you do not want, \n and you wll be dealt new cards.")
 	for card in card_manager.currently_spawned_cards:
 		if card.owner_id > 0:
 			card.selectable = true
 	for player in players.current_players:
 		player.set_button_text.rpc("action_button","Discard")
-		player.set_button_visibility("button1",false)
-		player.set_button_visibility("button2",false)
-		player.set_button_visibility("button3",false)
+		player.set_button_visibility.rpc("button1",false)
+		player.set_button_visibility.rpc("button2",false)
+		player.set_button_visibility.rpc("button3",false)
 		player.set_button_disabled.rpc("button1",true)
 		player.set_button_disabled.rpc("button2",true)
 		player.set_button_disabled.rpc("button3",true);

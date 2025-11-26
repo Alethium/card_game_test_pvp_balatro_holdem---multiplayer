@@ -430,11 +430,7 @@ func calculate_hand_score(cards: Array) -> int:
 	var best_hand = determine_best_hand(cards)
 	return best_hand.get_score()
 	
-# this is pre doink implimentation pf most basic stuff. 	
-
-
-
-
+# this is pre doink implimentation of most basic stuff. 	
 
 
 
@@ -453,19 +449,3 @@ func get_hand_info(cards: Array):
 # Example usage
 func _ready():
 	pass
-	## Create some test cards using your Minor_Arcana class
-	#var test_cards = [
-		## These would be instances of your Minor_Arcana class
-		## For testing, you'd need to create actual card instances
-	#]
-	#
-	## Determine the best hand
-	#var hand_info = get_hand_info(test_cards)
-	#print("Best hand: ", hand_info["hand_type"])
-	#print("Score: ", hand_info["score"])
-	#print("Multiplier: ", hand_info["multiplier"])
-	#print("Chips: ", hand_info["chips"])
-
-
-func _on_score_pressed() -> void:
-	pass # Replace with function body.

@@ -647,7 +647,7 @@ func server_discard_from_players(player_id):
 		card.outline.visible = false
 		card.owner_id = 0  # zero is for discarded cards
 		
-		## Remove from player's selection
+		### Remove from player's selection
 		if card in target_player.selected_cards:
 			target_player.selected_cards.erase(card)
 		

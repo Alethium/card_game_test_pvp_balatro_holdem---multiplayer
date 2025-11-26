@@ -8,6 +8,7 @@ var num_cards = 3
 func enter_state() -> void:
 	print("its time to deal some hole")
 	card_manager.dealing = true
+	play_space.request_status_text_change.rpc("Dealing Flop")
 	
 	
 func exit_state() -> void:
