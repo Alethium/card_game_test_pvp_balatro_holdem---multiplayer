@@ -4,6 +4,9 @@ enum Phase {Selection,Scoring,Winner }
 var showdown_phase : Phase = Phase.Selection
 var player_hand_info = []
 var players_ready = []
+
+var player_selected_cards = []
+var scoring = false
 #selection
 #the players select thier five cards and hit the Showdown Button
 #the selected hands are sent to the scoring manager who checks for the hand, and returns score information.
@@ -31,7 +34,7 @@ func enter_state() -> void:
 		if card.owner_id != 0 or -2:
 			card.selectable = true
 	for player in players.current_players:
-		player.set_button_text.rpc("action_button","Select")
+		player.set_button_text.rpc("action_button","Choose")
 		player.set_button_visibility.rpc("action_button",true)
 		player.set_button_visibility.rpc("button1",false)
 		player.set_button_visibility.rpc("button2",false)
@@ -47,22 +50,38 @@ func exit_state() -> void:
 	pass # Replace with function body.
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func update(_delta: float) -> void:
-	for player in players.current_players:
-		print(player.selected_cards)
-		if player.selected_cards:
-			if player.selected_cards.size() > 0:
-				player.set_button_text.rpc("action_button","Play Hand")
-				player.set_button_disabled.rpc("action_button",false)
 	if multiplayer.is_server():
 		for player in players.current_players:
-			if player.action_button_pressed and player.is_ready == false and player.selected_cards.size() > 0:
-				player.set_button_text.rpc("action_button","Play Hand")
+			player_selected_cards = game_manager.get_player_selected_cards(player.player_id)
+			player.selected_cards = player_selected_cards
+			
+			if player_selected_cards:
+				if player_selected_cards.size() > 0:
+					player.set_button_text.rpc("action_button","Play Hand")
+					player.set_button_disabled.rpc("action_button",false)
+				
+			else:
+				player.set_button_text.rpc("action_button","Choose")
+				player.set_button_disabled.rpc("action_button",true)
+					
+	
+		for player in players.current_players:
+			
+			if player.action_button_pressed and player.selected_cards.size() > 0:
+				player.set_button_text.rpc("action_button","Playing")
 				if !players_ready.has(player.player_id):
-					player_hand_info.append(game_manager.get_hand_base_score(player, player.selected_cards))
 					players_ready.append(player.player_id)
-		if players_ready.size() == players.current_players.size():
+					
+				
+		
+		if players_ready.size() == players.current_players.size() and scoring == false: 
+			scoring = true
+			for player in players.current_players:
+				player_hand_info.append(game_manager.get_hand_base_score(player, game_manager.get_player_selected_cards(player.player_id)))
+				print(player_hand_info)
 			print("time to check those hands against the major arcana")
 			play_space.request_status_text_change.rpc("all players ready \n time to check for modifiers and proceed to scoring. ")
+			
 
 
 # starting wth the player after the dealer, the "small blind." person.

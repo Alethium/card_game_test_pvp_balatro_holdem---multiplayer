@@ -85,12 +85,13 @@ func server_player_click(player_id,click_position):
 	var card = raycast_for_card(click_position)
 	if card != null and card is Minor_Arcana:
 		if !card.selected_by.has(player_id):
-			if (card.owner_id == player_id or card.owner_id == -1) and selected_cards.size() <= player.max_hand_size - 1 and card.selectable:
+			if (card.owner_id == player_id or card.owner_id == -1) and player.selected_cards.size() <= player.max_hand_size - 1 and card.selectable:
 				#select_card.rpc(card.card_id)  # Send ID instead of card object
 				card.select.rpc(player_id)
-				selected_cards.append(card)
-				print("num of cards selected : ",selected_cards.size())
-				print("cards selected : ",selected_cards)
+				#select_card.rpc(card.card_id)
+				
+				print("num of cards selected : ",player.selected_cards.size())
+				print("cards selected : ",player.selected_cards)
 				print("yay!",card," clicked!, clicker is: ",player_id,"clicked at : ",click_position)
 				print("clicked card is  allowed to be selected by this user  : ",card.selected)
 			else:
@@ -99,7 +100,8 @@ func server_player_click(player_id,click_position):
 			if card.owner_id == player_id or card.owner_id == -1 :
 				
 				card.deselect.rpc(player_id)
-				selected_cards.erase(card)
+				#deselect_card.rpc(card.card_id)
+				#player.selected_cards.erase(card)
 				print("selected card clicked for deselect", card.selected)
 			else:
 				print("clicked card is NOT allowed to be selected by this user")
@@ -161,16 +163,16 @@ func get_card_with_highest_z_index(cards):
 func select_card(card_id):
 	var card = find_card_by_id(card_id)
 	if card:
-		selected_cards.append(card)
+		player.selected_cards.append(card_id)
 		print("adding selected card: ", card_id)
 
 @rpc ("any_peer", "call_local", "reliable")
 func deselect_card(card_id):
 	print("removing selected card: ", card_id)
-	for i in range(selected_cards.size() - 1, -1, -1):
-		if selected_cards[i].card_id == card_id:
-			selected_cards.remove_at(i)
-	print(selected_cards, " after removal")
+	for i in range(player.selected_cards.size() - 1, -1, -1):
+		if player.selected_cards[i] == card_id:
+			player.selected_cards.remove_at(i)
+	print(player.selected_cards, " after removal")
 	
 
 func find_card_by_id(card_id):

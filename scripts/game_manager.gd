@@ -165,7 +165,14 @@ func set_previous_player():
 	
 
 
-
+func get_player_selected_cards(player_id):
+	var player_selected_cards = []
+	for card in card_manager.currently_spawned_cards:
+		if card.selected_by.has(player_id) :
+			player_selected_cards.append(card)
+	
+	return player_selected_cards
+			
 
 
 		
@@ -209,7 +216,7 @@ func _on_play_request(player,hand):
 #this will be done for each player. the return from this should fill that players doink array . 
 func get_hand_base_score(player,hand):
 	print("hand sent to play :", hand)
-	var community_slots = card_manager.minor_arcana_community_slots.get_children()
+	var community_slots = card_manager.minor_arcana_community_slots
 	var community_cards = []
 
 	#if the community slot contains a card, 

@@ -127,7 +127,7 @@ func _ready() -> void:
 	update_ready_display()
 	
 func _physics_process(delta: float) -> void:
-	selected_cards = %input_synchronizer.selected_cards
+	 
 	
 	if multiplayer.is_server():
 		update_input(delta) 
@@ -149,7 +149,7 @@ func update_input(_delta):
 	#hand_cursor.global_position += %input_synchronizer.player_mouse_cursor_direction
 	#is_ready = %input_synchronizer.is_ready
 	hand_cursor.global_position = %input_synchronizer.player_mouse_cursor_position
-	selected_cards = %input_synchronizer.selected_cards
+	
 	#also transfer clicking code from cardmanager over here
 	
 func get_current_hand():
@@ -456,8 +456,8 @@ func set_player_active(active_state: bool):
 @rpc("any_peer", "call_local", "reliable")			
 func clear_community_discards_from_selection():
 	#print("removing player %s cards : player id  :  ",% player_id)	
-	print(%input_synchronizer.selected_cards)
-	%input_synchronizer.selected_cards = %input_synchronizer.selected_cards.filter(
+	print(selected_cards)
+	selected_cards = selected_cards.filter(
 	func(card): return card.owner_id != -1
 	)
 	
@@ -465,8 +465,8 @@ func clear_community_discards_from_selection():
 @rpc("any_peer", "call_local", "reliable")			
 func clear_player_selection():
 	#print("removing player %s cards : player id  :  ",% player_id)	
-	print(%input_synchronizer.selected_cards)
-	%input_synchronizer.selected_cards = []
+	print(selected_cards)
+	selected_cards = []
 	
 
 

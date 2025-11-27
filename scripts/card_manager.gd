@@ -642,7 +642,7 @@ func server_discard_from_players(player_id):
 	# Process the discard
 	for card in cards_to_discard:
 		print("Discarding card: ", card)
-		target_player.input_synchronizer.deselect_card(card.card_id)
+		
 		card.deselect.rpc(0)
 		card.outline.visible = false
 		card.owner_id = 0  # zero is for discarded cards

@@ -26,18 +26,38 @@ func enter_state() -> void:
 		var current_card_count = 0
 		for card in card_manager.currently_spawned_cards:
 
-			if card.owner_id > 1 :
+			if card.owner_id > 0 :
 #				find a way to deselect like when clear community
 				current_card_count += 1
-			for player in players.current_players:
 				card.deselect.rpc(0)
+				
 		num_cards = 5*players.current_players.size() - current_card_count
-		
+		print("this many cards to be ddealt : ",num_cards)
+			
 	else:
 		num_cards = 5*players.current_players.size()
-	card_manager.dealing = true
-	card_manager.Current_Minor_Deck.deck_of_cards.shuffle()
-	print("it is time to deal cards!!!!!")
+		print("this many cards to be dealt : ",num_cards)
+	
+	if num_cards == 0:
+		if game_manager.prev_state == states.discard_players : 
+			print("no discard to discard")
+			if game_manager.second_prev_state == states.deal_players : 
+				print("time to go to  betting on your hand")
+				states.change_state(states.bet_deal)
+			elif game_manager.second_prev_state == states.deal_hole : 
+				states.change_state(states.bet_hole)	
+			elif game_manager.second_prev_state == states.deal_flop : 
+				states.change_state(states.bet_flop)
+			elif game_manager.second_prev_state == states.deal_turn : 
+				states.change_state(states.bet_turn)
+			elif game_manager.second_prev_state == states.deal_river : 
+				states.change_state(states.bet_river)
+	else:
+			
+		card_manager.dealing = true
+		card_manager.Current_Minor_Deck.deck_of_cards.shuffle()
+		print("it is time to deal cards!!!!!")
+	
 	
 		
 func exit_state() -> void:
