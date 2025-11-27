@@ -77,7 +77,7 @@ func update(_delta: float) -> void:
 		if players_ready.size() == players.current_players.size() and scoring == false: 
 			scoring = true
 			for player in players.current_players:
-				player_hand_info.append(game_manager.get_hand_base_score(player, game_manager.get_player_selected_cards(player.player_id)))
+				player_hand_info.append(game_manager.get_hand_base_score(player.player_id, game_manager.get_player_selected_cards(player.player_id)))
 				print(player_hand_info)
 			print("time to check those hands against the major arcana")
 			play_space.request_status_text_change.rpc("all players ready \n time to check for modifiers and proceed to scoring. ")

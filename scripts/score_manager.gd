@@ -53,6 +53,7 @@ class PokerHand:
 # Function to determine the best hand from selected cards
 func determine_best_hand(cards: Array) -> PokerHand:
 	# Sort cards by rank for easier processing
+	print("determining hand",cards)
 	cards.sort_custom(func(a, b): return a.rank < b.rank)
 	
 	var possible_hands = []
@@ -267,18 +268,21 @@ func check_four_of_a_kind(cards: Array) -> PokerHand:
 
 func check_full_house(cards: Array) -> PokerHand:
 	var rank_counts = {}
+	print(cards)
 	for card in cards:
 		if card.rank in rank_counts:
 			rank_counts[card.rank] += 1
 		else:
 			rank_counts[card.rank] = 1
-	
+	print("rank counts : ",rank_counts)
 	var has_three = false
 	var has_two = false
 	for count in rank_counts.values():
 		if count >= 3:
+			print("threesome",count)
 			has_three = true
 		elif count >= 2:
+			print("pairing",count)
 			has_two = true
 	
 	if has_three and has_two:

@@ -175,79 +175,41 @@ func get_player_selected_cards(player_id):
 			
 
 
-		
-func _on_play_request(player,hand):
-	print("hand sent to play :", hand)
-	var community_slots = card_manager.minor_arcana_community_slots.get_children()
-	var community_cards = []
-
-	#if the community slot contains a card, 
-	#and the card is selected for being played, add it to the played hand. 
-	if community_slots[0].stored_cards.size() == 1:
-		if community_slots[0].stored_cards[0].selected:
-			community_cards.append(community_slots[0].stored_cards[0])
-	if community_slots[1].stored_cards.size() == 1:
-		if community_slots[1].stored_cards[0].selected:
-			community_cards.append(community_slots[1].stored_cards[0])	
-	if community_slots[2].stored_cards.size() == 1:
-		if community_slots[2].stored_cards[0].selected:
-			community_cards.append(community_slots[2].stored_cards[0])	
-	if community_slots[3].stored_cards.size() == 1:
-		if community_slots[3].stored_cards[0].selected:
-			community_cards.append(community_slots[3].stored_cards[0])
-	if community_slots[4].stored_cards.size() == 1:
-		if community_slots[4].stored_cards[0].selected:
-			community_cards.append(community_slots[4].stored_cards[0])	
-
-	print("game manager knows of played hand : ", hand)
-	
-	var hand_info = score_manager.get_hand_info(hand+community_cards)
-	
-	player.hand_to_play.clear()
-	player.current_hand_display.text = str("Current Hand : ", hand_info["hand_type"])
-	player.score_display.text = str("Score : ", hand_info["score"])
-	print("Best hand: ", hand_info["hand_type"])
-	print("Score: ", hand_info["score"])
-	print("Multiplier: ", hand_info["multiplier"])
-	print("Chips: ", hand_info["chips"])
-	print("cards: ", hand_info["cards"])
-	
-
 #this will be done for each player. the return from this should fill that players doink array . 
-func get_hand_base_score(player,hand):
-	print("hand sent to play :", hand)
-	var community_slots = card_manager.minor_arcana_community_slots
-	var community_cards = []
+func get_hand_base_score(player_id,hand):
+	print(player_id," player hand sent to play :", hand)
+	#var community_slots = card_manager.minor_arcana_community_slots
+	#var community_cards = []
 
-	#if the community slot contains a card, 
-	#and the card is selected for being played, add it to the played hand. 
-	if community_slots[0].stored_cards.size() == 1:
-		if community_slots[0].stored_cards[0].selected:
-			community_cards.append(community_slots[0].stored_cards[0])
-	if community_slots[1].stored_cards.size() == 1:
-		if community_slots[1].stored_cards[0].selected:
-			community_cards.append(community_slots[1].stored_cards[0])	
-	if community_slots[2].stored_cards.size() == 1:
-		if community_slots[2].stored_cards[0].selected:
-			community_cards.append(community_slots[2].stored_cards[0])	
-	if community_slots[3].stored_cards.size() == 1:
-		if community_slots[3].stored_cards[0].selected:
-			community_cards.append(community_slots[3].stored_cards[0])
-	if community_slots[4].stored_cards.size() == 1:
-		if community_slots[4].stored_cards[0].selected:
-			community_cards.append(community_slots[4].stored_cards[0])	
+	##if the community slot contains a card, 
+	##and the card is selected for being played, add it to the played hand. 
+	#if community_slots[0].stored_cards.size() == 1:
+		#if community_slots[0].stored_cards[0].selected_by.has(player_id):
+			#community_cards.append(community_slots[0].stored_cards[0])
+	#if community_slots[1].stored_cards.size() == 1:
+		#if community_slots[1].stored_cards[0].selected_by.has(player_id):
+			#community_cards.append(community_slots[1].stored_cards[0])	
+	#if community_slots[2].stored_cards.size() == 1:
+		#if community_slots[2].stored_cards[0].selected_by.has(player_id):
+			#community_cards.append(community_slots[2].stored_cards[0])	
+	#if community_slots[3].stored_cards.size() == 1:
+		#if community_slots[3].stored_cards[0].selected_by.has(player_id):
+			#community_cards.append(community_slots[3].stored_cards[0])
+	#if community_slots[4].stored_cards.size() == 1:
+		#if community_slots[4].stored_cards[0].selected_by.has(player_id):
+			#community_cards.append(community_slots[4].stored_cards[0])	
 
 	print("game manager knows of played hand : ", hand)
 	
-	var hand_info = score_manager.get_hand_info(hand+community_cards)
+	var hand_info = score_manager.get_hand_info(hand)
 	
 #	hand info cant contain doink?
 # 	doinks need to be calculated after getting the hand info, 
 #	then feeding the hand into the on hand played check, 
 #	then each card needs to be fed into the on played card checker.
-	for card in player.hand_to_play:
+	for card in hand:
 		card.deselect.rpc()
-	player.hand_to_play.clear()
+	
 	
 	print("Best hand: ", hand_info["hand_type"])
 	print("Score: ", hand_info["score"])
