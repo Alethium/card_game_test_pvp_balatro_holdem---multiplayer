@@ -6,8 +6,8 @@ extends Node2D
 var display_name : String
 
 var starting_health = 100
-var current_health : int
-
+var current_health : int = 100
+var excess : int = 0
 var starting_mana = 0
 var current_mana : int
 
@@ -29,14 +29,14 @@ var current_hand_size = 0
 
 #player state controls
 enum PLAYER_STATE {dealer,in_play,out_of_play}
-
+var play_state : PLAYER_STATE = PLAYER_STATE.in_play
 enum BET_STATE {stay,see,raise,fold,none}
 var current_bet = 0
 
 
+@onready var health_meter: HealthMeter = $health_meter
+
 #var bet_state : BET_STATE
-
-
 
 var empty_slots = 5
 var selected_cards = []
@@ -123,6 +123,7 @@ func _ready() -> void:
 	player_added.emit(self)
 	current_hand = []
 	curr_hand_state = 0
+	
 	Input.set_mouse_mode(Input.MOUSE_MODE_HIDDEN)
 	update_ready_display()
 	
@@ -130,7 +131,8 @@ func _physics_process(delta: float) -> void:
 	 
 	
 	if multiplayer.is_server():
-		update_input(delta) 
+		update_input(delta)
+		 
 		
 func _input(event: InputEvent) -> void:
 	if multiplayer.get_unique_id() == player_id:
@@ -233,6 +235,7 @@ func set_action_button_pressed(button: bool):
 		print("player : ", player_id, " action button pressed : ", action_button_pressed)	
 		#set_action_button_text()		
 		
+
 		
 func _on_button1_pressed() -> void:
 	if multiplayer.get_unique_id() == player_id:
@@ -414,8 +417,25 @@ func set_player_ready(ready_state: bool):
 @rpc("any_peer", "call_local", "reliable")
 func set_player_bet_state(new_bet_state: BET_STATE):
 	bet_state = new_bet_state
+
+
+@rpc("any_peer", "call_local", "reliable")
+func request_player_play_state(new_play_state: String):
+	if multiplayer.is_server():
+		if new_play_state == "out":
+			set_player_play_state(PLAYER_STATE.out_of_play)
+		elif new_play_state == "in":
+			set_player_play_state(PLAYER_STATE.in_play)
+		elif new_play_state == "dealer":
+			set_player_play_state(PLAYER_STATE.dealer)
+			
+
+
+
 	
-	
+@rpc("any_peer", "call_local", "reliable")
+func set_player_play_state(new_play_state: PLAYER_STATE):
+	play_state = new_play_state	
 
 #@rpc ("any_peer","call_local", "reliable")
 #func request_player_bet():	
@@ -429,6 +449,14 @@ func set_player_bet_state(new_bet_state: BET_STATE):
 	#has_bet = new_bet_state	
 	#%Button1.text = "BET"
 	#
+	#@rpc ("any_peer","call_local", "reliable")
+#func request_player_active():
+	#if multiplayer.is_server():
+		#print("player : ", player_id, " is active")
+		#set_player_active.rpc(true)	
+		
+	
+
 	
 @rpc ("any_peer","call_local", "reliable")
 func request_player_active():
@@ -436,13 +464,6 @@ func request_player_active():
 		print("player : ", player_id, " is active")
 		set_player_active.rpc(true)	
 		
-		
-@rpc ("any_peer","call_local", "reliable")
-func request_player_inactive():
-	if multiplayer.is_server():
-		print("player : ", player_id, " is inactive")
-		set_player_active.rpc(false)	
-	
 @rpc("any_peer", "call_local", "reliable")
 func set_player_active(active_state: bool):
 	active_player = active_state	
@@ -450,6 +471,89 @@ func set_player_active(active_state: bool):
 		%Player_frame_outline.visible = true
 	else:
 		%Player_frame_outline.visible = false
+
+
+		#
+@rpc("any_peer", "call_local", "reliable")
+func update_player_health_bars():
+	# This should just trigger a visual update, not calculation
+	update_health_bar_visual()		
+
+
+
+#player.update_player_health_bar.rpc()
+
+
+@rpc("any_peer", "call_local", "reliable")
+func change_player_health(amount: int):
+	if multiplayer.is_server():
+		# Only server should calculate health changes
+		_calculate_health_change(amount)
+		# Sync the updated values to all clients
+		sync_health_values.rpc(current_health, excess)
+				
+func _calculate_health_change(amount: int):
+	var diff = starting_health - current_health
+	
+	# Positive numbers
+	if excess == 0:
+		if amount > 0:
+			if diff > amount:
+				current_health += amount
+			elif diff < amount:
+				current_health = starting_health
+				excess += amount - diff
+		else:
+			# Negative numbers
+			if excess == 0:
+				current_health += amount
+			else:
+				if excess > amount:
+					excess += amount
+				else:
+					current_health += excess - amount
+					excess = 0
+	
+	if current_health <= 0:
+		current_health = 0
+		set_player_play_state(PLAYER_STATE.out_of_play)
+	
+	# Update the health bar locally
+	update_health_bar_visual()
+	
+	
+@rpc("authority", "call_local", "reliable")
+func sync_health_values(synced_health: int, synced_excess: int):
+	current_health = synced_health
+	excess = synced_excess
+	update_health_bar_visual()
+
+func update_health_bar_visual():
+	if health_meter and health_meter.health_remaining_bar:
+		# Calculate bar sizes based on current values
+		var remaining_width = (108.0 / 100.0) * current_health
+		var excess_width = (108.0 / (100.0 * (get_parent().current_players.size() + 1))) * excess
+		
+		health_meter.health_remaining_bar.size.x = remaining_width
+		health_meter.health_excess_bar.size.x = excess_width
+
+
+
+#	starting health - current health = difference. if the difference is greater than the amount then add the amount. 
+#	if its less than the amount.put health at starting health and  subtract the difference from the amount and add it to the excess.
+#	 update both bars. 
+
+	#health panel size (108/100) * current_health
+	#excess panel size (108/(100*number of players - 1)) * excess amount
+	 
+	
+		
+@rpc ("any_peer","call_local", "reliable")
+func request_player_inactive():
+	if multiplayer.is_server():
+		print("player : ", player_id, " is inactive")
+		set_player_active.rpc(false)	
+	
 		
 
 

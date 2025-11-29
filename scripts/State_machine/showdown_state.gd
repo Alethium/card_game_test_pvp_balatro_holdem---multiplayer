@@ -75,15 +75,25 @@ func update(_delta: float) -> void:
 				
 		
 		if players_ready.size() == players.current_players.size() and scoring == false: 
-			scoring = true
-			for player in players.current_players:
-				player_hand_info.append(game_manager.get_hand_base_score(player.player_id, game_manager.get_player_selected_cards(player.player_id)))
-				print(player_hand_info)
-			print("time to check those hands against the major arcana")
-			play_space.request_status_text_change.rpc("all players ready \n time to check for modifiers and proceed to scoring. ")
-			
+			get_players_base_score()
+#			need to check all majors for hand based doinks agains tthe two player hands. 
+# 			
 
 
+func get_players_base_score():			
+	scoring = true
+	for player in players.current_players:
+		player_hand_info.append(game_manager.get_hand_base_score(player.player_id, game_manager.get_player_selected_cards(player.player_id)))
+		
+	print("time to check those hands against the major arcana")
+	print(player_hand_info)
+	play_space.request_status_text_change.rpc("all players ready \n time to check for modifiers and proceed to scoring. ")
+
+
+
+
+
+	
 # starting wth the player after the dealer, the "small blind." person.
 #give the hand to the score manager to find out what the best hand is, and get back the base numbers before doinking. 
 # score manager should return a hand name, the hands pre modified score. 

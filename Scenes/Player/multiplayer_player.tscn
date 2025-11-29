@@ -93,6 +93,18 @@ properties/4/replication_mode = 1
 properties/5/path = NodePath(".:selected_cards")
 properties/5/spawn = true
 properties/5/replication_mode = 1
+properties/6/path = NodePath(".:excess")
+properties/6/spawn = true
+properties/6/replication_mode = 1
+properties/7/path = NodePath(".:current_health")
+properties/7/spawn = true
+properties/7/replication_mode = 1
+properties/8/path = NodePath("health_meter/Health_remaining:size")
+properties/8/spawn = true
+properties/8/replication_mode = 1
+properties/9/path = NodePath("health_meter/Health_excess:size")
+properties/9/spawn = true
+properties/9/replication_mode = 1
 
 [node name="multiplayer_player" type="Node2D"]
 script = ExtResource("1_a61r2")
@@ -254,7 +266,7 @@ position = Vector2(-98, -2)
 [node name="player_hand" type="Node2D" parent="."]
 position = Vector2(-700, -7)
 
-[node name="health meter" parent="." instance=ExtResource("4_ql3ps")]
+[node name="health_meter" parent="." instance=ExtResource("4_ql3ps")]
 offset_left = 109.0
 offset_top = 88.0
 offset_right = 109.0
@@ -271,3 +283,5 @@ script = ExtResource("5_ql3ps")
 [connection signal="pressed" from="Control/Buttons_panel/Button1" to="." method="_on_button1_pressed"]
 [connection signal="pressed" from="Control/Buttons_panel/Button2" to="." method="_on_button2_pressed"]
 [connection signal="pressed" from="Control/Buttons_panel/Button3" to="." method="_on_button3_pressed"]
+
+[editable path="health_meter"]

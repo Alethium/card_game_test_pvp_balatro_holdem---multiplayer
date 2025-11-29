@@ -61,8 +61,11 @@ func _ready() -> void:
 func _process(delta: float) -> void:
 #build a state machine, that commands the card manager to deal cards, locks and unlocks what players can do. 
 	run_current_state(delta)
+	
+	
 	for player in players.current_players:
 		player.handle_hand_slots(delta)
+		player.update_player_health_bars.rpc()
 		
 		
 func run_current_state(delta):
@@ -127,21 +130,22 @@ func set_active_player():
 #	 check to see if they have a current bet state of folded before moving to make them active. 
 # 	maybe player. waiting_players, can collect losers, folders, and new joiners who wait for the hand to end to ante in ont he next go around. 
 func ante_in():
-	active_player.current_health -=1
+	active_player.change_player_health(-1)
 	current_pot += 1
+	
 	
 func raise_bet():
 	active_player.current_bet += 1
 	current_bet += 1
 	current_pot += current_bet
-	active_player.current_health -= current_bet - active_player.current_bet
+	active_player.change_player_health(-current_bet)
 #	0 + 1-1+1 = 1
 #   1 + 1 - 1 + 1 = 2
 
 func see_bet():
 	active_player.current_bet = current_bet
 	current_pot += current_bet 
-	active_player.current_health -= current_bet
+	active_player.change_player_health(-current_bet)
 	
 func reset_pot():
 	
@@ -151,6 +155,7 @@ func reset_pot():
 	
 func fold_player(player):
 	print("player has folded : ", player)
+	#player.set_player_play_state.rpc("out")
 #	set player current bet back to zero. 
 #	move the player from current players to waiting players. 
 #	 set external display to waiting to join
@@ -178,26 +183,7 @@ func get_player_selected_cards(player_id):
 #this will be done for each player. the return from this should fill that players doink array . 
 func get_hand_base_score(player_id,hand):
 	print(player_id," player hand sent to play :", hand)
-	#var community_slots = card_manager.minor_arcana_community_slots
-	#var community_cards = []
 
-	##if the community slot contains a card, 
-	##and the card is selected for being played, add it to the played hand. 
-	#if community_slots[0].stored_cards.size() == 1:
-		#if community_slots[0].stored_cards[0].selected_by.has(player_id):
-			#community_cards.append(community_slots[0].stored_cards[0])
-	#if community_slots[1].stored_cards.size() == 1:
-		#if community_slots[1].stored_cards[0].selected_by.has(player_id):
-			#community_cards.append(community_slots[1].stored_cards[0])	
-	#if community_slots[2].stored_cards.size() == 1:
-		#if community_slots[2].stored_cards[0].selected_by.has(player_id):
-			#community_cards.append(community_slots[2].stored_cards[0])	
-	#if community_slots[3].stored_cards.size() == 1:
-		#if community_slots[3].stored_cards[0].selected_by.has(player_id):
-			#community_cards.append(community_slots[3].stored_cards[0])
-	#if community_slots[4].stored_cards.size() == 1:
-		#if community_slots[4].stored_cards[0].selected_by.has(player_id):
-			#community_cards.append(community_slots[4].stored_cards[0])	
 
 	print("game manager knows of played hand : ", hand)
 	
