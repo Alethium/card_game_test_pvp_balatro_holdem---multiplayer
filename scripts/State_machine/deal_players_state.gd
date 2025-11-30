@@ -81,8 +81,8 @@ func update(_delta: float) -> void:
 			if game_manager.second_prev_state == states.deal_players : 
 				print("time to go to  betting on your hand")
 				states.change_state(states.bet_deal)
-			elif game_manager.second_prev_state == states.deal_hole : 
-				states.change_state(states.bet_hole)	
+			#elif game_manager.second_prev_state == states.deal_hole : 
+				#states.change_state(states.bet_hole)	
 			elif game_manager.second_prev_state == states.deal_flop : 
 				states.change_state(states.bet_flop)
 			elif game_manager.second_prev_state == states.deal_turn : 

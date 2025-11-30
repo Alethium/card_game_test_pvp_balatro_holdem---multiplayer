@@ -155,16 +155,16 @@ func handle_player_input():
 	if game_manager.active_player.button1_pressed:
 		print("better chose to see your bet")
 		players_stayed = 0
+		game_manager.see_bet()
 		game_manager.active_player.set_player_bet_state.rpc(BET_STATE.see)
 		game_manager.active_player.set_button1_pressed.rpc(false)
-		game_manager.see_bet()
 		game_manager.make_next_player_active()
 		
 	if game_manager.active_player.button2_pressed:
 		print("better chose to raise your bet")
 		players_stayed = 0
 		game_manager.raise_bet()
-		game_manager.active_player.change_player_health(-game_manager.current_bet)
+		
 		game_manager.active_player.set_player_bet_state.rpc(BET_STATE.raise)
 		game_manager.active_player.set_button2_pressed.rpc(false)
 		game_manager.make_next_player_active()		

@@ -17,6 +17,3 @@ material = null
 
 [node name="Back" parent="Visuals" index="3"]
 visible = false
-
-[node name="CollisionShape2D" parent="card_body" index="0"]
-visible = true

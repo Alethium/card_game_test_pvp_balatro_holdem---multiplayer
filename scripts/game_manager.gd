@@ -129,23 +129,23 @@ func set_active_player():
 			
 #	 check to see if they have a current bet state of folded before moving to make them active. 
 # 	maybe player. waiting_players, can collect losers, folders, and new joiners who wait for the hand to end to ante in ont he next go around. 
-func ante_in():
-	active_player.change_player_health(-1)
-	current_pot += 1
+func ante_in(player):
+	player.change_player_health.rpc(-5)
+	current_pot += 5
 	
 	
 func raise_bet():
-	active_player.current_bet += 1
-	current_bet += 1
+	active_player.current_bet += 5
+	current_bet += 5
 	current_pot += current_bet
-	active_player.change_player_health(-current_bet)
+	active_player.change_player_health.rpc(-current_bet)
 #	0 + 1-1+1 = 1
 #   1 + 1 - 1 + 1 = 2
 
 func see_bet():
 	active_player.current_bet = current_bet
 	current_pot += current_bet 
-	active_player.change_player_health(-current_bet)
+	active_player.change_player_health.rpc(-current_bet)
 	
 func reset_pot():
 	
@@ -194,7 +194,7 @@ func get_hand_base_score(player_id,hand):
 #	then feeding the hand into the on hand played check, 
 #	then each card needs to be fed into the on played card checker.
 	for card in hand:
-		card.deselect.rpc()
+		card.deselect.rpc(player_id)
 	
 	
 	print("Best hand: ", hand_info["hand_type"])

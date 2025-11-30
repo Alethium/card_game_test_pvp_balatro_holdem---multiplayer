@@ -46,7 +46,7 @@ class PokerHand:
 	func get_score() -> int:
 		var card_value : int = 0
 		for card in cards:
-			card_value += card.score
+			card_value += card.base_score
 		return (card_value + chips) * base_multiplier
 	
 
@@ -419,7 +419,7 @@ func check_high_card(cards: Array) -> PokerHand:
 		if card_rank > highest_rank:
 			highest_card = card
 		# If ranks are equal, compare scores
-		elif card_rank == highest_rank and card.score > highest_card.score:
+		elif card_rank == highest_rank and card.base_score > highest_card.base_score:
 			highest_card = card
 	
 	return PokerHand.new(

@@ -52,6 +52,7 @@ var number_of_cards_selected = 0
 @onready var player_role_marker_position: Node2D = $player_role_marker_position
 @onready var mouse_window_detection: Node = $mouse_window_detection
 @onready var status_text: Label = $Control/Buttons_panel/status_text
+@onready var hp_label: Label = $health_meter/Label
 
 var screen_size
 
@@ -129,6 +130,7 @@ func _ready() -> void:
 	
 func _physics_process(delta: float) -> void:
 	 
+	hp_label.text = str(current_health)
 	
 	if multiplayer.is_server():
 		update_input(delta)
@@ -531,8 +533,8 @@ func sync_health_values(synced_health: int, synced_excess: int):
 func update_health_bar_visual():
 	if health_meter and health_meter.health_remaining_bar:
 		# Calculate bar sizes based on current values
-		var remaining_width = (108.0 / 100.0) * current_health
-		var excess_width = (108.0 / (100.0 * (get_parent().current_players.size() + 1))) * excess
+		var remaining_width = (104.5 / 100.0) * current_health
+		var excess_width = (104.5 / (100.0 * (get_parent().current_players.size() + 1))) * excess
 		
 		health_meter.health_remaining_bar.size.x = remaining_width
 		health_meter.health_excess_bar.size.x = excess_width

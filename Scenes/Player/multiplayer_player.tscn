@@ -1,14 +1,16 @@
-[gd_scene load_steps=17 format=3 uid="uid://bqtpu7j6665bn"]
+[gd_scene load_steps=25 format=3 uid="uid://bqtpu7j6665bn"]
 
 [ext_resource type="Script" uid="uid://ryrvaexjy5si" path="res://scripts/Multiplayer/multiplayer_player.gd" id="1_a61r2"]
 [ext_resource type="PackedScene" uid="uid://dw4rp4xr3fy7k" path="res://Scenes/Player/hand_cursor.tscn" id="2_4ea1o"]
 [ext_resource type="Script" uid="uid://bomxxc8qi6eke" path="res://scripts/Multiplayer/multiplayer_input.gd" id="2_ql3ps"]
 [ext_resource type="Theme" uid="uid://d0uidb0k47w4o" path="res://Scenes/main_UI_theme.tres" id="2_rlkiy"]
+[ext_resource type="Texture2D" uid="uid://bkdcqc2hnku8i" path="res://UI_SPRITES/Panel5_theme.png" id="3_27tqa"]
 [ext_resource type="StyleBox" uid="uid://bs5cku8ovu0be" path="res://UI_SPRITES/mid_middle_light_raised_outline_stylebox.tres" id="3_dgqwy"]
 [ext_resource type="Texture2D" uid="uid://bift4163fm61m" path="res://UI_SPRITES/Highlighted_frame.png" id="3_ggwyl"]
 [ext_resource type="StyleBox" uid="uid://cu3bvgll0lxg8" path="res://UI_SPRITES/Dark_purple_stylebox.tres" id="3_nelj4"]
 [ext_resource type="Texture2D" uid="uid://c1mtr207ingrk" path="res://ICONS/player portraits temp/rxx82us-1-306x305.jpg" id="4_l2o4u"]
 [ext_resource type="PackedScene" uid="uid://c3fgf484hca30" path="res://Scenes/Player/health_meter.tscn" id="4_ql3ps"]
+[ext_resource type="Theme" uid="uid://bl5r56swuu6ll" path="res://Hexes_theme.tres" id="4_x0n4k"]
 [ext_resource type="Script" uid="uid://bv8vfsflrvprv" path="res://scripts/mouse_window_detection.gd" id="5_ql3ps"]
 [ext_resource type="Texture2D" uid="uid://dp5cqmh1ucrwx" path="res://ICONS/player portraits temp/archive_gio.jpg" id="5_rlkiy"]
 [ext_resource type="Texture2D" uid="uid://ds4iy4dprry8l" path="res://UI_SPRITES/Panel2_theme.png" id="7_j5uc4"]
@@ -19,6 +21,70 @@ texture_margin_left = 16.0
 texture_margin_top = 16.0
 texture_margin_right = 16.0
 texture_margin_bottom = 16.0
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_n0f22"]
+texture = ExtResource("3_ggwyl")
+texture_margin_left = 16.0
+texture_margin_top = 16.0
+texture_margin_right = 16.0
+texture_margin_bottom = 16.0
+expand_margin_left = 9.0
+expand_margin_top = 9.0
+expand_margin_right = 9.0
+expand_margin_bottom = 9.0
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_vk5un"]
+texture = ExtResource("3_27tqa")
+texture_margin_left = 16.0
+texture_margin_top = 16.0
+texture_margin_right = 16.0
+texture_margin_bottom = 16.0
+axis_stretch_horizontal = 1
+axis_stretch_vertical = 1
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_rqr2l"]
+texture = ExtResource("3_ggwyl")
+texture_margin_left = 16.0
+texture_margin_top = 16.0
+texture_margin_right = 16.0
+texture_margin_bottom = 16.0
+expand_margin_left = 9.0
+expand_margin_top = 9.0
+expand_margin_right = 9.0
+expand_margin_bottom = 9.0
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_kcp20"]
+texture = ExtResource("3_ggwyl")
+texture_margin_left = 16.0
+texture_margin_top = 16.0
+texture_margin_right = 16.0
+texture_margin_bottom = 16.0
+expand_margin_left = 10.0
+expand_margin_top = 10.0
+expand_margin_right = 10.0
+expand_margin_bottom = 10.0
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_0gtpp"]
+texture = ExtResource("3_ggwyl")
+texture_margin_left = 16.0
+texture_margin_top = 16.0
+texture_margin_right = 16.0
+texture_margin_bottom = 16.0
+expand_margin_left = 10.0
+expand_margin_top = 10.0
+expand_margin_right = 10.0
+expand_margin_bottom = 10.0
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_sw3sp"]
+texture = ExtResource("3_ggwyl")
+texture_margin_left = 16.0
+texture_margin_top = 16.0
+texture_margin_right = 16.0
+texture_margin_bottom = 16.0
+expand_margin_left = 9.0
+expand_margin_top = 9.0
+expand_margin_right = 9.0
+expand_margin_bottom = 9.0
 
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_ggwyl"]
 texture = ExtResource("7_j5uc4")
@@ -105,6 +171,9 @@ properties/8/replication_mode = 1
 properties/9/path = NodePath("health_meter/Health_excess:size")
 properties/9/spawn = true
 properties/9/replication_mode = 1
+properties/10/path = NodePath("health_meter/Label:text")
+properties/10/spawn = true
+properties/10/replication_mode = 1
 
 [node name="multiplayer_player" type="Node2D"]
 script = ExtResource("1_a61r2")
@@ -116,6 +185,7 @@ layout_mode = 3
 anchors_preset = 0
 offset_right = 40.0
 offset_bottom = 40.0
+metadata/_edit_lock_ = true
 
 [node name="Player_frame_outline" type="Panel" parent="Control"]
 unique_name_in_owner = true
@@ -128,6 +198,7 @@ offset_bottom = 115.0
 mouse_behavior_recursive = 1
 theme = ExtResource("2_rlkiy")
 theme_override_styles/panel = SubResource("StyleBoxTexture_n53ee")
+metadata/_edit_lock_ = true
 
 [node name="Player_frame" type="Panel" parent="Control"]
 layout_mode = 0
@@ -138,6 +209,7 @@ offset_bottom = 113.0
 mouse_behavior_recursive = 1
 theme = ExtResource("2_rlkiy")
 theme_override_styles/panel = ExtResource("3_nelj4")
+metadata/_edit_lock_ = true
 
 [node name="Avatar_frame" type="Panel" parent="Control"]
 layout_mode = 0
@@ -147,6 +219,7 @@ offset_right = 227.0
 offset_bottom = 110.0
 theme = ExtResource("2_rlkiy")
 theme_override_styles/panel = ExtResource("3_dgqwy")
+metadata/_edit_lock_ = true
 
 [node name="Buttons_panel" type="Panel" parent="Control"]
 unique_name_in_owner = true
@@ -157,8 +230,10 @@ offset_right = 227.0
 offset_bottom = 110.0
 theme = ExtResource("2_rlkiy")
 theme_override_styles/panel = ExtResource("3_dgqwy")
+metadata/_edit_lock_ = true
 
 [node name="current_hand" type="Label" parent="Control/Buttons_panel"]
+visible = false
 layout_mode = 0
 offset_left = 21.0
 offset_top = 136.0
@@ -168,6 +243,7 @@ theme = ExtResource("2_rlkiy")
 text = "Current Hand :"
 
 [node name="Score" type="Label" parent="Control/Buttons_panel"]
+visible = false
 layout_mode = 0
 offset_left = 78.0
 offset_top = 159.0
@@ -177,6 +253,7 @@ theme = ExtResource("2_rlkiy")
 text = "Score :"
 
 [node name="status_text" type="Label" parent="Control/Buttons_panel"]
+visible = false
 layout_mode = 0
 offset_left = 78.0
 offset_top = 183.0
@@ -224,6 +301,166 @@ offset_top = 68.0
 offset_right = 231.0
 offset_bottom = 133.0
 
+[node name="Score_Display" type="Control" parent="Control"]
+anchors_preset = 0
+offset_left = 1.0
+offset_top = -123.0
+offset_right = 217.0
+offset_bottom = 21.0
+
+[node name="BG" type="Panel" parent="Control/Score_Display"]
+texture_filter = 1
+layout_mode = 0
+offset_left = -1.0
+offset_right = 216.0
+offset_bottom = 224.0
+theme_override_styles/panel = SubResource("StyleBoxTexture_n0f22")
+
+[node name="Number_Panel" type="Panel" parent="Control/Score_Display/BG"]
+layout_mode = 1
+anchors_preset = 14
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_left = 45.0
+offset_top = -4.0
+offset_right = 3.0
+offset_bottom = 40.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxTexture_vk5un")
+
+[node name="Panel3" type="Panel" parent="Control/Score_Display/BG"]
+layout_mode = 1
+anchors_preset = 14
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_left = 5.0
+offset_top = -68.0
+offset_right = -5.0
+offset_bottom = 1.5
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxTexture_rqr2l")
+
+[node name="Panel3" type="Panel" parent="Control/Score_Display/BG/Panel3"]
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+offset_left = 5.0
+offset_top = 5.0
+offset_right = -5.0
+offset_bottom = 31.538727
+grow_horizontal = 2
+theme_override_styles/panel = SubResource("StyleBoxTexture_kcp20")
+
+[node name="Panel" type="Panel" parent="Control/Score_Display/BG/Panel3"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 5.0
+offset_top = 34.0
+offset_right = -110.300514
+offset_bottom = -5.3846664
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxTexture_kcp20")
+
+[node name="Panel2" type="Panel" parent="Control/Score_Display/BG/Panel3"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 110.0
+offset_top = 34.0
+offset_right = -5.0
+offset_bottom = -5.5
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxTexture_0gtpp")
+
+[node name="Score_Upper_Frame" type="Panel" parent="Control/Score_Display/BG"]
+layout_mode = 0
+offset_left = 4.0
+offset_top = 4.0
+offset_right = 212.0
+offset_bottom = 41.0
+theme_override_styles/panel = SubResource("StyleBoxTexture_sw3sp")
+
+[node name="round_score_bg" type="Panel" parent="Control/Score_Display/BG/Score_Upper_Frame"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -5.0
+offset_top = -4.000002
+offset_right = 5.0
+offset_bottom = 5.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxTexture_vk5un")
+
+[node name="Score_Text" type="Label" parent="Control/Score_Display/BG/Score_Upper_Frame"]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 53.0
+offset_top = 116.0
+offset_right = 147.0
+offset_bottom = 119.0
+grow_horizontal = 2
+grow_vertical = 2
+scale = Vector2(0.5, 0.5)
+theme = ExtResource("4_x0n4k")
+theme_override_font_sizes/font_size = 32
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Hand_Name" type="Label" parent="Control/Score_Display"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 8.0
+offset_top = 8.000005
+offset_right = -82.285736
+offset_bottom = -117.269775
+grow_horizontal = 2
+grow_vertical = 2
+scale = Vector2(1.575, 1.575)
+theme = ExtResource("2_rlkiy")
+text = "HAND NAME"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Round_Score" type="Label" parent="Control/Score_Display"]
+layout_mode = 0
+offset_left = 10.0
+offset_top = 115.00001
+offset_right = 72.0
+offset_bottom = 150.0
+scale = Vector2(0.75, 0.75)
+theme = ExtResource("2_rlkiy")
+text = "Round 
+Score"
+horizontal_alignment = 1
+
+[node name="Current_pot_text" type="Label" parent="Control/Score_Display"]
+unique_name_in_owner = true
+visible = false
+layout_mode = 0
+offset_left = -143.02228
+offset_top = -45.70579
+offset_right = 331.8853
+offset_bottom = 100.294205
+theme = ExtResource("4_x0n4k")
+horizontal_alignment = 1
+vertical_alignment = 1
+
 [node name="Avatar" type="Sprite2D" parent="Control"]
 unique_name_in_owner = true
 visible = false
@@ -233,7 +470,7 @@ texture = ExtResource("4_l2o4u")
 
 [node name="mini_avatar" type="Sprite2D" parent="Control"]
 unique_name_in_owner = true
-position = Vector2(34, 50.999996)
+position = Vector2(34, 48)
 scale = Vector2(0.17885949, 0.17885949)
 texture = ExtResource("5_rlkiy")
 
@@ -272,6 +509,15 @@ offset_top = 88.0
 offset_right = 109.0
 offset_bottom = 88.0
 scale = Vector2(1, 1)
+
+[node name="Health_remaining" parent="health_meter" index="0"]
+clip_contents = true
+
+[node name="Health_excess" parent="health_meter" index="1"]
+clip_contents = true
+
+[node name="Label" parent="health_meter" index="3"]
+text = ""
 
 [node name="player_role_marker_position" type="Node2D" parent="."]
 position = Vector2(13, -159)

@@ -29,4 +29,4 @@ func update(_delta: float) -> void:
 		print("done dealing state ")
 		card_manager.dealing = false
 		print("time to go to  betting on your hand")
-		states.change_state(states.discard_players)
+		states.change_state(states.bet_river)

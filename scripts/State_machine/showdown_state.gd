@@ -7,6 +7,7 @@ var players_ready = []
 
 var player_selected_cards = []
 var scoring = false
+var doink_buffer = []
 #selection
 #the players select thier five cards and hit the Showdown Button
 #the selected hands are sent to the scoring manager who checks for the hand, and returns score information.
@@ -90,7 +91,18 @@ func get_players_base_score():
 	play_space.request_status_text_change.rpc("all players ready \n time to check for modifiers and proceed to scoring. ")
 
 
-
+func get_major_doinks():
+	pass
+#	so there should be an array that has two hand info arrays. starting with player one we are going to put their current hands info 
+#	into the score display part of the UI for both players. need to make it clear which player is being scored. 
+#	 for cards in card_manager.currently_spawned_cards:
+		#if card.owner_id == -2 :  this is the id for a major arcana card. 
+#		 can also do a card manager.get_major_arcana
+#			 this retains the order of the cards.
+	for card in card_manager.get_major_arcana():
+		if card.effect_type == "on_hand":
+			print("this cards on hand effect :",card.on_hand_played(player_hand_info[0]))
+		
 
 
 	

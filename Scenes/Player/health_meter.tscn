@@ -1,9 +1,10 @@
-[gd_scene load_steps=7 format=3 uid="uid://c3fgf484hca30"]
+[gd_scene load_steps=8 format=3 uid="uid://c3fgf484hca30"]
 
 [ext_resource type="Script" uid="uid://mt35ylygqk3f" path="res://scripts/health_meter.gd" id="1_m1brx"]
 [ext_resource type="Texture2D" uid="uid://b8n5w85t3cptc" path="res://UI_SPRITES/health_bar_filler.png" id="2_slg77"]
 [ext_resource type="Texture2D" uid="uid://c5rqa2pn8rrrq" path="res://UI_SPRITES/health_excess_filler.png" id="3_ruwqr"]
 [ext_resource type="Texture2D" uid="uid://tjer1ua7c8s6" path="res://UI_SPRITES/Healthbar frame full.png" id="3_slg77"]
+[ext_resource type="Theme" uid="uid://d0uidb0k47w4o" path="res://Scenes/main_UI_theme.tres" id="5_2m7vp"]
 
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_2m7vp"]
 texture = ExtResource("2_slg77")
@@ -55,3 +56,13 @@ theme_override_styles/panel = SubResource("StyleBoxTexture_cccc8")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 texture = ExtResource("3_slg77")
+
+[node name="Label" type="Label" parent="."]
+layout_mode = 0
+offset_left = -101.0
+offset_top = -8.5
+offset_right = -1.5
+offset_bottom = 14.5
+theme = ExtResource("5_2m7vp")
+theme_override_colors/font_color = Color(1, 0.64, 0.64, 0.7137255)
+text = "Health"

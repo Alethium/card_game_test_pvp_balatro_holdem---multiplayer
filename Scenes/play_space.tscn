@@ -526,8 +526,9 @@ Slot_Type = 1
 position = Vector2(1300, 438)
 Slot_Type = 1
 
-[node name="Minor_Arcana" parent="." node_paths=PackedStringArray("discard_pile") instance=ExtResource("2_i6akn")]
+[node name="Minor_Arcana" parent="." node_paths=PackedStringArray("cards", "discard_pile") instance=ExtResource("2_i6akn")]
 position = Vector2(128, 953)
+cards = NodePath("../Minor_card_deck_Slot")
 discard_pile = NodePath("../Minor_card_discard_slot")
 
 [node name="height_outline" parent="Minor_Arcana/visuals" index="0"]
@@ -545,8 +546,9 @@ position = Vector2(275, 953)
 [node name="Minor_card_discard_slot" parent="." instance=ExtResource("1_pe22w")]
 position = Vector2(275, 953)
 
-[node name="Major_arcana_deck" parent="." node_paths=PackedStringArray("discard_pile") instance=ExtResource("13_m2f5l")]
+[node name="Major_arcana_deck" parent="." node_paths=PackedStringArray("cards", "discard_pile") instance=ExtResource("13_m2f5l")]
 position = Vector2(601, 953)
+cards = NodePath("../Major_Arcana_Deck_Slot")
 discard_pile = NodePath("../Major_Arcana_Discard_Slot")
 
 [node name="Major_Arcana_Deck_Slot" parent="." instance=ExtResource("1_pe22w")]

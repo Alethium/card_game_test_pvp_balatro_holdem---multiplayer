@@ -48,8 +48,8 @@ func check_players_ante():
 				player.request_player_ready.rpc()
 				player.set_button_text.rpc("action_button","Ante In!")
 				if !players_ready.has(player.player_id):
-					game_manager.ante_in()
-					
+					game_manager.ante_in(player)
+					player.request_player_ready.rpc()
 					players_ready.append(player.player_id)
 			#elif !player.action_button_pressed and player.is_ready == true:
 				#player.request_player_unready.rpc()
