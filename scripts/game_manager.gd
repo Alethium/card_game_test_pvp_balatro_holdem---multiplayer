@@ -4,6 +4,7 @@ extends Node2D
 @onready var card_manager: Node2D = $"../card_manager"
 @onready var players: Node2D = $"../Players"
 @onready var current_player_index = 0
+@onready var pops: Control = %pops
 
 
 var current_dealer = Player
@@ -16,6 +17,7 @@ var current_pot = 0
 
 var current_score = 0
 # will be used when displaying the growing score for each players hand as doinks com inasthe for loopmoves through the players cards
+"res://Scenes/number_pop.tscn"
 
 @onready var active_player_index = 0
 var active_player = null
@@ -47,6 +49,7 @@ var next_state
 #@onready var game_status_display: Control = $"../UI/Game_Status_Display"
 
 @onready var play_space: Node2D = $".."
+const NUMBER_POP = preload("uid://cll8dmv2sjg5g")
 
 
 
@@ -131,6 +134,7 @@ func set_active_player():
 # 	maybe player. waiting_players, can collect losers, folders, and new joiners who wait for the hand to end to ante in ont he next go around. 
 func ante_in(player):
 	player.change_player_health.rpc(-5)
+	trigger_pop(-5,player.health_meter.global_position)
 	current_pot += 5
 	
 	
@@ -139,6 +143,7 @@ func raise_bet():
 	current_bet += 5
 	current_pot += current_bet
 	active_player.change_player_health.rpc(-current_bet)
+	trigger_pop(-current_bet,active_player.health_meter.global_position)
 #	0 + 1-1+1 = 1
 #   1 + 1 - 1 + 1 = 2
 
@@ -146,6 +151,7 @@ func see_bet():
 	active_player.current_bet = current_bet
 	current_pot += current_bet 
 	active_player.change_player_health.rpc(-current_bet)
+	trigger_pop(-current_bet,active_player.health_meter.global_position)
 	
 func reset_pot():
 	
@@ -206,7 +212,17 @@ func get_hand_base_score(player_id,hand):
 	return hand_info
 
 
-
+@rpc("any_peer", "call_local", "reliable")
+func spawn_pop(new_value, location):
+	var new_pop = NUMBER_POP.instantiate()
+	new_pop.global_position = location
+	pops.add_child(new_pop)
+	new_pop.set_value(new_value)  # Don't use .rpc here since spawn_pop is already RPC
+		
+		
+# Call it like this instead:
+func trigger_pop(new_value, location):
+	spawn_pop.rpc(new_value, location)	
 
 
 

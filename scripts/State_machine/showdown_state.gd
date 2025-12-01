@@ -8,6 +8,7 @@ var players_ready = []
 var player_selected_cards = []
 var scoring = false
 var doink_buffer = []
+var doink_timer = 0
 #selection
 #the players select thier five cards and hit the Showdown Button
 #the selected hands are sent to the scoring manager who checks for the hand, and returns score information.
@@ -29,6 +30,7 @@ var doink_buffer = []
 # FIX BUTTONS TO HAVE ONLY DISABLED ACTION BUTTON THAT SAYS SELECT HAND
 #UNLOCK THE COMMUNITY AND HAND CARDS FOR SELECTION. 
 func enter_state() -> void:
+#	ONLY SCORE THE PLAYERS WHO ARE NOT FOLDED AND OUT OF THE GAME. PLAYER. PLAYSTATE
 	play_space.request_status_text_change.rpc("Please Select the \n Hand you want to play")
 	print("ITS TIME FOR A MOTHERFUCKIN SHOWDOWN")
 	for card in card_manager.currently_spawned_cards:

@@ -1,0 +1,37 @@
+[gd_scene load_steps=4 format=3 uid="uid://cll8dmv2sjg5g"]
+
+[ext_resource type="Script" uid="uid://c082uqp42s5wi" path="res://scripts/number_pop.gd" id="1_t1yps"]
+[ext_resource type="Theme" uid="uid://d0uidb0k47w4o" path="res://Scenes/main_UI_theme.tres" id="2_iwl4d"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_t1yps"]
+font_size = 48
+outline_size = 3
+outline_color = Color(0, 0, 0, 1)
+shadow_size = 4
+shadow_color = Color(0, 0, 0, 0.6)
+shadow_offset = Vector2(1, 3.715)
+
+[node name="Number_Pop" type="Control"]
+z_index = 5
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_t1yps")
+
+[node name="Label" type="Label" parent="."]
+layout_mode = 0
+offset_left = -58.0
+offset_top = -29.0
+offset_right = 50.0
+offset_bottom = 3.0
+theme = ExtResource("2_iwl4d")
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_font_sizes/font_size = 32
+text = "NULL"
+label_settings = SubResource("LabelSettings_t1yps")
+horizontal_alignment = 1
+vertical_alignment = 1
