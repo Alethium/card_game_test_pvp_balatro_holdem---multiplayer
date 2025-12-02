@@ -1,4 +1,4 @@
-[gd_scene load_steps=26 format=3 uid="uid://bqtpu7j6665bn"]
+[gd_scene load_steps=27 format=3 uid="uid://bqtpu7j6665bn"]
 
 [ext_resource type="Script" uid="uid://ryrvaexjy5si" path="res://scripts/Multiplayer/multiplayer_player.gd" id="1_a61r2"]
 [ext_resource type="PackedScene" uid="uid://dw4rp4xr3fy7k" path="res://Scenes/Player/hand_cursor.tscn" id="2_4ea1o"]
@@ -13,6 +13,7 @@
 [ext_resource type="Theme" uid="uid://bl5r56swuu6ll" path="res://Hexes_theme.tres" id="4_x0n4k"]
 [ext_resource type="Script" uid="uid://bv8vfsflrvprv" path="res://scripts/mouse_window_detection.gd" id="5_ql3ps"]
 [ext_resource type="Texture2D" uid="uid://dp5cqmh1ucrwx" path="res://ICONS/player portraits temp/archive_gio.jpg" id="5_rlkiy"]
+[ext_resource type="Script" uid="uid://5yg0gnp4m5dj" path="res://scripts/score_display.gd" id="6_x0n4k"]
 [ext_resource type="Texture2D" uid="uid://ds4iy4dprry8l" path="res://UI_SPRITES/Panel2_theme.png" id="7_j5uc4"]
 
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_n53ee"]
@@ -319,6 +320,7 @@ offset_left = 1.0
 offset_top = -123.0
 offset_right = 217.0
 offset_bottom = 21.0
+script = ExtResource("6_x0n4k")
 
 [node name="BG" type="Panel" parent="Control/Score_Display"]
 texture_filter = 1

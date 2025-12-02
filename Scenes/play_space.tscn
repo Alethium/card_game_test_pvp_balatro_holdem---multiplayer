@@ -1,4 +1,4 @@
-[gd_scene load_steps=29 format=3 uid="uid://bstgicllg5jw4"]
+[gd_scene load_steps=27 format=3 uid="uid://bstgicllg5jw4"]
 
 [ext_resource type="PackedScene" uid="uid://dvdg2bxoihq32" path="res://Scenes/card_slot.tscn" id="1_pe22w"]
 [ext_resource type="Script" uid="uid://cvvna1si82h41" path="res://scripts/play_space.gd" id="1_yahnq"]
@@ -8,21 +8,18 @@
 [ext_resource type="PackedScene" uid="uid://cmw07kbi54r1n" path="res://Scenes/Hexas_Hold_Em_Card_Manager.tscn" id="2_osk37"]
 [ext_resource type="Theme" uid="uid://bl5r56swuu6ll" path="res://Hexes_theme.tres" id="2_vksat"]
 [ext_resource type="Script" uid="uid://boin6tr0pb4jm" path="res://scripts/score_manager.gd" id="3_5lyoa"]
-[ext_resource type="Texture2D" uid="uid://cvu6of51i2ysw" path="res://UI_SPRITES/Panel4_theme.png" id="3_8c8v6"]
-[ext_resource type="Texture2D" uid="uid://duw5qosqqirgu" path="res://UI_SPRITES/Panel1_theme.png" id="4_e11vn"]
+[ext_resource type="Texture2D" uid="uid://bift4163fm61m" path="res://UI_SPRITES/Highlighted_frame.png" id="4_8c8v6"]
 [ext_resource type="Script" uid="uid://dokx0fbek01si" path="res://scripts/card_synchronizer.gd" id="4_l4lkg"]
 [ext_resource type="Texture2D" uid="uid://bkdcqc2hnku8i" path="res://UI_SPRITES/Panel5_theme.png" id="5_hia5p"]
 [ext_resource type="Script" uid="uid://bq8u3qwnf4w16" path="res://scripts/card_spawner.gd" id="6_a7jki"]
-[ext_resource type="LabelSettings" uid="uid://dsh0ub0027h0" path="res://red text.tres" id="6_hia5p"]
 [ext_resource type="Script" uid="uid://cilgpbld2ax5j" path="res://scripts/players.gd" id="6_m4s6i"]
-[ext_resource type="Texture2D" uid="uid://b61a25r41lpnr" path="res://UI_SPRITES/Panel3_theme.png" id="7_hia5p"]
 [ext_resource type="Script" uid="uid://chwq4d5jfqblg" path="res://scripts/Multiplayer/multiplayer_manager.gd" id="8_5lyoa"]
 [ext_resource type="Script" uid="uid://ovlfxfanimqr" path="res://scripts/game_status_display.gd" id="9_62gg8"]
 [ext_resource type="PackedScene" uid="uid://b4np4nqab6der" path="res://Scenes/minor_discard_pile.tscn" id="11_2r64v"]
 [ext_resource type="PackedScene" uid="uid://b74yh17gf2rmq" path="res://Scenes/Cards/Major_Arcana/Major_Arcana_Deck.tscn" id="13_m2f5l"]
 
-[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_ye6pk"]
-texture = ExtResource("3_8c8v6")
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_e11vn"]
+texture = ExtResource("4_8c8v6")
 texture_margin_left = 16.0
 texture_margin_top = 16.0
 texture_margin_right = 16.0
@@ -31,9 +28,53 @@ expand_margin_left = 9.0
 expand_margin_top = 9.0
 expand_margin_right = 9.0
 expand_margin_bottom = 9.0
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_hia5p"]
+texture = ExtResource("5_hia5p")
+texture_margin_left = 16.0
+texture_margin_top = 16.0
+texture_margin_right = 16.0
+texture_margin_bottom = 16.0
+expand_margin_left = 9.0
+expand_margin_top = 9.0
+expand_margin_right = 9.0
+expand_margin_bottom = 9.0
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_62gg8"]
+texture = ExtResource("4_8c8v6")
+texture_margin_left = 16.0
+texture_margin_top = 16.0
+texture_margin_right = 16.0
+texture_margin_bottom = 16.0
+expand_margin_left = 9.0
+expand_margin_top = 9.0
+expand_margin_right = 9.0
+expand_margin_bottom = 9.0
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_ye6pk"]
+texture = ExtResource("4_8c8v6")
+texture_margin_left = 16.0
+texture_margin_top = 16.0
+texture_margin_right = 16.0
+texture_margin_bottom = 16.0
+expand_margin_left = 10.0
+expand_margin_top = 10.0
+expand_margin_right = 10.0
+expand_margin_bottom = 10.0
 
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_yc5f0"]
-texture = ExtResource("4_e11vn")
+texture = ExtResource("4_8c8v6")
+texture_margin_left = 16.0
+texture_margin_top = 16.0
+texture_margin_right = 16.0
+texture_margin_bottom = 16.0
+expand_margin_left = 10.0
+expand_margin_top = 10.0
+expand_margin_right = 10.0
+expand_margin_bottom = 10.0
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_jiu1g"]
+texture = ExtResource("4_8c8v6")
 texture_margin_left = 16.0
 texture_margin_top = 16.0
 texture_margin_right = 16.0
@@ -42,31 +83,6 @@ expand_margin_left = 9.0
 expand_margin_top = 9.0
 expand_margin_right = 9.0
 expand_margin_bottom = 9.0
-
-[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_nom78"]
-texture = ExtResource("7_hia5p")
-texture_margin_left = 16.0
-texture_margin_top = 16.0
-texture_margin_right = 16.0
-texture_margin_bottom = 16.0
-expand_margin_left = 10.0
-expand_margin_top = 10.0
-expand_margin_right = 10.0
-expand_margin_bottom = 10.0
-
-[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_gymjv"]
-load_path = "res://.godot/imported/Panel3_theme.png-510ba5197d823759ac46b3df9ae825c8.ctex"
-
-[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_jiu1g"]
-texture = SubResource("CompressedTexture2D_gymjv")
-texture_margin_left = 16.0
-texture_margin_top = 16.0
-texture_margin_right = 16.0
-texture_margin_bottom = 16.0
-expand_margin_left = 10.0
-expand_margin_top = 10.0
-expand_margin_right = 10.0
-expand_margin_bottom = 10.0
 
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_sgjxw"]
 texture = ExtResource("5_hia5p")
@@ -84,6 +100,9 @@ properties/0/replication_mode = 1
 properties/1/path = NodePath(".:current_bet")
 properties/1/spawn = true
 properties/1/replication_mode = 1
+properties/2/path = NodePath("../UI/Score_Display/BG/pot_bg/current_pot_text:text")
+properties/2/spawn = true
+properties/2/replication_mode = 1
 
 [sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_5lyoa"]
 properties/0/path = NodePath("card_manager:networked_cards")
@@ -92,18 +111,6 @@ properties/0/replication_mode = 1
 properties/1/path = NodePath("Minor_Arcana:deck_height")
 properties/1/spawn = true
 properties/1/replication_mode = 1
-properties/2/path = NodePath("UI/Game_Status_Display/Game_Status_text:text")
-properties/2/spawn = true
-properties/2/replication_mode = 1
-properties/3/path = NodePath("UI/Score_Display/current_pot_text:text")
-properties/3/spawn = true
-properties/3/replication_mode = 1
-properties/4/path = NodePath("UI/Score_Display/BG/Score_Upper_Frame/Score_Text:text")
-properties/4/spawn = true
-properties/4/replication_mode = 1
-properties/5/path = NodePath("UI/Score_Display/Current_pot_text:text")
-properties/5/spawn = true
-properties/5/replication_mode = 1
 
 [node name="Play_Space" type="Node2D"]
 script = ExtResource("1_yahnq")
@@ -117,6 +124,7 @@ offset_bottom = 40.0
 theme = ExtResource("2_hia5p")
 
 [node name="Buttons" type="Control" parent="UI"]
+visible = false
 anchors_preset = 0
 offset_right = 40.0
 offset_bottom = 40.0
@@ -217,193 +225,12 @@ process_priority = 1
 z_as_relative = false
 anchors_preset = 0
 
-[node name="Score_Display" type="Control" parent="UI"]
-anchors_preset = 0
-offset_left = 866.99994
-offset_top = 996.00006
-offset_right = 906.99994
-offset_bottom = 1036.0
-scale = Vector2(0.5453692, 0.5032204)
-
-[node name="BG" type="Panel" parent="UI/Score_Display"]
-texture_filter = 1
-layout_mode = 0
-offset_left = -304.38098
-offset_top = -488.85132
-offset_right = -170.5267
-offset_bottom = -367.6321
-scale = Vector2(5, 5)
-theme_override_styles/panel = SubResource("StyleBoxTexture_ye6pk")
-
-[node name="Panel3" type="Panel" parent="UI/Score_Display/BG"]
-layout_mode = 0
-offset_left = 1.8336182
-offset_top = 25.833618
-offset_right = 132.02066
-offset_bottom = 87.43686
-theme_override_styles/panel = SubResource("StyleBoxTexture_yc5f0")
-
-[node name="Panel" type="Panel" parent="UI/Score_Display/BG/Panel3"]
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-offset_left = 3.3005142
-offset_top = 28.21824
-offset_right = -71.14448
-offset_bottom = -2.3846664
-grow_horizontal = 2
-grow_vertical = 2
-theme_override_styles/panel = SubResource("StyleBoxTexture_nom78")
-
-[node name="Panel3" type="Panel" parent="UI/Score_Display/BG/Panel3"]
-layout_mode = 1
-anchors_preset = 10
-anchor_right = 1.0
-offset_left = 2.2003326
-offset_top = 1.5897522
-offset_right = -2.2003326
-offset_bottom = 25.038727
-grow_horizontal = 2
-theme_override_styles/panel = SubResource("StyleBoxTexture_nom78")
-
-[node name="Panel2" type="Panel" parent="UI/Score_Display/BG/Panel3"]
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-offset_left = 67.110504
-offset_top = 27.820824
-offset_right = -2.5670776
-offset_bottom = -2.7820816
-grow_horizontal = 2
-grow_vertical = 2
-theme_override_styles/panel = SubResource("StyleBoxTexture_jiu1g")
-
-[node name="Number_Panel" type="Panel" parent="UI/Score_Display/BG/Panel3"]
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-offset_left = 42.173306
-offset_top = 52.8595
-offset_right = 9.168121
-offset_bottom = 40.93628
-grow_horizontal = 2
-grow_vertical = 2
-theme_override_styles/panel = SubResource("StyleBoxTexture_sgjxw")
-
-[node name="Score_Upper_Frame" type="Panel" parent="UI/Score_Display/BG"]
-layout_mode = 0
-offset_left = 1.8336182
-offset_top = 1.5897522
-offset_right = 132.02066
-offset_bottom = 25.833588
-theme_override_styles/panel = SubResource("StyleBoxTexture_yc5f0")
-
-[node name="round_score_bg" type="Panel" parent="UI/Score_Display/BG/Score_Upper_Frame"]
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-offset_left = 18.702961
-offset_top = -7.9488697
-offset_right = 7.701187
-offset_bottom = 7.9487457
-grow_horizontal = 2
-grow_vertical = 2
-theme_override_styles/panel = SubResource("StyleBoxTexture_sgjxw")
-
-[node name="Score_Text" type="Label" parent="UI/Score_Display/BG/Score_Upper_Frame"]
-unique_name_in_owner = true
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-offset_left = 29.337944
-offset_top = 2.3845892
-offset_right = 97.181915
-offset_bottom = 31.397774
-grow_horizontal = 2
-grow_vertical = 2
-scale = Vector2(0.5, 0.5)
-theme = ExtResource("2_vksat")
-theme_override_font_sizes/font_size = 32
-horizontal_alignment = 1
-vertical_alignment = 1
-
-[node name="Hand_Name" type="Label" parent="UI/Score_Display"]
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-offset_left = -209.03262
-offset_top = -325.901
-offset_right = 416.96738
-offset_bottom = -255.901
-grow_horizontal = 2
-grow_vertical = 2
-scale = Vector2(0.693, 0.693)
-text = "HAND NAME"
-label_settings = ExtResource("6_hia5p")
-horizontal_alignment = 1
-vertical_alignment = 1
-
-[node name="Round_Score" type="Label" parent="UI/Score_Display"]
-layout_mode = 0
-offset_left = -267.70837
-offset_top = -453.0818
-offset_right = -143.70837
-offset_bottom = -354.0818
-theme = ExtResource("2_vksat")
-theme_override_constants/line_spacing = -15
-theme_override_font_sizes/font_size = 47
-text = "Round 
-Score"
-horizontal_alignment = 1
-
-[node name="current_pot" type="Label" parent="UI/Score_Display"]
-layout_mode = 0
-offset_left = -289.7118
-offset_top = -19.872215
-offset_right = -37.711792
-offset_bottom = 137.12778
-theme = ExtResource("2_vksat")
-theme_override_constants/line_spacing = -15
-theme_override_font_sizes/font_size = 64
-text = "Current
-Pot/Bet"
-horizontal_alignment = 1
-
-[node name="current_pot_text" type="Label" parent="UI/Score_Display"]
-unique_name_in_owner = true
-layout_mode = 0
-offset_left = -143.02228
-offset_top = -45.70579
-offset_right = 331.8853
-offset_bottom = 100.294205
-theme = ExtResource("2_vksat")
-horizontal_alignment = 1
-vertical_alignment = 1
-
-[node name="Current_pot_text" type="Label" parent="UI/Score_Display"]
-unique_name_in_owner = true
-visible = false
-layout_mode = 0
-offset_left = -143.02228
-offset_top = -45.70579
-offset_right = 331.8853
-offset_bottom = 100.294205
-theme = ExtResource("2_vksat")
-horizontal_alignment = 1
-vertical_alignment = 1
-
 [node name="Game_Status_Display" type="Control" parent="UI"]
 anchors_preset = 0
-offset_left = 1076.0
-offset_top = 757.0
-offset_right = 1624.0
-offset_bottom = 1051.0
+offset_left = 930.0
+offset_top = 824.0
+offset_right = 1151.0
+offset_bottom = 1052.0
 theme = ExtResource("2_hia5p")
 script = ExtResource("9_62gg8")
 
@@ -426,7 +253,7 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 theme = ExtResource("2_hia5p")
-theme_override_font_sizes/font_size = 32
+theme_override_font_sizes/font_size = 16
 text = "
 "
 horizontal_alignment = 1
@@ -438,6 +265,260 @@ unique_name_in_owner = true
 anchors_preset = 0
 offset_right = 40.0
 offset_bottom = 40.0
+
+[node name="Score_Display" type="Control" parent="UI"]
+anchors_preset = 0
+offset_left = 705.00006
+offset_top = 826.0
+offset_right = 921.00006
+offset_bottom = 970.0
+
+[node name="BG" type="Panel" parent="UI/Score_Display"]
+texture_filter = 1
+layout_mode = 0
+offset_left = -1.0
+offset_right = 216.0
+offset_bottom = 224.0
+theme_override_styles/panel = SubResource("StyleBoxTexture_e11vn")
+
+[node name="score_bg" type="Panel" parent="UI/Score_Display/BG"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.24400002
+anchor_top = 0.513
+anchor_right = 0.97700006
+anchor_bottom = 0.629
+offset_left = 0.051994324
+offset_top = 0.08799744
+offset_right = -0.009017944
+offset_bottom = 0.104003906
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("2_hia5p")
+theme_override_styles/panel = SubResource("StyleBoxTexture_hia5p")
+
+[node name="Round_Score" type="Label" parent="UI/Score_Display/BG/score_bg"]
+layout_mode = 0
+offset_left = -42.0
+offset_right = 20.0
+offset_bottom = 35.0
+scale = Vector2(0.75, 0.75)
+theme = ExtResource("2_hia5p")
+text = "Round 
+Score"
+horizontal_alignment = 1
+
+[node name="score_text" type="Label" parent="UI/Score_Display/BG/score_bg"]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 0.9999962
+offset_top = -13.0
+offset_right = 37.0
+offset_bottom = 18.0
+grow_horizontal = 2
+grow_vertical = 2
+scale = Vector2(0.8, 0.8)
+theme = ExtResource("2_vksat")
+theme_override_font_sizes/font_size = 32
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="pot_bg" type="Panel" parent="UI/Score_Display/BG"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.24400002
+anchor_top = 0.513
+anchor_right = 0.97700006
+anchor_bottom = 0.629
+offset_left = 34.914818
+offset_top = 29.38089
+offset_right = -0.32203674
+offset_bottom = 78.77379
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("2_hia5p")
+theme_override_styles/panel = SubResource("StyleBoxTexture_hia5p")
+
+[node name="pot_score" type="Label" parent="UI/Score_Display/BG/pot_bg"]
+layout_mode = 0
+offset_left = -78.2484
+offset_top = 20.100504
+offset_right = 19.751602
+offset_bottom = 55.100502
+scale = Vector2(0.75, 0.75)
+theme = ExtResource("2_hia5p")
+text = "Pot
+Current Bet"
+horizontal_alignment = 1
+
+[node name="current_pot_text" type="Label" parent="UI/Score_Display/BG/pot_bg"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 1.0
+offset_top = 0.7070923
+offset_right = -43.824158
+offset_bottom = -27.6698
+grow_horizontal = 2
+grow_vertical = 2
+scale = Vector2(0.8, 0.8)
+theme = ExtResource("2_vksat")
+theme_override_font_sizes/font_size = 32
+text = "pot/bet"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="chips_n_mult_frame" type="Panel" parent="UI/Score_Display/BG"]
+layout_mode = 1
+anchors_preset = 14
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_left = 5.0
+offset_top = -68.0
+offset_right = -5.0
+offset_bottom = 1.5
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxTexture_62gg8")
+
+[node name="chips_panel" type="Panel" parent="UI/Score_Display/BG/chips_n_mult_frame"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 6.0
+offset_top = 6.0
+offset_right = -110.300514
+offset_bottom = -20.5
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxTexture_ye6pk")
+
+[node name="chips_display_text" type="Label" parent="UI/Score_Display/BG/chips_n_mult_frame/chips_panel"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("2_hia5p")
+theme_override_font_sizes/font_size = 32
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="mult_panel" type="Panel" parent="UI/Score_Display/BG/chips_n_mult_frame"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 110.0
+offset_top = 6.0
+offset_right = -6.0
+offset_bottom = -20.5
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxTexture_yc5f0")
+
+[node name="mult_display_text" type="Label" parent="UI/Score_Display/BG/chips_n_mult_frame/mult_panel"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_bottom = -1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("2_hia5p")
+theme_override_font_sizes/font_size = 32
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="chips" type="Label" parent="UI/Score_Display/BG/chips_n_mult_frame"]
+layout_mode = 0
+offset_left = 28.0
+offset_top = 48.0
+offset_right = 70.0
+offset_bottom = 71.0
+theme = ExtResource("2_hia5p")
+text = "Chips"
+
+[node name="mult" type="Label" parent="UI/Score_Display/BG/chips_n_mult_frame"]
+layout_mode = 0
+offset_left = 137.0
+offset_top = 49.0
+offset_right = 175.0
+offset_bottom = 65.0
+theme = ExtResource("2_hia5p")
+text = "Mult"
+
+[node name="X" type="Label" parent="UI/Score_Display/BG/chips_n_mult_frame"]
+layout_mode = 0
+offset_left = 98.0
+offset_top = 17.0
+offset_right = 136.0
+offset_bottom = 33.0
+theme = ExtResource("2_hia5p")
+text = "X"
+
+[node name="Name_Frame" type="Panel" parent="UI/Score_Display/BG"]
+layout_mode = 0
+offset_left = 5.0
+offset_top = 5.0
+offset_right = 212.0
+offset_bottom = 42.0
+theme_override_styles/panel = SubResource("StyleBoxTexture_jiu1g")
+
+[node name="round_score_bg" type="Panel" parent="UI/Score_Display/BG/Name_Frame"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -5.0
+offset_top = -4.000002
+offset_right = 5.0
+offset_bottom = 5.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxTexture_sgjxw")
+
+[node name="Hand_Name" type="Label" parent="UI/Score_Display/BG/Name_Frame/round_score_bg"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 10.0
+offset_top = -1.0000067
+offset_right = -80.285736
+offset_bottom = -16.28572
+grow_horizontal = 2
+grow_vertical = 2
+scale = Vector2(1.575, 1.575)
+theme = ExtResource("2_hia5p")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="current_pot_text" type="Label" parent="UI/Score_Display/BG"]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 88.862854
+offset_top = 145.00003
+offset_right = 24.53418
+offset_bottom = 12.2500305
+grow_horizontal = 2
+grow_vertical = 2
+scale = Vector2(0.8, 0.8)
+theme = ExtResource("2_vksat")
+theme_override_font_sizes/font_size = 32
+text = "pot/bet"
+horizontal_alignment = 1
+vertical_alignment = 1
 
 [node name="score_manager" type="Node2D" parent="."]
 script = ExtResource("3_5lyoa")
@@ -470,6 +551,9 @@ spawn_limit = 4
 _spawnable_scenes = PackedStringArray("uid://d4bg2fjkyscq2", "uid://mhajchtk424d", "uid://drsmlrw45phl5", "uid://j2iukh50yewt", "uid://bs6yeipecaa1p", "uid://c8nagbifgm20i", "uid://dhrgq0ogf8xeb", "uid://cqfihcmqt7kt7", "uid://d06wp8q8q2pc5", "uid://bfoks6lvmcscl", "uid://cvj1u7pivusst", "uid://coynxdgqkqdqa", "uid://dofwpfub0oatt", "uid://duj2bqxcyce7v", "uid://ff8vrymvdrgs", "uid://cdoitkgsmfiba", "uid://c3qx0612o88qb", "uid://df5xoqo6s7p0a", "uid://do3but4m0lcg1", "uid://dcgwtpmmv3yse", "uid://cm7oqmx87bvs1", "uid://chpaiyda2qbos", "uid://vw827lfx0ycl", "uid://dl6rprqpihw7w", "uid://b5a6ih0y4ffaq", "uid://x2cixdk12pvi", "uid://bdu1cveobdfns", "uid://dhvqk7maugtk7", "uid://fcb08xwf270c", "uid://5m1tdo0pvpc3", "uid://cp2ed38po2n0", "uid://cmjsspkcfinq0", "uid://bo6hcsssrr2i2", "uid://dn4kh1xpi1ee", "uid://cupx7ebudox6a", "uid://dhou5814tsyis", "uid://db78bd3sall0y", "uid://cku7ub33oekmq", "uid://j1h6sbbvtul3", "uid://c87q0yw1rn2wj", "uid://bt7lijhv2vtje", "uid://duheuggs440vs", "uid://ch4c4stw52sqd", "uid://bsipwvyh2781g", "uid://cv5qe8on007ia", "uid://b6llft0jbigne", "uid://cw1xwdbag2kwx", "uid://dvwdr1xco46iy", "uid://cuomvtluurk11", "uid://ckmmo3gnwc3d3", "uid://d1w8sixdpx7gy", "uid://calb3lej0bc18", "uid://cbtjjiaunwaib", "uid://conthr1petdfj", "uid://dy1id0ccksmyi", "uid://dxofq3gxspclc")
 spawn_path = NodePath("../UI/spawned_cards")
 script = ExtResource("6_a7jki")
+
+[node name="pop_spawner" type="MultiplayerSpawner" parent="."]
+_spawnable_scenes = PackedStringArray("uid://cll8dmv2sjg5g")
 
 [node name="Players" type="Node2D" parent="."]
 script = ExtResource("6_m4s6i")

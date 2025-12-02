@@ -36,7 +36,7 @@ func server_increase_score_value(value):
 	update_score_display()
 	
 func update_score_display():
-	%Score_Text.text = str(game_manager.current_score)
+	%score_text.text = str(game_manager.current_score)
 	
 	
 	
