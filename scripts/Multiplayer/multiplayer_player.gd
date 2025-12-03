@@ -26,7 +26,7 @@ var discarding = false
 var discard_count = 2
 var max_hand_size = 5
 var current_hand_size = 0
-
+var current_score : int = 0
 #player state controls
 enum PLAYER_STATE {dealer,in_play,out_of_play}
 var play_state : PLAYER_STATE = PLAYER_STATE.in_play
@@ -48,7 +48,8 @@ var number_of_cards_selected = 0
 
 # UI ELEMENTS
 @onready var current_hand_display: Label = $Control/Buttons_panel/current_hand
-@onready var score_display: Label = $Control/Buttons_panel/Score
+@onready var score_display: PlayerScoreDisplay = $Control/Score_Display
+
 @onready var player_role_marker_position: Node2D = $player_role_marker_position
 @onready var mouse_window_detection: Node = $mouse_window_detection
 @onready var status_text: Label = $Control/Buttons_panel/status_text
@@ -116,6 +117,7 @@ func _ready() -> void:
 		%mini_avatar.visible = false
 		%Avatar.visible = true
 		%external_status.visible = true
+		hand_cursor.visible = false
 	else:
 		%mini_avatar.visible = true
 		%Avatar.visible = false
@@ -465,6 +467,7 @@ func request_player_active():
 	if multiplayer.is_server():
 		print("player : ", player_id, " is active")
 		set_player_active.rpc(true)	
+
 		
 @rpc("any_peer", "call_local", "reliable")
 func set_player_active(active_state: bool):
@@ -480,8 +483,6 @@ func set_player_active(active_state: bool):
 func update_player_health_bars():
 	# This should just trigger a visual update, not calculation
 	update_health_bar_visual()		
-
-
 
 #player.update_player_health_bar.rpc()
 
@@ -530,6 +531,8 @@ func sync_health_values(synced_health: int, synced_excess: int):
 	excess = synced_excess
 	update_health_bar_visual()
 
+
+
 func update_health_bar_visual():
 	if health_meter and health_meter.health_remaining_bar:
 		# Calculate bar sizes based on current values
@@ -538,6 +541,177 @@ func update_health_bar_visual():
 		
 		health_meter.health_remaining_bar.size.x = remaining_width
 		health_meter.health_excess_bar.size.x = excess_width
+
+
+#-----------------SCORE DISPLAY FUNCTIONS-----------------------
+
+#player.set_score_display_visible.rpc(true)
+@rpc("any_peer", "call_local", "reliable")
+func set_score_display_visible(value:bool):
+	if value == true:
+		%mini_avatar.visible = true
+		%Avatar.visible = false
+		%external_status.visible = false
+	else:
+		%external_status.visible = true
+		%mini_avatar.visible = false
+		%Avatar.visible = true
+	score_display.visible = value
+
+
+
+@rpc("any_peer", "call_local", "reliable")
+func request_score_value_increase(value):
+	if multiplayer.is_server():
+		print("increasing score by : ", value)
+		server_increase_score_value(value)
+	else:
+		request_score_value_increase.rpc_id(1, value)
+
+@rpc("authority", "call_local", "reliable")
+func server_increase_score_value(value):
+	current_score += value
+	
+	update_score_display()
+	
+func update_score_display():
+	if score_display and score_display.score:
+		score_display.score.text = str(current_score)
+
+
+
+# ===== NEW FUNCTIONS FOR CHIPS AND MULTIPLIER DISPLAY =====
+
+@rpc("any_peer", "call_local", "reliable")
+func request_chips_display_update(value):
+	if multiplayer.is_server():
+		server_update_chips_display(value)
+	else:
+		request_chips_display_update.rpc_id(1, value)
+
+@rpc("authority", "call_local", "reliable")
+func server_update_chips_display(value):
+	
+	update_chips_display(value)
+
+func update_chips_display(value):
+	if score_display and score_display.chips:
+		score_display.chips.text = str(value)
+
+
+
+@rpc("any_peer", "call_local", "reliable")
+func request_mult_display_update(value):
+	if multiplayer.is_server():
+		server_update_mult_display(value)
+	else:
+		request_mult_display_update.rpc_id(1, value)
+
+@rpc("authority", "call_local", "reliable")
+func server_update_mult_display(value):
+	
+	update_mult_display(value)
+
+func update_mult_display(value):
+	if score_display and score_display.mult:
+		score_display.mult.text = str(value)
+
+#--------------	HAND NAME DISPLAY------------------
+@rpc("any_peer", "call_local", "reliable")
+func request_hand_display_update(text):
+	if multiplayer.is_server():
+		server_update_chips_display(text)
+	else:
+		request_chips_display_update.rpc_id(1, text)
+
+@rpc("authority", "call_local", "reliable")
+func server_update_hand_display(text):
+	
+	update_hand_display(text)
+
+func update_hand_display(text):
+	if score_display and score_display.hand:
+		score_display.hand.text = text
+
+#--------------EXTERNAL STATUS DISPLAY----------------------
+
+
+@rpc("any_peer", "call_local", "reliable")
+func request_status_text_change(text):
+	if multiplayer.is_server():
+		print("changing status text to : ", text)
+		server_change_external_status_text(text)
+	else:
+		request_status_text_change.rpc_id(1, text)  # Send to server (ID 1)
+
+@rpc("authority", "call_local", "reliable")  # Changed from "any_peer" to "authority"
+func server_change_external_status_text(text):
+	print("server updating status display")
+	update_external_status_display(text)
+
+	
+func update_external_status_display(text):
+	# Add null check to avoid errors
+	if has_node("%Game_Status_text"):
+		%external_status.text = text
+		print("Updated status display to: ", text)
+	else:
+		print("ERROR: Game_Status_text node not found!")
+	
+
+
+
+
+
+
+
+# ===== CONVENIENCE FUNCTIONS =====
+
+
+
+@rpc("any_peer", "call_local", "reliable")
+func request_update_all_displays(score,chips,multiplier,hand):
+	if multiplayer.is_server():
+		server_update_all_displays(score,chips,multiplier,hand)
+	else:
+		request_update_all_displays.rpc_id(1, score,chips,multiplier,hand)
+
+@rpc("authority", "call_local", "reliable")
+func server_update_all_displays(score,chips,multiplier,hand):
+	update_all_score_displays(score,chips,multiplier,hand)
+	
+
+
+
+
+func update_all_score_displays(score,chips,multiplier,hand):
+	"""Update all score display elements at once"""
+	if score >= 0:
+		current_score = score
+	
+	server_increase_score_value.rpc(score)
+	
+	server_update_chips_display.rpc(chips)
+
+	server_update_mult_display.rpc(multiplier)
+	
+	server_update_hand_display.rpc(hand)
+	
+	
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -578,20 +752,20 @@ func clear_player_selection():
 
 
 @rpc("any_peer", "call_local", "reliable")
-func request_status_text_change(text):
+func request_player_status_text_change(text):
 	if multiplayer.is_server():
 		print("changing status text to : " , text)
-		server_change_status_text(text)
+		server_player_change_status_text(text)
 	else:
 		request_status_text_change.rpc_id(1,text)
 
 @rpc("authority","call_local" ,"reliable")
-func server_change_status_text(text):
-	update_status_display(text)
+func server_player_change_status_text(text):
+	update_player_status_display(text)
 	
 
-func update_status_display(text):
-	get_tree().get_node(3).game_status_text.text = text
+func update_player_status_display(text):
+	status_text.text = text
 	
 	#
 #func update_active_display():

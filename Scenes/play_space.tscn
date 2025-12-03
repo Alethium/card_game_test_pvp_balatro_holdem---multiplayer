@@ -8,13 +8,13 @@
 [ext_resource type="PackedScene" uid="uid://cmw07kbi54r1n" path="res://Scenes/Hexas_Hold_Em_Card_Manager.tscn" id="2_osk37"]
 [ext_resource type="Theme" uid="uid://bl5r56swuu6ll" path="res://Hexes_theme.tres" id="2_vksat"]
 [ext_resource type="Script" uid="uid://boin6tr0pb4jm" path="res://scripts/score_manager.gd" id="3_5lyoa"]
+[ext_resource type="Script" uid="uid://cf7iudpuvxqjv" path="res://scripts/game_score_display.gd" id="3_e11vn"]
 [ext_resource type="Texture2D" uid="uid://bift4163fm61m" path="res://UI_SPRITES/Highlighted_frame.png" id="4_8c8v6"]
 [ext_resource type="Script" uid="uid://dokx0fbek01si" path="res://scripts/card_synchronizer.gd" id="4_l4lkg"]
 [ext_resource type="Texture2D" uid="uid://bkdcqc2hnku8i" path="res://UI_SPRITES/Panel5_theme.png" id="5_hia5p"]
 [ext_resource type="Script" uid="uid://bq8u3qwnf4w16" path="res://scripts/card_spawner.gd" id="6_a7jki"]
 [ext_resource type="Script" uid="uid://cilgpbld2ax5j" path="res://scripts/players.gd" id="6_m4s6i"]
 [ext_resource type="Script" uid="uid://chwq4d5jfqblg" path="res://scripts/Multiplayer/multiplayer_manager.gd" id="8_5lyoa"]
-[ext_resource type="Script" uid="uid://ovlfxfanimqr" path="res://scripts/game_status_display.gd" id="9_62gg8"]
 [ext_resource type="PackedScene" uid="uid://b4np4nqab6der" path="res://Scenes/minor_discard_pile.tscn" id="11_2r64v"]
 [ext_resource type="PackedScene" uid="uid://b74yh17gf2rmq" path="res://Scenes/Cards/Major_Arcana/Major_Arcana_Deck.tscn" id="13_m2f5l"]
 
@@ -103,6 +103,21 @@ properties/1/replication_mode = 1
 properties/2/path = NodePath("../UI/Score_Display/BG/pot_bg/current_pot_text:text")
 properties/2/spawn = true
 properties/2/replication_mode = 1
+properties/3/path = NodePath("../UI/Game_Status_Display/Game_Status_text:text")
+properties/3/spawn = true
+properties/3/replication_mode = 1
+properties/4/path = NodePath("../UI/Score_Display/BG/chips_n_mult_frame/mult_panel/mult_display_text:text")
+properties/4/spawn = true
+properties/4/replication_mode = 1
+properties/5/path = NodePath("../UI/Score_Display/BG/chips_n_mult_frame/chips_panel/chips_display_text:text")
+properties/5/spawn = true
+properties/5/replication_mode = 1
+properties/6/path = NodePath("../UI/Score_Display/BG/Name_Frame/round_score_bg/Hand_Name:text")
+properties/6/spawn = true
+properties/6/replication_mode = 1
+properties/7/path = NodePath("../UI/Score_Display/BG/score_bg/score_text:text")
+properties/7/spawn = true
+properties/7/replication_mode = 1
 
 [sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_5lyoa"]
 properties/0/path = NodePath("card_manager:networked_cards")
@@ -232,7 +247,7 @@ offset_top = 824.0
 offset_right = 1151.0
 offset_bottom = 1052.0
 theme = ExtResource("2_hia5p")
-script = ExtResource("9_62gg8")
+script = ExtResource("3_e11vn")
 
 [node name="Panel" type="Panel" parent="UI/Game_Status_Display"]
 layout_mode = 1
@@ -272,6 +287,7 @@ offset_left = 705.00006
 offset_top = 826.0
 offset_right = 921.00006
 offset_bottom = 970.0
+script = ExtResource("3_e11vn")
 
 [node name="BG" type="Panel" parent="UI/Score_Display"]
 texture_filter = 1
@@ -309,7 +325,6 @@ Score"
 horizontal_alignment = 1
 
 [node name="score_text" type="Label" parent="UI/Score_Display/BG/score_bg"]
-unique_name_in_owner = true
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -359,10 +374,10 @@ layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_left = 1.0
-offset_top = 0.7070923
-offset_right = -43.824158
-offset_bottom = -27.6698
+offset_left = 15.137083
+offset_top = 22.70709
+offset_right = -29.687073
+offset_bottom = -5.6698
 grow_horizontal = 2
 grow_vertical = 2
 scale = Vector2(0.8, 0.8)
@@ -501,33 +516,17 @@ theme = ExtResource("2_hia5p")
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="current_pot_text" type="Label" parent="UI/Score_Display/BG"]
-unique_name_in_owner = true
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-offset_left = 88.862854
-offset_top = 145.00003
-offset_right = 24.53418
-offset_bottom = 12.2500305
-grow_horizontal = 2
-grow_vertical = 2
-scale = Vector2(0.8, 0.8)
-theme = ExtResource("2_vksat")
-theme_override_font_sizes/font_size = 32
-text = "pot/bet"
-horizontal_alignment = 1
-vertical_alignment = 1
-
 [node name="score_manager" type="Node2D" parent="."]
+unique_name_in_owner = true
 script = ExtResource("3_5lyoa")
 
 [node name="card_manager" parent="." node_paths=PackedStringArray("Current_Major_Deck", "Current_Minor_Deck") instance=ExtResource("2_osk37")]
+unique_name_in_owner = true
 Current_Major_Deck = NodePath("../Major_arcana_deck")
 Current_Minor_Deck = NodePath("../Minor_Arcana")
 
 [node name="game_manager" parent="." instance=ExtResource("2_5lyoa")]
+unique_name_in_owner = true
 position = Vector2(1617, 66)
 rotation = 3.14159
 
@@ -536,6 +535,7 @@ root_path = NodePath("../game_manager")
 replication_config = SubResource("SceneReplicationConfig_62gg8")
 
 [node name="multiplayer_manager" type="Node2D" parent="."]
+unique_name_in_owner = true
 script = ExtResource("8_5lyoa")
 
 [node name="card_synchronizer" type="MultiplayerSynchronizer" parent="."]
@@ -551,9 +551,6 @@ spawn_limit = 4
 _spawnable_scenes = PackedStringArray("uid://d4bg2fjkyscq2", "uid://mhajchtk424d", "uid://drsmlrw45phl5", "uid://j2iukh50yewt", "uid://bs6yeipecaa1p", "uid://c8nagbifgm20i", "uid://dhrgq0ogf8xeb", "uid://cqfihcmqt7kt7", "uid://d06wp8q8q2pc5", "uid://bfoks6lvmcscl", "uid://cvj1u7pivusst", "uid://coynxdgqkqdqa", "uid://dofwpfub0oatt", "uid://duj2bqxcyce7v", "uid://ff8vrymvdrgs", "uid://cdoitkgsmfiba", "uid://c3qx0612o88qb", "uid://df5xoqo6s7p0a", "uid://do3but4m0lcg1", "uid://dcgwtpmmv3yse", "uid://cm7oqmx87bvs1", "uid://chpaiyda2qbos", "uid://vw827lfx0ycl", "uid://dl6rprqpihw7w", "uid://b5a6ih0y4ffaq", "uid://x2cixdk12pvi", "uid://bdu1cveobdfns", "uid://dhvqk7maugtk7", "uid://fcb08xwf270c", "uid://5m1tdo0pvpc3", "uid://cp2ed38po2n0", "uid://cmjsspkcfinq0", "uid://bo6hcsssrr2i2", "uid://dn4kh1xpi1ee", "uid://cupx7ebudox6a", "uid://dhou5814tsyis", "uid://db78bd3sall0y", "uid://cku7ub33oekmq", "uid://j1h6sbbvtul3", "uid://c87q0yw1rn2wj", "uid://bt7lijhv2vtje", "uid://duheuggs440vs", "uid://ch4c4stw52sqd", "uid://bsipwvyh2781g", "uid://cv5qe8on007ia", "uid://b6llft0jbigne", "uid://cw1xwdbag2kwx", "uid://dvwdr1xco46iy", "uid://cuomvtluurk11", "uid://ckmmo3gnwc3d3", "uid://d1w8sixdpx7gy", "uid://calb3lej0bc18", "uid://cbtjjiaunwaib", "uid://conthr1petdfj", "uid://dy1id0ccksmyi", "uid://dxofq3gxspclc")
 spawn_path = NodePath("../UI/spawned_cards")
 script = ExtResource("6_a7jki")
-
-[node name="pop_spawner" type="MultiplayerSpawner" parent="."]
-_spawnable_scenes = PackedStringArray("uid://cll8dmv2sjg5g")
 
 [node name="Players" type="Node2D" parent="."]
 script = ExtResource("6_m4s6i")

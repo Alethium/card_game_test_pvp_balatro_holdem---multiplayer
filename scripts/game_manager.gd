@@ -5,6 +5,7 @@ extends Node2D
 @onready var players: Node2D = $"../Players"
 @onready var current_player_index = 0
 @onready var pops: Control = %pops
+@onready var score_display: GameScoreDisplay = $"../UI/Score_Display"
 
 
 var current_dealer = Player
@@ -135,6 +136,7 @@ func set_active_player():
 func ante_in(player):
 	player.change_player_health.rpc(-5)
 	trigger_pop(-5,player.health_meter.global_position)
+	trigger_pop(+5,score_display.pot.global_position)
 	current_pot += 5
 	
 	
@@ -144,14 +146,16 @@ func raise_bet():
 	current_pot += current_bet
 	active_player.change_player_health.rpc(-current_bet)
 	trigger_pop(-current_bet,active_player.health_meter.global_position)
+	trigger_pop(+current_bet,score_display.pot.global_position)
 #	0 + 1-1+1 = 1
 #   1 + 1 - 1 + 1 = 2
 
 func see_bet():
+	active_player.change_player_health.rpc(-(current_bet-active_player.current_bet))
 	active_player.current_bet = current_bet
 	current_pot += current_bet 
-	active_player.change_player_health.rpc(-current_bet)
 	trigger_pop(-current_bet,active_player.health_meter.global_position)
+	trigger_pop(+current_bet,score_display.pot.global_position)
 	
 func reset_pot():
 	
@@ -211,9 +215,13 @@ func get_hand_base_score(player_id,hand):
 
 	return hand_info
 
+func trigger_pop(new_value, location):
+	spawn_pop.rpc(new_value, location)	
 
 @rpc("any_peer", "call_local", "reliable")
 func spawn_pop(new_value, location):
+	
+	print("POP!",new_value,location,multiplayer.get_unique_id())
 	var new_pop = NUMBER_POP.instantiate()
 	new_pop.global_position = location
 	pops.add_child(new_pop)
@@ -221,8 +229,6 @@ func spawn_pop(new_value, location):
 		
 		
 # Call it like this instead:
-func trigger_pop(new_value, location):
-	spawn_pop.rpc(new_value, location)	
 
 
 

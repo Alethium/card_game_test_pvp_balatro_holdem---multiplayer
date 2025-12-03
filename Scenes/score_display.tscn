@@ -1,0 +1,277 @@
+[gd_scene load_steps=13 format=3 uid="uid://d14yx3iiat38"]
+
+[ext_resource type="Script" uid="uid://5yg0gnp4m5dj" path="res://scripts/player_score_display.gd" id="1_rj35s"]
+[ext_resource type="Texture2D" uid="uid://bift4163fm61m" path="res://UI_SPRITES/Highlighted_frame.png" id="2_pmud1"]
+[ext_resource type="Theme" uid="uid://d0uidb0k47w4o" path="res://Scenes/main_UI_theme.tres" id="3_23jxg"]
+[ext_resource type="Texture2D" uid="uid://bkdcqc2hnku8i" path="res://UI_SPRITES/Panel5_theme.png" id="4_ucbaq"]
+[ext_resource type="Theme" uid="uid://bl5r56swuu6ll" path="res://Hexes_theme.tres" id="5_t8vvr"]
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_n0f22"]
+texture = ExtResource("2_pmud1")
+texture_margin_left = 16.0
+texture_margin_top = 16.0
+texture_margin_right = 16.0
+texture_margin_bottom = 16.0
+expand_margin_left = 9.0
+expand_margin_top = 9.0
+expand_margin_right = 9.0
+expand_margin_bottom = 9.0
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_27tqa"]
+texture = ExtResource("4_ucbaq")
+texture_margin_left = 16.0
+texture_margin_top = 16.0
+texture_margin_right = 16.0
+texture_margin_bottom = 16.0
+expand_margin_left = 9.0
+expand_margin_top = 9.0
+expand_margin_right = 9.0
+expand_margin_bottom = 9.0
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_rqr2l"]
+texture = ExtResource("2_pmud1")
+texture_margin_left = 16.0
+texture_margin_top = 16.0
+texture_margin_right = 16.0
+texture_margin_bottom = 16.0
+expand_margin_left = 9.0
+expand_margin_top = 9.0
+expand_margin_right = 9.0
+expand_margin_bottom = 9.0
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_kcp20"]
+texture = ExtResource("2_pmud1")
+texture_margin_left = 16.0
+texture_margin_top = 16.0
+texture_margin_right = 16.0
+texture_margin_bottom = 16.0
+expand_margin_left = 10.0
+expand_margin_top = 10.0
+expand_margin_right = 10.0
+expand_margin_bottom = 10.0
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_0gtpp"]
+texture = ExtResource("2_pmud1")
+texture_margin_left = 16.0
+texture_margin_top = 16.0
+texture_margin_right = 16.0
+texture_margin_bottom = 16.0
+expand_margin_left = 10.0
+expand_margin_top = 10.0
+expand_margin_right = 10.0
+expand_margin_bottom = 10.0
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_sw3sp"]
+texture = ExtResource("2_pmud1")
+texture_margin_left = 16.0
+texture_margin_top = 16.0
+texture_margin_right = 16.0
+texture_margin_bottom = 16.0
+expand_margin_left = 9.0
+expand_margin_top = 9.0
+expand_margin_right = 9.0
+expand_margin_bottom = 9.0
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_vk5un"]
+texture = ExtResource("4_ucbaq")
+texture_margin_left = 16.0
+texture_margin_top = 16.0
+texture_margin_right = 16.0
+texture_margin_bottom = 16.0
+axis_stretch_horizontal = 1
+axis_stretch_vertical = 1
+
+[node name="player_Score_Display" type="Control"]
+layout_mode = 3
+anchors_preset = 0
+offset_left = 1.0
+offset_top = -123.0
+offset_right = 217.0
+offset_bottom = 21.0
+script = ExtResource("1_rj35s")
+
+[node name="BG" type="Panel" parent="."]
+texture_filter = 1
+layout_mode = 0
+offset_left = -1.0
+offset_right = 216.0
+offset_bottom = 224.0
+theme_override_styles/panel = SubResource("StyleBoxTexture_n0f22")
+
+[node name="score_bg" type="Panel" parent="BG"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.24400002
+anchor_top = 0.513
+anchor_right = 0.97700006
+anchor_bottom = 0.629
+offset_left = 0.051994324
+offset_top = 0.08799744
+offset_right = -0.009017944
+offset_bottom = 0.104003906
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("3_23jxg")
+theme_override_styles/panel = SubResource("StyleBoxTexture_27tqa")
+
+[node name="score_text" type="Label" parent="BG/score_bg"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 0.9999962
+offset_top = -13.0
+offset_right = 38.24997
+offset_bottom = 18.0
+grow_horizontal = 2
+grow_vertical = 2
+scale = Vector2(0.8, 0.8)
+theme = ExtResource("5_t8vvr")
+theme_override_font_sizes/font_size = 32
+text = "123,24,"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="chips_n_mult_frame" type="Panel" parent="BG"]
+layout_mode = 1
+anchors_preset = 14
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_left = 5.0
+offset_top = -68.0
+offset_right = -5.0
+offset_bottom = 1.5
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxTexture_rqr2l")
+
+[node name="chips_panel" type="Panel" parent="BG/chips_n_mult_frame"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 6.0
+offset_top = 6.0
+offset_right = -110.300514
+offset_bottom = -20.5
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxTexture_kcp20")
+
+[node name="chips_display_text" type="Label" parent="BG/chips_n_mult_frame/chips_panel"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("3_23jxg")
+theme_override_font_sizes/font_size = 32
+text = "12"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="mult_panel" type="Panel" parent="BG/chips_n_mult_frame"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 110.0
+offset_top = 6.0
+offset_right = -6.0
+offset_bottom = -20.5
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxTexture_0gtpp")
+
+[node name="mult_display_text" type="Label" parent="BG/chips_n_mult_frame/mult_panel"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_bottom = -1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("3_23jxg")
+theme_override_font_sizes/font_size = 32
+text = "34"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="chips" type="Label" parent="BG/chips_n_mult_frame"]
+layout_mode = 0
+offset_left = 28.0
+offset_top = 48.0
+offset_right = 70.0
+offset_bottom = 71.0
+theme = ExtResource("3_23jxg")
+text = "Chips"
+
+[node name="mult" type="Label" parent="BG/chips_n_mult_frame"]
+layout_mode = 0
+offset_left = 137.0
+offset_top = 49.0
+offset_right = 175.0
+offset_bottom = 65.0
+theme = ExtResource("3_23jxg")
+text = "Mult"
+
+[node name="X" type="Label" parent="BG/chips_n_mult_frame"]
+layout_mode = 0
+offset_left = 98.0
+offset_top = 17.0
+offset_right = 136.0
+offset_bottom = 33.0
+theme = ExtResource("3_23jxg")
+text = "X"
+
+[node name="Name_Frame" type="Panel" parent="BG"]
+layout_mode = 0
+offset_left = 5.0
+offset_top = 5.0
+offset_right = 212.0
+offset_bottom = 42.0
+theme_override_styles/panel = SubResource("StyleBoxTexture_sw3sp")
+
+[node name="round_score_bg" type="Panel" parent="BG/Name_Frame"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -5.0
+offset_top = -4.000002
+offset_right = 5.0
+offset_bottom = 5.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxTexture_vk5un")
+
+[node name="Hand_Name" type="Label" parent="BG/Name_Frame/round_score_bg"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 10.0
+offset_top = -1.0000067
+offset_right = -80.285736
+offset_bottom = -16.28572
+grow_horizontal = 2
+grow_vertical = 2
+scale = Vector2(1.575, 1.575)
+theme = ExtResource("3_23jxg")
+text = "Hand Name"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Round_Score" type="Label" parent="."]
+layout_mode = 0
+offset_left = 10.0
+offset_top = 115.00001
+offset_right = 72.0
+offset_bottom = 150.0
+scale = Vector2(0.75, 0.75)
+theme = ExtResource("3_23jxg")
+text = "Round 
+Score"
+horizontal_alignment = 1

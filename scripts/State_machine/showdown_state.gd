@@ -54,10 +54,11 @@ func exit_state() -> void:
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func update(_delta: float) -> void:
 	if multiplayer.is_server():
+#		waiting for players to select the cards they want to play as their hand
 		for player in players.current_players:
 			player_selected_cards = game_manager.get_player_selected_cards(player.player_id)
 			player.selected_cards = player_selected_cards
-			
+#			if they select any cards change the button 
 			if player_selected_cards:
 				if player_selected_cards.size() > 0:
 					player.set_button_text.rpc("action_button","Play Hand")
@@ -67,7 +68,7 @@ func update(_delta: float) -> void:
 				player.set_button_text.rpc("action_button","Choose")
 				player.set_button_disabled.rpc("action_button",true)
 					
-	
+#	collect the ready players
 		for player in players.current_players:
 			
 			if player.action_button_pressed and player.selected_cards.size() > 0:
@@ -78,16 +79,58 @@ func update(_delta: float) -> void:
 				
 		
 		if players_ready.size() == players.current_players.size() and scoring == false: 
+#			change the exterior display for the players to the scoring display. 
+			for player in players.current_players:
+				player.set_score_display_visible.rpc(true)
 			get_players_base_score()
+			
+			
+#			set the score display for the players to the returned info from the base score fetch
 #			need to check all majors for hand based doinks agains tthe two player hands. 
 # 			
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 func get_players_base_score():			
 	scoring = true
 	for player in players.current_players:
-		player_hand_info.append(game_manager.get_hand_base_score(player.player_id, game_manager.get_player_selected_cards(player.player_id)))
-		
+		var hand_info = game_manager.get_hand_base_score(player.player_id, game_manager.get_player_selected_cards(player.player_id))
+		player_hand_info.append(hand_info)
+		print(player,"displayed info score : ",hand_info.score," chips : ", hand_info.chips," mult : ", hand_info.multiplier," hand name: ",hand_info.hand_type)
+		player.request_update_all_displays.rpc(hand_info.score, hand_info.chips, hand_info.multiplier,hand_info.hand_type)
+			#"hand_type": best_hand.hand_type,
+			#"multiplier": best_hand.base_multiplier,
+			#"chips": best_hand.chips,
+			#"score": best_hand.get_score(),
+			#"cards": best_hand.cards
+	#set the score display for the players to the returned info from the base score fetch	
+	
+	
+	
 	print("time to check those hands against the major arcana")
 	print(player_hand_info)
 	play_space.request_status_text_change.rpc("all players ready \n time to check for modifiers and proceed to scoring. ")
