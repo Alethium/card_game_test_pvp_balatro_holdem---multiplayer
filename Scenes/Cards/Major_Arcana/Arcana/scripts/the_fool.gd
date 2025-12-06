@@ -10,8 +10,11 @@ func _ready():
 	
 
 
-func on_hand_played(hand_type: String):
+func on_hand_played(hand_type):
 	# Called after any hand is played
+	print("on hand played, hand type",hand_type)
+	
+	
 	if hand_type:
 		if !upside_down :
 			return ["chip",50]

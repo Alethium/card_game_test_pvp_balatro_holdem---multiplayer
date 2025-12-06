@@ -155,7 +155,12 @@ func _on_player_added(player):
 #_______________________________________________________________________________
 #							UTILITY TOOLS
 #_______________________________________________________________________________
-
+func get_major_arcana():
+	var major_arcana_in_play = []
+	for card in currently_spawned_cards:
+		if card.owner_id == -2:
+			major_arcana_in_play.append(card)
+	return major_arcana_in_play			
 func initialize_deck_order():
 	if multiplayer.is_server():
 		deck_seed = randi()

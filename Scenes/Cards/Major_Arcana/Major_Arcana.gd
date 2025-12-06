@@ -37,13 +37,6 @@ func handle_rotation():
 	else:
 		%Visuals.rotation = lerp(%Visuals.rotation,0.0,0.1)
 
-	
-func on_card_played(card):
-	# Called when any card is played
-	if card.rank%2 and card.rank <= 10:
-		return ["chips",card.rank]
-	elif !card.rank%2 and card.rank <= 10:
-		return ["chips",20]
 		
 func _on_card_body_input_event(viewport: Node, event: InputEvent, shape_idx: int) -> void:
 	if event is InputEventMouseButton and event.button_index == MOUSE_BUTTON_LEFT:

@@ -264,6 +264,7 @@ offset_right = 231.0
 offset_bottom = 133.0
 
 [node name="Score_Display" parent="Control" instance=ExtResource("6_n53ee")]
+visible = false
 layout_mode = 0
 offset_left = 0.0
 offset_top = -124.0

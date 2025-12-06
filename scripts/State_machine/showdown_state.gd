@@ -9,6 +9,7 @@ var player_selected_cards = []
 var scoring = false
 var doink_buffer = []
 var doink_timer = 0
+var num_cards = 0
 #selection
 #the players select thier five cards and hit the Showdown Button
 #the selected hands are sent to the scoring manager who checks for the hand, and returns score information.
@@ -30,6 +31,12 @@ var doink_timer = 0
 # FIX BUTTONS TO HAVE ONLY DISABLED ACTION BUTTON THAT SAYS SELECT HAND
 #UNLOCK THE COMMUNITY AND HAND CARDS FOR SELECTION. 
 func enter_state() -> void:
+	if game_manager.prev_state == states.game_start :
+		num_cards = 5
+		print("this many cards to be dealt : ",num_cards)
+		card_manager.dealing = true
+		card_manager.Current_Minor_Deck.deck_of_cards.shuffle()
+		print("it is time to deal cards!!!!!")
 #	ONLY SCORE THE PLAYERS WHO ARE NOT FOLDED AND OUT OF THE GAME. PLAYER. PLAYSTATE
 	play_space.request_status_text_change.rpc("Please Select the \n Hand you want to play")
 	print("ITS TIME FOR A MOTHERFUCKIN SHOWDOWN")
@@ -53,6 +60,22 @@ func exit_state() -> void:
 	pass # Replace with function body.
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func update(_delta: float) -> void:
+
+	if card_manager.dealing_timer == 0 and num_cards > 0 :
+		card_manager.dealing_timer += 20
+		num_cards -= 1
+		print("state machine calling for card deal to player")
+		for i in range(0,players.current_players.size()) :
+			card_manager._on_deal_to_players_pressed()
+		card_manager._on_deal_to_community_pressed()
+		card_manager._on_deal_to_major_arcana_pressed()
+	if card_manager.dealing_timer == 0 and num_cards == 0 and card_manager.dealing == true :
+		print("done dealing state ")
+		for card in card_manager.currently_spawned_cards:
+			if card.owner_id != 0 or -2:
+				card.selectable = true
+		card_manager.dealing = false
+		
 	if multiplayer.is_server():
 #		waiting for players to select the cards they want to play as their hand
 		for player in players.current_players:
@@ -83,6 +106,7 @@ func update(_delta: float) -> void:
 			for player in players.current_players:
 				player.set_score_display_visible.rpc(true)
 			get_players_base_score()
+			get_major_doinks()
 			
 			
 #			set the score display for the players to the returned info from the base score fetch
@@ -113,12 +137,12 @@ func update(_delta: float) -> void:
 
 
 
-
+#----STEP ONE----------
 
 func get_players_base_score():			
 	scoring = true
 	for player in players.current_players:
-		var hand_info = game_manager.get_hand_base_score(player.player_id, game_manager.get_player_selected_cards(player.player_id))
+		var hand_info = game_manager.get_hand_base_score(game_manager.get_player_selected_cards(player.player_id),player.player_id)
 		player_hand_info.append(hand_info)
 		print(player,"displayed info score : ",hand_info.score," chips : ", hand_info.chips," mult : ", hand_info.multiplier," hand name: ",hand_info.hand_type)
 		player.request_update_all_displays.rpc(hand_info.score, hand_info.chips, hand_info.multiplier,hand_info.hand_type)
@@ -137,7 +161,7 @@ func get_players_base_score():
 
 
 func get_major_doinks():
-	pass
+	
 #	so there should be an array that has two hand info arrays. starting with player one we are going to put their current hands info 
 #	into the score display part of the UI for both players. need to make it clear which player is being scored. 
 #	 for cards in card_manager.currently_spawned_cards:
@@ -145,9 +169,21 @@ func get_major_doinks():
 #		 can also do a card manager.get_major_arcana
 #			 this retains the order of the cards.
 	for card in card_manager.get_major_arcana():
-		if card.effect_type == "on_hand":
-			print("this cards on hand effect :",card.on_hand_played(player_hand_info[0]))
-		
+		print("card effect type : ",card.effect_type)
+		if card.effect_type == 1: # 1 is on hand played, we feed it what kind of hand we have
+			
+			print(card,"  :  this cards on hand effect : ",card.on_hand_played(player_hand_info[0].hand_type))
+			print(card,"  :  this cards on hand effect : ",card.on_hand_played(player_hand_info[1].hand_type))
+		elif card.effect_type == 0: # 1 is on card played, we feed it what kind of hand we have
+			for i in range(0,players.current_players.size()):
+				for player_card in player_hand_info[i].cards:
+					print("Player id of hand owner",player_hand_info[i].owner_id," : Card played : ", player_card)
+					print("return from card played  ",card.on_card_played(player_card))
+				
+
+			#for card in card_manager.currently_spawned_cards:
+				
+			
 
 
 	

@@ -191,13 +191,13 @@ func get_player_selected_cards(player_id):
 
 
 #this will be done for each player. the return from this should fill that players doink array . 
-func get_hand_base_score(player_id,hand):
+func get_hand_base_score(hand,player_id):
 	print(player_id," player hand sent to play :", hand)
 
 
 	print("game manager knows of played hand : ", hand)
 	
-	var hand_info = score_manager.get_hand_info(hand)
+	var hand_info = score_manager.get_hand_info(hand,player_id)
 	
 #	hand info cant contain doink?
 # 	doinks need to be calculated after getting the hand info, 

@@ -53,4 +53,4 @@ func check_players_ready():
 		#print(players_ready)		
 		if players_ready.size() == players.current_players.size():
 			print("all players ready")
-			states.change_state(states.ante_up)
+			states.change_state(states.showdown)

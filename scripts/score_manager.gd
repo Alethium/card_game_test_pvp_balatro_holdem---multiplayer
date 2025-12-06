@@ -439,7 +439,7 @@ func calculate_hand_score(cards: Array) -> int:
 
 
 # Function to get hand information
-func get_hand_info(cards: Array):
+func get_hand_info(cards: Array,owner_id: int):
 	var best_hand = determine_best_hand(cards)
 	if best_hand != null :
 		return {
@@ -447,7 +447,9 @@ func get_hand_info(cards: Array):
 			"multiplier": best_hand.base_multiplier,
 			"chips": best_hand.chips,
 			"score": best_hand.get_score(),
-			"cards": best_hand.cards
+			"cards": best_hand.cards,
+			"owner_id" : owner_id
+			
 		}
 
 # Example usage
