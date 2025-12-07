@@ -6,8 +6,8 @@
 [node name="The_Fool" instance=ExtResource("1_oldpi")]
 script = ExtResource("2_gfvtj")
 card_name = "The Fool"
-effect_description = "Rightside-up: + 50 chips
-Upside-down: + 4 mult"
+effect_description = "Rightside-up: The Fool for love gives your pair + 50 chips
+Upside-down: The Fool for solitude gives your High Card + 4 mult"
 effect_type = 1
 chip_modifier = 50
 mult_modifier = 4

@@ -187,7 +187,14 @@ func get_player_selected_cards(player_id):
 			player_selected_cards.append(card)
 	
 	return player_selected_cards
-			
+
+func get_player_held_cards(player_id):
+	var player_held_cards = []
+	for card in card_manager.currently_spawned_cards:
+		if card.owner_id == player_id and !card.selected :
+			player_held_cards.append(card)
+	
+	return player_held_cards			
 
 
 #this will be done for each player. the return from this should fill that players doink array . 

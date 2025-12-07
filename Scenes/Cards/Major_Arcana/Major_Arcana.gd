@@ -5,7 +5,7 @@ extends Card
 @export var card_name: String = "name"
 @export_multiline var effect_description: String = "Rightside-up:
 Upside-down:"
-enum EffectType {on_card,on_hand}
+enum EffectType {on_card,on_hand,on_held,on_scoring,active}
 @export var effect_type : EffectType
 @export var sell_value: int = 3  # Base sell value
 @export var rarity: int = 0  # Common, Uncommon, Rare, etc.

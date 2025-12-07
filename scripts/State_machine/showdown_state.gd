@@ -7,7 +7,7 @@ var players_ready = []
 
 var player_selected_cards = []
 var scoring = false
-var doink_buffer = []
+var player_doink_buffers = []
 var doink_timer = 0
 var num_cards = 0
 #selection
@@ -106,7 +106,11 @@ func update(_delta: float) -> void:
 			for player in players.current_players:
 				player.set_score_display_visible.rpc(true)
 			get_players_base_score()
-			get_major_doinks()
+			
+			
+			for player in players.current_players:
+				
+				player_doink_buffers.append(get_major_doinks(player)) 
 			
 			
 #			set the score display for the players to the returned info from the base score fetch
@@ -144,7 +148,7 @@ func get_players_base_score():
 	for player in players.current_players:
 		var hand_info = game_manager.get_hand_base_score(game_manager.get_player_selected_cards(player.player_id),player.player_id)
 		player_hand_info.append(hand_info)
-		print(player,"displayed info score : ",hand_info.score," chips : ", hand_info.chips," mult : ", hand_info.multiplier," hand name: ",hand_info.hand_type)
+		print(player,"displayed info score : ",hand_info.score," chips : ", hand_info.chips," mult : ", hand_info.multiplier," hand name: ",hand_info.hand_type,"owner_id",hand_info.owner_id)
 		player.request_update_all_displays.rpc(hand_info.score, hand_info.chips, hand_info.multiplier,hand_info.hand_type)
 			#"hand_type": best_hand.hand_type,
 			#"multiplier": best_hand.base_multiplier,
@@ -160,28 +164,63 @@ func get_players_base_score():
 	play_space.request_status_text_change.rpc("all players ready \n time to check for modifiers and proceed to scoring. ")
 
 
-func get_major_doinks():
-	
+func get_major_doinks(player):
+	var doink_buffer = []
+#	 DOINK = [
+#	(The major arcana the effect is coming from),
+#	(catalyst of the Doink.card,hand,major,just self,null),
+#	(the value that is affected),
+#	(the amount the value is to be affected)
+#	]
+#	EXAMPLE return DOINK  = [self.card_name,hand_type,"mult",4] 
+#	ACTUAL DOINK CONTENTS = ["The Magician","Two Pair","mult",4]
+#
 #	so there should be an array that has two hand info arrays. starting with player one we are going to put their current hands info 
 #	into the score display part of the UI for both players. need to make it clear which player is being scored. 
 #	 for cards in card_manager.currently_spawned_cards:
 		#if card.owner_id == -2 :  this is the id for a major arcana card. 
 #		 can also do a card manager.get_major_arcana
-#			 this retains the order of the cards.
+#			 this retains the order of the cards. 
+	print(player.player_id, "processing for doinks ")
 	for card in card_manager.get_major_arcana():
-		print("card effect type : ",card.effect_type)
-		if card.effect_type == 1: # 1 is on hand played, we feed it what kind of hand we have
-			
-			print(card,"  :  this cards on hand effect : ",card.on_hand_played(player_hand_info[0].hand_type))
-			print(card,"  :  this cards on hand effect : ",card.on_hand_played(player_hand_info[1].hand_type))
-		elif card.effect_type == 0: # 1 is on card played, we feed it what kind of hand we have
-			for i in range(0,players.current_players.size()):
-				for player_card in player_hand_info[i].cards:
-					print("Player id of hand owner",player_hand_info[i].owner_id," : Card played : ", player_card)
-					print("return from card played  ",card.on_card_played(player_card))
+		#print("this card : ",card,"card effect type : ",card.effect_type)
+#		collect and load doink in order from general to specific. I might need to make this an ordered for loop
+#		on all rounds, on the other jokers , cards you didnt play, the hand you played, the cards in that hand. 
+		if card.effect_type == 2: # 2 is on cards held and  not played. 
+			if card.on_held(game_manager.get_player_held_cards(player.player_id))  != null:
+				print("adding doink to the buffer : ", card.on_held(game_manager.get_player_held_cards(player.player_id)))
+				doink_buffer.append(card.on_held(game_manager.get_player_held_cards(player.player_id)))
 				
+					
+				
+			
+		elif card.effect_type == 1: # 1 is on hand played, we feed it what kind of hand we have
+				for hand_info in player_hand_info:
+					if hand_info.owner_id == player.player_id:
+						if card.on_hand_played(hand_info.hand_type) != null:
+							print("adding doink to the buffer : ", card.on_hand_played(hand_info.hand_type))
+							doink_buffer.append(card.on_hand_played(hand_info.hand_type))
+							
 
-			#for card in card_manager.currently_spawned_cards:
+
+
+		elif card.effect_type == 0: # 1 is on card played, we feed it what kind of hand we have
+			for hand_info in player_hand_info:
+				if hand_info.owner_id == player.player_id:
+					for player_card in hand_info.cards:
+						if card.on_card_played(player_card) != null :
+							print("adding doink to the buffer : ",card.on_card_played(player_card))
+							doink_buffer.append(card.on_card_played(player_card))
+							
+					
+						
+	print(player.player_id, "processed for doinks ")
+	
+	print("adding doink buffer contents as duffer to main array",doink_buffer)
+	return doink_buffer		
+					
+
+				#for card in card_manager.currently_spawned_cards:
 				
 			
 

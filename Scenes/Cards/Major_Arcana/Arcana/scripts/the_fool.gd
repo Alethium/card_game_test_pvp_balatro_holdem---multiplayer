@@ -12,16 +12,17 @@ func _ready():
 
 func on_hand_played(hand_type):
 	# Called after any hand is played
-	print("on hand played, hand type",hand_type)
 	
-	
-	if hand_type:
-		if !upside_down :
-			return ["chip",50]
-		else:
-			return ["mult",4]
 
-func _on_card_body_input_event(viewport: Node, event: InputEvent, shape_idx: int) -> void:
-	if event is InputEventMouseButton and event.button_index == MOUSE_BUTTON_LEFT:
-		if event.pressed:
-			upside_down = !upside_down
+	if hand_type == "Pair":
+		if !upside_down :
+			print("The Fool for love gives your pair + 50 chips")
+			return [self.card_name,hand_type,"chip",50]
+		else:
+			print("the card is facing the wrong direction to trigger ")
+	if hand_type == "High Card":		
+		if upside_down :
+			print("The Fool for solitude gives your High Card + 4 mult")
+			return [self.card_name,hand_type,"mult",4]
+		else:
+			print("the card is facing the wrong direction to trigger ")

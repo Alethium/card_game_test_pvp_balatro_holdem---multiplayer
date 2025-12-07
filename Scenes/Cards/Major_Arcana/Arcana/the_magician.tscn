@@ -1,10 +1,15 @@
 [gd_scene load_steps=3 format=3 uid="uid://dchhob3ouxr0n"]
 
 [ext_resource type="PackedScene" uid="uid://btsrbpjk6c605" path="res://Scenes/Cards/Major_Arcana/major_arcana_card.tscn" id="1_l71ut"]
-[ext_resource type="Script" uid="uid://6xo1xj4mffmw" path="res://Scenes/Cards/the_magician.gd" id="2_oyipc"]
+[ext_resource type="Script" uid="uid://6xo1xj4mffmw" path="res://Scenes/Cards/Major_Arcana/Arcana/scripts/the_magician.gd" id="2_oyipc"]
 
 [node name="The_Magician" instance=ExtResource("1_l71ut")]
 script = ExtResource("2_oyipc")
+card_name = "The Magician"
+effect_description = "Rightside-up:
+Gentle - Played cards with Wands suit give +3 Mult when scored
+Upside-down:
+Wrathful - Played cards with Pentacle suit give +3 Mult when scored"
 
 [node name="Front" parent="Visuals" index="2"]
 frame = 1

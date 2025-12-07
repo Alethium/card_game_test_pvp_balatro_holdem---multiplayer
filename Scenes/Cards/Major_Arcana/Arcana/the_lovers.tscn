@@ -1,0 +1,19 @@
+[gd_scene load_steps=3 format=3 uid="uid://d4ignu318k1yo"]
+
+[ext_resource type="PackedScene" uid="uid://btsrbpjk6c605" path="res://Scenes/Cards/Major_Arcana/major_arcana_card.tscn" id="1_aatwh"]
+[ext_resource type="Script" uid="uid://2gr12uxgwovl" path="res://Scenes/Cards/Major_Arcana/Arcana/scripts/the_lovers.gd" id="2_gsb15"]
+
+[node name="The_Lovers" instance=ExtResource("1_aatwh")]
+script = ExtResource("2_gsb15")
+card_name = "The Lovers"
+effect_description = "Rightside-up:
+Juliette - Each Queen held in hand gives +13 Mult
+Upside-down:
+Romeo - Each King held in hand gives X1.5 Mult"
+effect_type = 2
+
+[node name="Front" parent="Visuals" index="2"]
+frame = 6
+
+[node name="CollisionShape2D" parent="card_body" index="0"]
+position = Vector2(-0.5, 0)
