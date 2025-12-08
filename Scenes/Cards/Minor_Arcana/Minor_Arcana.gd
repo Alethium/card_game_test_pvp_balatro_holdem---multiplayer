@@ -8,6 +8,8 @@ var base_score : int
 var mod_score : int = base_score
 var face_card : bool
 var cursed = false
+var temp_suit : SUIT  
+var temp_rank : RANK
 
 
 
@@ -15,8 +17,9 @@ var cursed = false
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	super._ready()
-	front.frame_coords.x = rank + 1
-	front.frame_coords.y = suit 
+	temp_rank = rank
+	temp_suit = suit
+	update_visual()
 	if rank == 0:
 		base_score = 10
 		face_card = true
@@ -36,3 +39,6 @@ func _ready() -> void:
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 
 	
+func update_visual():
+	front.frame_coords.x = temp_rank + 1
+	front.frame_coords.y = temp_suit 

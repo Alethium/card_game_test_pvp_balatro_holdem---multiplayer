@@ -210,8 +210,7 @@ func get_hand_base_score(hand,player_id):
 # 	doinks need to be calculated after getting the hand info, 
 #	then feeding the hand into the on hand played check, 
 #	then each card needs to be fed into the on played card checker.
-	for card in hand:
-		card.deselect.rpc(player_id)
+
 	
 	
 	print("Best hand: ", hand_info["hand_type"])

@@ -54,7 +54,7 @@ class PokerHand:
 func determine_best_hand(cards: Array) -> PokerHand:
 	# Sort cards by rank for easier processing
 	#print("determining hand",cards)
-	cards.sort_custom(func(a, b): return a.rank < b.rank)
+	cards.sort_custom(func(a, b): return a.temp_rank < b.temp_rank)
 	
 	var possible_hands = []
 	
@@ -132,9 +132,9 @@ func check_flush_five(cards: Array) -> PokerHand:
 			return null
 	
 	# All cards must be the same rank
-	var first_rank = cards[0].rank
+	var first_rank = cards[0].temp_rank
 	for card in cards:
-		if card.rank != first_rank:
+		if card.temp_rank != first_rank:
 			return null
 	
 	return PokerHand.new(
@@ -157,10 +157,10 @@ func check_flush_house(cards: Array) -> PokerHand:
 	# Must be a full house (three of one rank, two of another)
 	var rank_counts = {}
 	for card in cards:
-		if card.rank in rank_counts:
-			rank_counts[card.rank] += 1
+		if card.temp_rank in rank_counts:
+			rank_counts[card.temp_rank] += 1
 		else:
-			rank_counts[card.rank] = 1
+			rank_counts[card.temp_rank] = 1
 	
 	var has_three = false
 	var has_two = false
@@ -185,9 +185,9 @@ func check_five_of_a_kind(cards: Array) -> PokerHand:
 		return null
 	
 	# All cards must be the same rank
-	var first_rank = cards[0].rank
+	var first_rank = cards[0].temp_rank
 	for card in cards:
-		if card.rank != first_rank:
+		if card.temp_rank != first_rank:
 			return null
 	
 	return PokerHand.new(
@@ -212,8 +212,8 @@ func check_royal_flush(cards: Array) -> PokerHand:
 	var required_ranks = [9, 10, 11, 12, 0]  # Ten, Page, Knight, Queen, King, Ace
 	var found_ranks = []
 	for card in cards:
-		if card.rank in required_ranks and not card.rank in found_ranks:
-			found_ranks.append(card.rank)
+		if card.temp_rank in required_ranks and not card.temp_rank in found_ranks:
+			found_ranks.append(card.temp_rank)
 	
 	if found_ranks.size() == 5:
 		return PokerHand.new(
@@ -250,10 +250,10 @@ func check_straight_flush(cards: Array) -> PokerHand:
 func check_four_of_a_kind(cards: Array) -> PokerHand:
 	var rank_counts = {}
 	for card in cards:
-		if card.rank in rank_counts:
-			rank_counts[card.rank] += 1
+		if card.temp_rank in rank_counts:
+			rank_counts[card.temp_rank] += 1
 		else:
-			rank_counts[card.rank] = 1
+			rank_counts[card.temp_rank] = 1
 	
 	for rank in rank_counts:
 		if rank_counts[rank] >= 4:
@@ -270,10 +270,10 @@ func check_full_house(cards: Array) -> PokerHand:
 	var rank_counts = {}
 	#print(cards)
 	for card in cards:
-		if card.rank in rank_counts:
-			rank_counts[card.rank] += 1
+		if card.temp_rank in rank_counts:
+			rank_counts[card.temp_rank] += 1
 		else:
-			rank_counts[card.rank] = 1
+			rank_counts[card.temp_rank] = 1
 	#print("rank counts : ",rank_counts)
 	var has_three = false
 	var has_two = false
@@ -318,8 +318,8 @@ func check_straight(cards: Array) -> PokerHand:
 	# Get unique ranks
 	var unique_ranks = []
 	for card in cards:
-		if not card.rank in unique_ranks:
-			unique_ranks.append(card.rank)
+		if not card.temp_rank in unique_ranks:
+			unique_ranks.append(card.temp_rank)
 	
 	unique_ranks.sort()
 	
@@ -347,10 +347,10 @@ func check_straight(cards: Array) -> PokerHand:
 func check_three_of_a_kind(cards: Array) -> PokerHand:
 	var rank_counts = {}
 	for card in cards:
-		if card.rank in rank_counts:
-			rank_counts[card.rank] += 1
+		if card.temp_rank in rank_counts:
+			rank_counts[card.temp_rank] += 1
 		else:
-			rank_counts[card.rank] = 1
+			rank_counts[card.temp_rank] = 1
 	
 	for rank in rank_counts:
 		if rank_counts[rank] >= 3:
@@ -366,10 +366,10 @@ func check_three_of_a_kind(cards: Array) -> PokerHand:
 func check_two_pair(cards: Array) -> PokerHand:
 	var rank_counts = {}
 	for card in cards:
-		if card.rank in rank_counts:
-			rank_counts[card.rank] += 1
+		if card.temp_rank in rank_counts:
+			rank_counts[card.temp_rank] += 1
 		else:
-			rank_counts[card.rank] = 1
+			rank_counts[card.temp_rank] = 1
 	
 	var pair_count = 0
 	for count in rank_counts.values():
@@ -389,10 +389,10 @@ func check_two_pair(cards: Array) -> PokerHand:
 func check_pair(cards: Array) -> PokerHand:
 	var rank_counts = {}
 	for card in cards:
-		if card.rank in rank_counts:
-			rank_counts[card.rank] += 1
+		if card.temp_rank in rank_counts:
+			rank_counts[card.temp_rank] += 1
 		else:
-			rank_counts[card.rank] = 1
+			rank_counts[card.temp_rank] = 1
 	
 	for rank in rank_counts:
 		if rank_counts[rank] >= 2:
@@ -413,8 +413,8 @@ func check_high_card(cards: Array) -> PokerHand:
 	var highest_card = cards[0]
 	for card in cards:
 		# Ace is high (rank 0 is highest)
-		var card_rank = 14 if card.rank == 0 else card.rank + 1
-		var highest_rank = 14 if highest_card.rank == 0 else highest_card.rank + 1
+		var card_rank = 14 if card.temp_rank == 0 else card.temp_rank + 1
+		var highest_rank = 14 if highest_card.temp_rank == 0 else highest_card.temp_rank + 1
 		
 		if card_rank > highest_rank:
 			highest_card = card

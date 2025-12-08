@@ -1,0 +1,16 @@
+[gd_scene load_steps=3 format=3 uid="uid://g8eu3ud2shsp"]
+
+[ext_resource type="PackedScene" uid="uid://btsrbpjk6c605" path="res://Scenes/Cards/Major_Arcana/major_arcana_card.tscn" id="1_6672m"]
+[ext_resource type="Script" uid="uid://bnxpw7f13sn82" path="res://Scenes/Cards/Major_Arcana/Arcana/scripts/the_transexual.gd" id="2_ytacx"]
+
+[node name="The_Transexual" instance=ExtResource("1_6672m")]
+script = ExtResource("2_ytacx")
+card_name = "The Transexual"
+effect_description = "Rightside-up:
+MTF  - Kings are now Queens,
+Upside-down:
+FTM - Queens are now Kings."
+effect_type = 3
+
+[node name="Front" parent="Visuals" index="2"]
+frame = 2

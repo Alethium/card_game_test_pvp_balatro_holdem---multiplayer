@@ -8,6 +8,7 @@ extends Deck
 const THE_FOOL = preload("uid://dewuqaryhsymb")
 const THE_MAGICIAN = preload("uid://dchhob3ouxr0n")
 const THE_LOVERS = preload("uid://d4ignu318k1yo")
+const THE_TRANSEXUAL = preload("uid://g8eu3ud2shsp")
 
 var base_set: Array = [
 	
@@ -15,6 +16,7 @@ var base_set: Array = [
 	THE_MAGICIAN,
 	THE_LOVERS,
 	THE_FOOL,
+	THE_TRANSEXUAL,
 	THE_LOVERS,
 	THE_MAGICIAN,
 	THE_FOOL,

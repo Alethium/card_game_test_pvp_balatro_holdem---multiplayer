@@ -8,6 +8,7 @@ var players_ready = []
 var player_selected_cards = []
 var scoring = false
 var player_doink_buffers = []
+var scoring_doink_buffer = []
 var doink_timer = 0
 var num_cards = 0
 #selection
@@ -146,7 +147,20 @@ func update(_delta: float) -> void:
 func get_players_base_score():			
 	scoring = true
 	for player in players.current_players:
+		for card in card_manager.get_major_arcana():
+			if card.effect_type == 3:
+				print("doinkk on scoring based cards",card.on_scoring(game_manager.get_player_selected_cards(player.player_id)))
+				var curr_doink = card.on_scoring(game_manager.get_player_selected_cards(player.player_id))
+				if curr_doink != null:
+					if curr_doink.effect == "change_rank":
+						curr_doink.target.temp_rank = curr_doink.value
+						curr_doink.target.update_visual()
+						print(curr_doink)
 		var hand_info = game_manager.get_hand_base_score(game_manager.get_player_selected_cards(player.player_id),player.player_id)
+		print("players cards are after doing scoring doink",game_manager.get_player_selected_cards(player.player_id))
+			
+				 
+		
 		player_hand_info.append(hand_info)
 		print(player,"displayed info score : ",hand_info.score," chips : ", hand_info.chips," mult : ", hand_info.multiplier," hand name: ",hand_info.hand_type,"owner_id",hand_info.owner_id)
 		player.request_update_all_displays.rpc(hand_info.score, hand_info.chips, hand_info.multiplier,hand_info.hand_type)
