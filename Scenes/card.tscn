@@ -38,6 +38,12 @@ properties/8/replication_mode = 1
 properties/9/path = NodePath(".:scale")
 properties/9/spawn = true
 properties/9/replication_mode = 1
+properties/10/path = NodePath("Visuals/Front:frame_coords:x")
+properties/10/spawn = true
+properties/10/replication_mode = 1
+properties/11/path = NodePath("Visuals/Front:frame_coords:y")
+properties/11/spawn = true
+properties/11/replication_mode = 1
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_e6po8"]
 shader = ExtResource("1_e6po8")
