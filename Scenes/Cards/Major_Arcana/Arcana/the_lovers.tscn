@@ -11,9 +11,13 @@ Juliette - Each Queen held in hand gives +13 Mult
 Upside-down:
 Romeo - Each King held in hand gives X1.5 Mult"
 effect_type = 2
+up_info_text = "Juliette - Each Queen held in hand gives +13 "
+down_info_text = "Romeo - Each King held in hand gives X1.5 Mult"
 
 [node name="Front" parent="Visuals" index="2"]
 frame = 6
 
 [node name="CollisionShape2D" parent="card_body" index="0"]
 position = Vector2(-0.5, 0)
+
+[editable path="Card_Info_Display"]

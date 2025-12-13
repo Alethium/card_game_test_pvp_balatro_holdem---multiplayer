@@ -107,6 +107,7 @@ script = ExtResource("1_0qqmn")
 
 [node name="Card_Info_Display" parent="." instance=ExtResource("2_bnspj")]
 unique_name_in_owner = true
+visible = false
 layout_mode = 0
 offset_left = -85.0
 offset_top = 92.0

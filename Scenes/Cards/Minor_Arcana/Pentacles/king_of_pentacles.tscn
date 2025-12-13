@@ -7,3 +7,5 @@
 script = ExtResource("2_xlekl")
 suit = 2
 rank = 13
+
+[editable path="Card_Info_Display"]

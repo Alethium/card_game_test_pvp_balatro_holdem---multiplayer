@@ -8,7 +8,8 @@ extends Button
 @onready var front: Sprite2D = $Visuals/Front
 @onready var outline: Sprite2D = $Visuals/card_outline
 @onready var visuals: Node2D = $Visuals
-@export var info_text: String = "Card_Info"
+@export var up_info_text: String = "Card_Info"
+@export var down_info_text: String = "Card_Info"
 
 var current_slot_id
 var selected = false
@@ -114,6 +115,7 @@ func _on_card_body_mouse_entered() -> void:
 		#%Visuals.global_scale.x = 2.2
 		#%Visuals.global_scale.y = 2.2
 		#wiggle()
+		%Card_Info_Display.set_info_text.rpc()
 		%Card_Info_Display.visible = true
 		#set_info_visible.rpc(true)
 	if is_multiplayer_authority():
@@ -135,6 +137,7 @@ func _on_card_body_mouse_exited() -> void:
 
 @rpc ("any_peer", "call_local", "reliable")		
 func set_info_visible(state : bool):
+	
 	%Card_Info_Display.visible = state		
 		
 @rpc ("any_peer", "call_local", "reliable")		

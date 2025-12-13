@@ -11,9 +11,13 @@ Upside-down: The Fool for solitude gives your High Card + 4 mult"
 effect_type = 1
 chip_modifier = 50
 mult_modifier = 4
+up_info_text = "The Fool for Love gives your pair + 50 chips"
+down_info_text = "The Fool for Solitude gives your High Card + 4 mult"
 
 [node name="bg" parent="Visuals" index="1"]
 material = null
 
 [node name="Back" parent="Visuals" index="3"]
 visible = false
+
+[editable path="Card_Info_Display"]

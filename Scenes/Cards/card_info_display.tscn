@@ -33,7 +33,6 @@ properties/0/spawn = true
 properties/0/replication_mode = 1
 
 [node name="Card_Info_Display" type="Control"]
-visible = false
 layout_mode = 3
 anchors_preset = 0
 offset_left = -65.0

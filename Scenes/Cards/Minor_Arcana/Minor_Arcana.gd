@@ -29,10 +29,10 @@ func _ready() -> void:
 	elif rank >= 10:
 		base_score = 10
 		face_card = true
-	info_text = str("+ ",base_score," Chips")
+	up_info_text = str("+ ",base_score," Chips")
 	
 	
-	%Card_Info_Display.set_info_text.rpc()
+	#%Card_Info_Display.set_info_text.rpc()
 	
 	
 

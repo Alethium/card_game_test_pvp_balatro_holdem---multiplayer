@@ -19,6 +19,23 @@ mult_modifier = 0
 money_modifier = 0
 probability_modifier = 0.0
 
+[node name="Card_Info_Display" parent="." index="0"]
+offset_top = 96.0
+offset_bottom = 183.99994
+
+[node name="Info_body" parent="Card_Info_Display" index="0"]
+anchors_preset = -1
+anchor_left = 0.023000002
+anchor_top = 0.25
+anchor_right = 1.3576832
+anchor_bottom = 1.5672729
+offset_left = 0.066999674
+offset_top = 7.6293945e-06
+offset_right = 99.83618
+offset_bottom = 52.08007
+scale = Vector2(0.5, 0.5)
+metadata/_edit_use_anchors_ = true
+
 [node name="bg" parent="Visuals" index="1"]
 position = Vector2(1.66893e-06, 0.11821699)
 scale = Vector2(0.9295775, 1.0130152)
@@ -36,3 +53,5 @@ frame = 31
 [connection signal="mouse_entered" from="." to="." method="_on_mouse_entered"]
 [connection signal="mouse_exited" from="." to="." method="_on_mouse_exited"]
 [connection signal="input_event" from="card_body" to="." method="_on_card_body_input_event"]
+
+[editable path="Card_Info_Display"]

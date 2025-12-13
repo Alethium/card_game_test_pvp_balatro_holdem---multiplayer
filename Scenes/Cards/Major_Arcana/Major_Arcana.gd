@@ -25,6 +25,7 @@ var edition: String = "Base"  # Foil, Holographic, Polychrome, etc.
 func _ready():
 	# Jokers are always face up
 	face_down = false
+	#%Card_Info_Display.set_info_text.rpc()
 
 	
 func _process(_delta):

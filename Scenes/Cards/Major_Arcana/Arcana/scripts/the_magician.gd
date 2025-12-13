@@ -23,6 +23,6 @@ func on_card_played(card):
 	elif upside_down:
 		if card.suit == card.SUIT.Pentacles:
 			print("The Magician is Wrathful - Played cards with Pentacle suit give +3 Mult when scored")
-			return [self.card_name,card,"mult",3]
+			return [self.card_name,card,"mult",5]
 		else:
 			print("the card is facing the wrong direction to trigger ")

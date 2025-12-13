@@ -8,5 +8,17 @@ script = ExtResource("2_6cpu5")
 suit = 3
 rank = 13
 
-[node name="bg" parent="Visuals" index="0"]
+[node name="bg" parent="Visuals" index="1"]
+position = Vector2(2.5000005, 0)
+scale = Vector2(0.9868422, 1)
 hframes = 14
+
+[node name="Front" parent="Visuals" index="2"]
+position = Vector2(0.99999934, 0)
+scale = Vector2(0.95774645, 1)
+
+[node name="Back" parent="Visuals" index="3"]
+position = Vector2(7.748604e-07, 3.8146973e-06)
+scale = Vector2(0.98591536, 1)
+
+[editable path="Card_Info_Display"]

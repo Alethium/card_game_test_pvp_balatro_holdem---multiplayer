@@ -11,6 +11,10 @@ MTF  - Kings are now Queens,
 Upside-down:
 FTM - Queens are now Kings."
 effect_type = 3
+up_info_text = "MTF  - Kings are now Queens"
+down_info_text = "FTM - Queens are now Kings"
 
 [node name="Front" parent="Visuals" index="2"]
 frame = 2
+
+[editable path="Card_Info_Display"]

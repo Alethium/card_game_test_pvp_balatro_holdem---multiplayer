@@ -11,11 +11,27 @@ var player_doink_buffers = []
 var scoring_doink_buffer = []
 var doink_timer = 0
 var num_cards = 0
+# TODO
+
+#fix card info display for up and down mode
+
 
 # showdown states
-# collect base score
+# SELECTION
+#players select cards and ready up
+# collect base score on selected cards
 # flip all cards for all to see. 
 # deselect everything
+
+# SCORING
+# display base chips and mult for both players
+# do not display score yet. 
+# collect major arcana based doinks
+# animate the doink array contents in order collected, cards wiggle, chips and mult grow as doinks apply value, numpops come up for the changes.ending in a new chips and mult score,
+# convert the new chips and mult for players into doink arrays for each player. 
+# animate the scoring doinks. the chip value doinks for the number of mult 
+# whoever has the highest score at the end is the winner. 
+# winner gets the current pot, made of other health, added back into their health pool. 
 
 
 

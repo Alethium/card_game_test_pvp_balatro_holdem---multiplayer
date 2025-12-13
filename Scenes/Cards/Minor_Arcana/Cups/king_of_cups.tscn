@@ -6,3 +6,5 @@
 [node name="King_of_Cups" instance=ExtResource("1_ktf4p")]
 script = ExtResource("2_ptw2d")
 rank = 13
+
+[editable path="Card_Info_Display"]

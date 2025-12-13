@@ -9,10 +9,14 @@ card_name = "The Magician"
 effect_description = "Rightside-up:
 Gentle - Played cards with Wands suit give +3 Mult when scored
 Upside-down:
-Wrathful - Played cards with Pentacle suit give +3 Mult when scored"
+Wrathful - Played cards with Pentacle suit give +5 Mult when scored"
+up_info_text = "Gentle - Played cards with Wands suit give +3 Mult when scored"
+down_info_text = "Wrathful - Played cards with Pentacle suit give +5 Mult when scored"
 
 [node name="Front" parent="Visuals" index="2"]
 frame = 1
 
 [node name="Back" parent="Visuals" index="3"]
 visible = false
+
+[editable path="Card_Info_Display"]
