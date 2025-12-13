@@ -11,6 +11,28 @@ var player_doink_buffers = []
 var scoring_doink_buffer = []
 var doink_timer = 0
 var num_cards = 0
+
+# showdown states
+# collect base score
+# flip all cards for all to see. 
+# deselect everything
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 #selection
 #the players select thier five cards and hit the Showdown Button
 #the selected hands are sent to the scoring manager who checks for the hand, and returns score information.

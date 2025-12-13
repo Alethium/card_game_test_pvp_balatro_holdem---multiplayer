@@ -57,33 +57,37 @@ func _ready():
 @rpc ("any_peer", "call_local", "reliable")
 func select(select_by_id):
 	# Update visual feedback based on selection state
-	if multiplayer.get_unique_id() ==  select_by_id:
-		outline.visible = true
+	
+
 	print("selected by" , select_by_id)
 	if !selected_by.has(select_by_id) :
 		selected = true
-		%Visuals.position.y -= 15
 		selected_by.append(select_by_id)
+		if multiplayer.get_unique_id() == select_by_id:
+			outline.visible = true
+			%Visuals.position.y -= 15
 		
 @rpc ("any_peer", "call_local", "reliable")
 func deselect(select_by_id):
-	if selected == true :
-		if select_by_id == 0:
-			print("deselected community")
-			outline.visible = false
-			selected = false
+
+	if select_by_id == 0:
+		if selected_by.has(multiplayer.get_unique_id()):
 			%Visuals.position.y += 15
-			selected_by = []
-			
-		else:	
-				# Add any other visual feedback for selected cards
-			print("deselected by" , select_by_id)
-			if multiplayer.get_unique_id() ==  select_by_id:
+			outline.visible = false
+		print("deselected community for all")
+		selected = false
+		selected_by = []
+		
+	else:	
+			# Add any other visual feedback for selected cards
+		print("deselected by" , select_by_id)
+		if selected_by.has(select_by_id):
+			if selected_by.has(multiplayer.get_unique_id()) and select_by_id == multiplayer.get_unique_id():
 				outline.visible = false
-			if selected_by.has(select_by_id):
-				selected = false
-				%Visuals.position.y += 15
-				selected_by.erase(select_by_id)
+				if selected_by.has(select_by_id):
+					%Visuals.position.y += 15
+			selected = false
+			selected_by.erase(select_by_id)
 	
 		
 

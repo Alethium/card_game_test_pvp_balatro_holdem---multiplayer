@@ -8,7 +8,7 @@ var base_score : int
 var mod_score : int = base_score
 var face_card : bool
 var cursed = false
-var temp_suit : SUIT  
+var temp_suit : SUIT   
 var temp_rank : RANK
 
 
