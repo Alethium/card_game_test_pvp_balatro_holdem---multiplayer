@@ -190,6 +190,7 @@ func instantiate_cards():
 			int_card.global_position = minor_card_deck_slot.global_position
 			int_card.card_id = card_id_counter
 			int_card.discard_slot = minor_card_discard_slot
+			int_card.card_manager = self
 			card_id_counter += 1
 			spawned_cards.add_child(int_card)
 			int_card.z_index = 0 
@@ -218,6 +219,7 @@ func instantiate_cards():
 			int_card.global_position = major_arcana_deck_slot.global_position
 			int_card.card_id = card_id_counter
 			int_card.discard_slot = minor_card_discard_slot
+			int_card.card_manager = self
 			card_id_counter += 1
 			spawned_cards.add_child(int_card)
 			

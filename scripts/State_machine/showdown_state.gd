@@ -27,24 +27,21 @@ var num_cards = 0
 # display base chips and mult for both players
 # do not display score yet. 
 # collect major arcana based doinks
+# once those have all been applied. collect the doinks for the adjusted value for each cards chip value. 
 # animate the doink array contents in order collected, cards wiggle, chips and mult grow as doinks apply value, numpops come up for the changes.ending in a new chips and mult score,
+# display base score of base mult x chips.
+# animate the doinks for chip value adjustment to base score. 
+# does the card chip value adjust the scores chip value? or just add too it to eliminate ties?
 # convert the new chips and mult for players into doink arrays for each player. 
 # animate the scoring doinks. the chip value doinks for the number of mult 
+
+
+
+#WINNER
 # whoever has the highest score at the end is the winner. 
 # winner gets the current pot, made of other health, added back into their health pool. 
-
-
-
-
-
-
-
-
-
-
-
-
-
+# convert the pot into doinks, doink the healthbar from the pot 
+# reset for next hand
 
 
 
@@ -99,7 +96,7 @@ func exit_state() -> void:
 	pass # Replace with function body.
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func update(_delta: float) -> void:
-
+# current SHORTCUT TO FINAL SCORING
 	if card_manager.dealing_timer == 0 and num_cards > 0 :
 		card_manager.dealing_timer += 20
 		num_cards -= 1
@@ -114,43 +111,46 @@ func update(_delta: float) -> void:
 			if card.owner_id != 0 or -2:
 				card.selectable = true
 		card_manager.dealing = false
+#	SHORTCUT END < REMOVE 
 		
 	if multiplayer.is_server():
 #		waiting for players to select the cards they want to play as their hand
-		for player in players.current_players:
-			player_selected_cards = game_manager.get_player_selected_cards(player.player_id)
-			player.selected_cards = player_selected_cards
-#			if they select any cards change the button 
-			if player_selected_cards:
-				if player_selected_cards.size() > 0:
-					player.set_button_text.rpc("action_button","Play Hand")
-					player.set_button_disabled.rpc("action_button",false)
-				
-			else:
-				player.set_button_text.rpc("action_button","Choose")
-				player.set_button_disabled.rpc("action_button",true)
+		if showdown_phase == Phase.Selection:
+			for player in players.current_players:
+				player_selected_cards = game_manager.get_player_selected_cards(player.player_id)
+				player.selected_cards = player_selected_cards
+	#			if they select any cards change the button 
+				if player_selected_cards:
+					if player_selected_cards.size() > 0:
+						player.set_button_text.rpc("action_button","Play Hand")
+						player.set_button_disabled.rpc("action_button",false)
 					
-#	collect the ready players
-		for player in players.current_players:
-			
-			if player.action_button_pressed and player.selected_cards.size() > 0:
-				player.set_button_text.rpc("action_button","Playing")
-				if !players_ready.has(player.player_id):
-					players_ready.append(player.player_id)
-					
+				else:
+					player.set_button_text.rpc("action_button","Choose")
+					player.set_button_disabled.rpc("action_button",true)
+						
+		#	collect the ready players
+			for player in players.current_players:
 				
+				if player.action_button_pressed and player.selected_cards.size() > 0:
+					player.set_button_text.rpc("action_button","Playing")
+					if !players_ready.has(player.player_id):
+						players_ready.append(player.player_id)
+						
+					
 		
-		if players_ready.size() == players.current_players.size() and scoring == false: 
-#			change the exterior display for the players to the scoring display. 
-			for player in players.current_players:
-				player.set_score_display_visible.rpc(true)
-			get_players_base_score()
+			if players_ready.size() == players.current_players.size() and scoring == false: 
+	#			change the exterior display for the players to the scoring display. 
+				for player in players.current_players:
+					player.set_score_display_visible.rpc(true)
+				get_players_base_score()
+				showdown_phase = Phase.Scoring
 			
-			
-			for player in players.current_players:
-				
-				player_doink_buffers.append(get_major_doinks(player)) 
-			
+		if showdown_phase == Phase.Scoring:	
+			if player_doink_buffers.size() < players.current_players.size():
+				for player in players.current_players:
+					player_doink_buffers.append([player.player_id,get_major_doinks(player)]) 
+					print("all the player doinks",player_doink_buffers)
 			
 #			set the score display for the players to the returned info from the base score fetch
 #			need to check all majors for hand based doinks agains tthe two player hands. 
@@ -268,7 +268,7 @@ func get_major_doinks(player):
 						
 	print(player.player_id, "processed for doinks ")
 	
-	print("adding doink buffer contents as duffer to main array",doink_buffer)
+	print("adding doink buffer contents  to main array",doink_buffer)
 	return doink_buffer		
 					
 

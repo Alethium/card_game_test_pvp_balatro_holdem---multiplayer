@@ -13,14 +13,14 @@ func _ready():
 func on_held(cards):
 	
 	for card in cards :
-		if card.rank == card.RANK.Queen:
+		if card.rank == 12:
 			if !upside_down :
 				print("The Lover Juliette - gives +13 Mult for Each Queen held in hand ")
 				return [self.card_name,card,"mult",13]
 			else:
 				print("the card is facing the wrong direction to trigger ")
 				
-		elif card.rank == card.RANK.King:
+		elif card.rank == 13:
 			if upside_down :
 				print("The Lover Romeo - gives X1.5 Mult for Each King held in hand ")
 				return [self.card_name,card,"multX",1.5]

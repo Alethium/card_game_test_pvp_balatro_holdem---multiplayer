@@ -33,7 +33,7 @@ var current_height_state : HEIGHT_STATE = HEIGHT_STATE.BASE
 @onready var sync: MultiplayerSynchronizer = $MultiplayerSynchronizer
 
 var upside_down = false
-
+var card_manager 
 
 
 func _ready():

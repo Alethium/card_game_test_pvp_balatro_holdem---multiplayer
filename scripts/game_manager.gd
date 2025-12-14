@@ -185,7 +185,7 @@ func get_player_selected_cards(player_id):
 	for card in card_manager.currently_spawned_cards:
 		if card.selected_by.has(player_id) :
 			player_selected_cards.append(card)
-	
+			#print("getting players selected cards", player_id," : cards : ",player_selected_cards)
 	return player_selected_cards
 
 func get_player_held_cards(player_id):

@@ -10,23 +10,25 @@ func _ready():
 	
 
 # recieves the players selected cards and converts qtk or ktq
-func on_scoring(cards):
+func on_scoring(_cards):
 	
-	for card in cards :
-		if card.rank == card.RANK.King:
-			if !upside_down :
-				
-				print("The Kings are now Queens ")
-				return {"origin" : self.card_name,"target" : card,"effect" : "change_rank","value" : 12}
-			else:
-				print("the card is facing the wrong direction to trigger ")
-				
-		elif card.rank == card.RANK.Queen:
-			if upside_down :
-				print("The Queens are now Kings ")
-				return {"origin" : self.card_name,"target" : card,"effect" : "change_rank","value" : 13}
-			else:
-				print("the card is facing the wrong direction to trigger ")
+	for card in card_manager.currently_spawned_cards:
+		if card is Minor_Arcana:
+#			this one checks the AGAB of the card
+			if card.rank == card.RANK.King:
+				if !upside_down :
+					
+					print("The Kings are now Queens ")
+					return {"origin" : self.card_name,"target" : card,"effect" : "change_rank","value" : 12}
+				else:
+					print("the card is facing the wrong direction to trigger ")
+					
+			elif card.rank == card.RANK.Queen:
+				if upside_down :
+					print("The Queens are now Kings ")
+					return {"origin" : self.card_name,"target" : card,"effect" : "change_rank","value" : 13}
+				else:
+					print("the card is facing the wrong direction to trigger ")
 				
 	# Called after any hand is played
 	#print("The Lovers , on card played, suit type : ",card.suit)
